@@ -3,7 +3,11 @@
   "version": "0.0.1",
   "description": "RelativeCI agent",
   "main": "index.js",
+  "bin": {
+    "relative-ci-agent": "bin/index.js"
+  },
   "scripts": {
+    "lint": "eslint lib",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -13,5 +17,13 @@
     "eslint": "^5.6.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.14.0"
+  },
+  "dependencies": {
+    "dotenv": "^6.0.0",
+    "env-ci": "^2.5.0",
+    "fs-extra": "^7.0.0",
+    "isomorphic-fetch": "^2.2.1",
+    "lodash": "^4.17.11",
+    "yargs": "^12.0.2"
   }
 }
