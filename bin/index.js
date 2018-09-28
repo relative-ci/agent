@@ -6,6 +6,7 @@ const yargs = require('yargs');
 const envCi = require('env-ci');
 const fs = require('fs-extra');
 const { pick } = require('lodash');
+const debug = require('debug')('relative-ci-agent');
 
 const { send } = require('../lib');
 
@@ -13,8 +14,9 @@ const DEFAULT_ENDPOINT = 'https://relative-ci.firebaseapp.com/api/save';
 const KEY = process.env.RELATIVE_CI_KEY;
 const ENDPOINT = process.env.RELATIVE_CI_ENDPOINT || DEFAULT_ENDPOINT;
 
-
 const envs = envCi();
+
+debug(envs);
 
 const args = yargs
   .options({
