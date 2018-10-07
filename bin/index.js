@@ -10,7 +10,7 @@ const debug = require('debug')('relative-ci:agent');
 
 const { send } = require('../lib');
 
-const DEFAULT_ENDPOINT = 'https://relative-ci.firebaseapp.com/api/save';
+const DEFAULT_ENDPOINT = 'https://api.relative-ci.com/save';
 const KEY = process.env.RELATIVE_CI_KEY;
 const ENDPOINT = process.env.RELATIVE_CI_ENDPOINT || DEFAULT_ENDPOINT;
 
