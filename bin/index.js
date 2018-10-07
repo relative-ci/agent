@@ -6,8 +6,8 @@ const yargs = require('yargs');
 const envCi = require('env-ci');
 const fs = require('fs-extra');
 const { pick } = require('lodash');
-const debug = require('debug')('relative-ci:agent');
 
+const { debug } = require('../lib/utils');
 const { send } = require('../lib');
 
 const DEFAULT_ENDPOINT = 'https://api.relative-ci.com/save';
