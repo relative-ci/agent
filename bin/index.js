@@ -9,6 +9,7 @@ const { pick } = require('lodash');
 
 const { debug } = require('../lib/utils');
 const { send } = require('../lib');
+const packageInfo = require('../package.json');
 
 const DEFAULT_ENDPOINT = 'https://api.relative-ci.com/save';
 const KEY = process.env.RELATIVE_CI_KEY;
@@ -16,7 +17,7 @@ const ENDPOINT = process.env.RELATIVE_CI_ENDPOINT || DEFAULT_ENDPOINT;
 
 const envs = envCi();
 
-debug(envs);
+debug('CI env variables', envs);
 
 const args = yargs
   .options({
@@ -52,4 +53,5 @@ const stats = pick(fs.readJSONSync(args.webpackStats), ['assets']);
 send(stats, {
   ...envs,
   ...args,
+  agentVersion: packageInfo.version,
 });
