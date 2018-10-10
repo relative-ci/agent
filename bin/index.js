@@ -48,7 +48,7 @@ const args = yargs
   .help().argv;
 
 // Pick only the required data
-const stats = pick(fs.readJSONSync(args.webpackStats), ['assets']);
+const stats = pick(fs.readJSONSync(args.webpackStats), ['assets', 'entrypoints']);
 
 send(stats, {
   ...envs,
