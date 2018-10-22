@@ -39,7 +39,6 @@ const args = yargs
     },
     build: {
       default: envs.build,
-      demandOption: true,
     },
     webpackStats: {
       demandOption: true,
