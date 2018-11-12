@@ -7,7 +7,7 @@ const envCi = require('env-ci');
 const fs = require('fs-extra');
 const { pick } = require('lodash');
 
-const { debug } = require('../lib/utils');
+const { debug, getCommitMessage } = require('../lib/utils');
 const { send } = require('../lib');
 const packageInfo = require('../package.json');
 
@@ -43,14 +43,21 @@ const args = yargs
     webpackStats: {
       demandOption: true,
     },
+    includeCommitMessage: {
+      default: false,
+    },
   })
   .help().argv;
 
 // Pick only the required data
 const stats = pick(fs.readJSONSync(args.webpackStats), ['assets', 'entrypoints']);
 
+// Get last commit message if enabled
+const commitMessage = args.includeCommitMessage ? getCommitMessage() : '';
+
 send(stats, {
   ...envs,
   ...args,
+  commitMessage,
   agentVersion: packageInfo.version,
 });
