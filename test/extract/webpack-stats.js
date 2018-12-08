@@ -16,6 +16,11 @@ describe('Extract Webpack stats', () => {
           size: 1,
           chunks: [],
         },
+        {
+          name: 'file1.js.map',
+          size: 2,
+          chunks: [],
+        },
       ],
     };
 
