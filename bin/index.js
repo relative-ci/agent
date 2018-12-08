@@ -42,7 +42,7 @@ const args = yargs
     },
     build: {
       default: envs.build,
-    }
+    },
   })
   .help().argv;
 
