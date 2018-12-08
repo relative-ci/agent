@@ -41,6 +41,40 @@ describe('Extract Webpack stats', () => {
     assert.deepStrictEqual(extract(ACTUAL), EXPECTED);
   });
 
+  it('should pick up assets with pathIgnorePattern', () => {
+    const ACTUAL = {
+      assets: [
+        {
+          name: 'file1.js',
+          size: 1,
+          chunks: [],
+        },
+        {
+          name: 'file2.js',
+          size: 1,
+          chunks: [],
+        },
+        {
+          name: 'file1.js.map',
+          size: 2,
+          chunks: [],
+        },
+      ],
+    };
+
+    const EXPECTED = {
+      assets: [
+        {
+          name: 'file2.js',
+          size: 1,
+        },
+      ],
+      entrypoints: {},
+    };
+
+    assert.deepStrictEqual(extract(ACTUAL, { pathIgnorePattern: 'file1.js(|.map)$' }), EXPECTED);
+  });
+
   it('should pick up entrypoints', () => {
     const ACTUAL = {
       entrypoints: {
