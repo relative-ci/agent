@@ -37,7 +37,7 @@ const args = yargs
       demandOption: true,
     },
     branch: {
-      default: envs.branch,
+      default: envs.branch || envs.prBranch,
       demandOption: true,
     },
     build: {
