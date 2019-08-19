@@ -36,6 +36,6 @@
     "fs-extra": "^8.1.0",
     "isomorphic-fetch": "^2.2.1",
     "lodash": "^4.17.15",
-    "yargs": "^13.3.0"
+    "yargs": "^14.0.0"
   }
 }
