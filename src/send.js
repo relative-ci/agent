@@ -1,7 +1,8 @@
 const fetch = require('isomorphic-fetch');
+
 const { debug } = require('./utils');
 
-module.exports = (data, options) => {
+module.exports = (data, options, logger) => {
   const {
     key,
     endpoint,
@@ -46,19 +47,19 @@ module.exports = (data, options) => {
       debug('Response', response);
 
       if (response.code) {
-        console.error(response);
+        logger.error(response);
         return;
       }
 
       const { info, res } = response;
 
       if (!res) {
-        console.error('Something went wrong', response);
+        logger.error('Something went wrong', response);
         return;
       }
 
-      console.log(`Job #${res.job.internalBuildNumber} done.`);
-      console.log(info.message);
+      logger.info(`Job #${res.job.internalBuildNumber} done.`);
+      logger.info(info.message);
     })
-    .catch((err) => console.error(err));
+    .catch((err) => logger.error(err));
 };
