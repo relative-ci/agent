@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
 import envCI from 'env-ci';
-import { pick, set } from 'lodash';
+import { omit, pick, set } from 'lodash';
 
 import pck from '../package.json';
 import send from './send';
@@ -37,9 +37,12 @@ export const agent = (artifactsData, config) => {
 
   const params = {
     key: process.env.RELATIVE_CI_KEY,
-    endpoint: process.env.RELATOVE_CI_ENDPOINT || DEFAULT_ENDPOINT,
+    endpoint: process.env.RELATIVE_CI_ENDPOINT || DEFAULT_ENDPOINT,
     agentVersion: pck.version,
-    ...ciEnvVars,
+
+    ...omit(ciEnvVars, 'prBranch'),
+    branch: ciEnvVars.branch || ciEnvVars.prBranch,
+
     ...includeCommitMessage ? {
       commitMessage: getCommitMessage(),
     } : {},
@@ -48,11 +51,11 @@ export const agent = (artifactsData, config) => {
   debug('Job parameters', params);
 
   if (!params.commit) {
-    throw new Error('"commit" value is missing, make sure the agent is setup correctly!');
+    throw new Error('"commit" value is missing, make sure the agent is setup correctly! Read more on https://relative-ci.com/documentation/setup.');
   }
 
   if (!params.branch) {
-    throw new Error('"branch" value is missing, make sure the agent is setup correctly!');
+    throw new Error('"branch" value is missing, make sure the agent is setup correctly! Read more on https://relative-ci.com/documentation/setup.');
   }
 
   // Filter only the necessary data
