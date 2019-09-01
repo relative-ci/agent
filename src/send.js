@@ -6,14 +6,16 @@ module.exports = (data, options) => {
     key,
     endpoint,
 
-    commit,
     branch,
-    pr,
     build,
     buildUrl,
+    commit,
+    pr,
     slug,
-    agentVersion,
+
     commitMessage,
+
+    agentVersion,
   } = options;
 
   const payload = {

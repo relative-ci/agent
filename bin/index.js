@@ -1,60 +1,40 @@
 #!/usr/bin/env node
 
-require('dotenv').config();
-
-const yargs = require('yargs');
-const envCi = require('env-ci');
+const { get } = require('lodash');
+const { readJSONSync, pathExistsSync } = require('fs-extra');
 const cosmiconfig = require('cosmiconfig');
 
-const { debug, getCommitMessage } = require('../lib/utils');
-const agent = require('../lib');
-const packageInfo = require('../package.json');
+const { agent } = require('../');
+const { debug } = require('../lib/utils');
 
-const DEFAULT_ENDPOINT = 'https://api.relative-ci.com/save';
+const searchConfig = cosmiconfig('relativeci').searchSync();
 
-const KEY = process.env.RELATIVE_CI_KEY;
-const ENDPOINT = process.env.RELATIVE_CI_ENDPOINT || DEFAULT_ENDPOINT;
+debug('Config', searchConfig);
 
-const envs = envCi();
-debug('CI env variables', envs);
+if (!searchConfig) {
+  console.error('You need to provide a config file! Read more on https://relative-ci.com/documentation/setup#22-configuration.');
+  process.exit(1);
+}
 
-const searchConfig = cosmiconfig('relativeci');
-const { config } = searchConfig.searchSync();
-debug('Config', config);
+const { config } = searchConfig;
 
-const args = yargs
-  .options({
-    key: {
-      default: KEY,
-      demandOption: true,
-    },
-    endpoint: {
-      default: ENDPOINT,
-      demandOption: true,
-    },
-    commit: {
-      default: envs.commit,
-      demandOption: true,
-    },
-    branch: {
-      default: envs.branch || envs.prBranch,
-      demandOption: true,
-    },
-    build: {
-      default: envs.build,
-    },
-  })
-  .help().argv;
+if (!get(config, 'webpack.stats')) {
+  console.error('The path to your webpack stats file is missing! Read more on https://relative-ci.com/documentation/setup#22-configuration.');
+  process.exit(1);
+}
 
-const commitMessage = config.includeCommitMessage ? getCommitMessage() : '';
+const webpackArtifactFilepath = get(config, 'webpack.stats');
 
-// @TODO Add error handling here
-agent({
-  config,
-  params: {
-    ...envs,
-    ...args,
-    commitMessage,
-    agentVersion: packageInfo.version,
+if (!pathExistsSync(webpackArtifactFilepath)) {
+  console.error(`The webpack stats file does not exists(${webpackArtifactFilepath})! Read more on https://relative-ci.com/documentation/setup#1-configure-webpack.`);
+  process.exit(1);
+}
+
+const artifactsData = [
+  {
+    key: 'webpack.stats',
+    data: readJSONSync(webpackArtifactFilepath),
   },
-});
+];
+
+agent(artifactsData, config);
