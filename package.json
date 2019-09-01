@@ -8,8 +8,13 @@
     "relative-ci-agent": "bin/index.js"
   },
   "scripts": {
-    "lint": "eslint lib",
-    "test": "mocha test/extract/*.js"
+    "build": "babel src -d lib",
+    "lint": "eslint .",
+    "test": "mocha test/extract/*.js",
+    "prepublishOnly": "npm run build"
+  },
+  "engines": {
+    "node": ">= 8.0"
   },
   "keywords": [
     "webpack",
@@ -34,12 +39,16 @@
   },
   "homepage": "https://relative-ci.com/documentation/setup",
   "devDependencies": {
+    "@babel/cli": "^7.5.5",
+    "@babel/core": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
     "eslint": "^6.3.0",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-plugin-import": "^2.18.2",
     "mocha": "^6.2.0"
   },
   "dependencies": {
+    "core-js": "^3.2.1",
     "cosmiconfig": "^5.2.1",
     "debug": "^4.1.1",
     "dotenv": "^8.1.0",
