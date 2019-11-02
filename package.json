@@ -49,7 +49,7 @@
   },
   "dependencies": {
     "core-js": "^3.2.1",
-    "cosmiconfig": "^5.2.1",
+    "cosmiconfig": "^6.0.0",
     "debug": "^4.1.1",
     "dotenv": "^8.1.0",
     "env-ci": "^4.1.1",
