@@ -1,3 +1,4 @@
+const { get } = require('lodash');
 const fetch = require('isomorphic-fetch');
 
 const { debug } = require('./utils');
@@ -51,15 +52,18 @@ module.exports = (data, options, logger) => {
         return;
       }
 
-      const { info, res } = response;
+      const { res } = response;
 
       if (!res) {
         logger.error('Something went wrong', response);
         return;
       }
 
-      logger.info(`Job #${res.job.internalBuildNumber} done.`);
-      logger.info(info.message.txt);
+      const buildNumber = get(res, 'job.internalBuildNumber');
+      const buildSizeInfo = get(response, 'info.message.txt');
+
+      logger.info(`Job #${buildNumber} done.`);
+      logger.info(buildSizeInfo);
     })
     .catch((err) => logger.error(err));
 };
