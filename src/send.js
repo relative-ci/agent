@@ -59,7 +59,7 @@ module.exports = (data, options, logger) => {
       }
 
       logger.info(`Job #${res.job.internalBuildNumber} done.`);
-      logger.info(info.message);
+      logger.info(info.message.txt);
     })
     .catch((err) => logger.error(err));
 };
