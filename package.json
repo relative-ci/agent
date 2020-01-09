@@ -52,7 +52,7 @@
     "cosmiconfig": "^6.0.0",
     "debug": "^4.1.1",
     "dotenv": "^8.2.0",
-    "env-ci": "^4.5.2",
+    "env-ci": "^5.0.0",
     "fs-extra": "^8.1.0",
     "isomorphic-fetch": "^2.2.1",
     "lodash": "^4.17.15"
