@@ -45,6 +45,10 @@ export const agent = (artifactsData, config, logger = console) => {
     throw new Error('"key" value is missing, make sure the agent is setup correctly! Read more on https://relative-ci.com/documentation/setup.');
   }
 
+  if (!params.slug) {
+    throw new Error('"slug" value is missing, make sure the agent is setup correctly! Read more on https://relative-ci.com/documentation/setup.');
+  }
+
   if (!params.commit) {
     throw new Error('"commit" value is missing, make sure the agent is setup correctly! Read more on https://relative-ci.com/documentation/setup.');
   }
