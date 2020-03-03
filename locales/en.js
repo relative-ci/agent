@@ -1,5 +1,5 @@
 const ERROR_PREFIX = 'ERROR:';
-const SETUP_INFO = 'Read more about RelativeCI agent setup at https://relative-ci.com/documentation/setup#22-configuration.';
+const SETUP_INFO = 'Read more about RelativeCI agent setup at https://relative-ci.com/documentation/setup.';
 
 module.exports.GENERIC_ERROR = 'Something went wrong';
 
