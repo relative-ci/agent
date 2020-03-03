@@ -2,12 +2,12 @@
 
 const { get } = require('lodash');
 const { readJSONSync, pathExistsSync } = require('fs-extra');
-const cosmiconfig = require('cosmiconfig');
+const { cosmiconfigSync } = require('cosmiconfig');
 
 const { agent } = require('../');
 const { debug } = require('../lib/utils');
 
-const searchConfig = cosmiconfig('relativeci').searchSync();
+const searchConfig = cosmiconfigSync('relativeci').search();
 
 debug('Config', searchConfig);
 
