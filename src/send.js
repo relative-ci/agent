@@ -1,6 +1,7 @@
 const { get } = require('lodash');
 const fetch = require('isomorphic-fetch');
 
+const LOCALES = require('../locales/en');
 const { debug } = require('./utils');
 
 module.exports = (data, options, logger) => {
@@ -55,7 +56,7 @@ module.exports = (data, options, logger) => {
       const { res } = response;
 
       if (!res) {
-        logger.error('Something went wrong', response);
+        logger.error(LOCALES.GENERIC_ERROR, response);
         return;
       }
 
