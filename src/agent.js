@@ -2,6 +2,7 @@ import dotenv from 'dotenv';
 import { set } from 'lodash';
 
 import pck from '../package.json';
+import * as LOCALES from '../locales/en';
 import send from './send';
 import { debug, getCommitMessage, getEnvCI } from './utils';
 import { extractWebpackStats } from './extract';
@@ -38,25 +39,23 @@ export const agent = (artifactsData, config, logger = console) => {
     } : {},
   };
 
-
   debug('Job parameters', params);
 
   if (!params.key) {
-    throw new Error('"key" value is missing, make sure the agent is setup correctly! Read more on https://relative-ci.com/documentation/setup.');
+    throw new Error(LOCALES.AGENT_MISSING_KEY_ERROR);
   }
 
   if (!params.slug) {
-    throw new Error('"slug" value is missing, make sure the agent is setup correctly! Read more on https://relative-ci.com/documentation/setup.');
+    throw new Error(LOCALES.AGENT_MISSING_SLUG_ERROR);
   }
 
   if (!params.commit) {
-    throw new Error('"commit" value is missing, make sure the agent is setup correctly! Read more on https://relative-ci.com/documentation/setup.');
+    throw new Error(LOCALES.AGENT_MISSING_COMMIT_ERROR);
   }
 
   if (!params.branch) {
-    throw new Error('"branch" value is missing, make sure the agent is setup correctly! Read more on https://relative-ci.com/documentation/setup.');
+    throw new Error(LOCALES.AGENT_MISSING_BRANCH_ERROR);
   }
-
 
   // Filter only the necessary data
   const filteredData = getFilteredData(artifactsData);
