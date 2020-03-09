@@ -26,6 +26,13 @@ export const agent = (artifactsData, config, logger = console) => {
 
   const { includeCommitMessage } = config;
 
+  let slug = process.env.RELATIVE_CI_SLUG;
+
+  if (!slug) {
+    debug('RELATIVE_CI_SLUG not available, using env-ci');
+    slug = envCIVars.slug;
+  }
+
   const params = {
     key: process.env.RELATIVE_CI_KEY,
     endpoint: process.env.RELATIVE_CI_ENDPOINT || DEFAULT_ENDPOINT,
@@ -33,6 +40,7 @@ export const agent = (artifactsData, config, logger = console) => {
 
     ...envCIVars,
     branch: envCIVars.branch || envCIVars.prBranch,
+    slug,
 
     ...includeCommitMessage ? {
       commitMessage: getCommitMessage(),
