@@ -1,5 +1,5 @@
 <a href="https://relative-ci.com">
-<img alt="RelativeCI" src="https://raw.githubusercontent.com/relative-ci/agent/update-readme/assets/relative-ci--logo.svg?sanitize=true" width="96" />
+<img alt="RelativeCI" src="https://raw.githubusercontent.com/relative-ci/agent/master/assets/relative-ci--logo.svg?sanitize=true" width="96" />
 </a>
 
 # RelativeCI agent
