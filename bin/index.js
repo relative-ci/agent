@@ -14,21 +14,21 @@ debug('Config', searchConfig);
 
 if (!searchConfig) {
   console.error(LOCALES.CLI_MISSING_CONFIGURATION_ERROR);
-  process.exit(1);
+  process.exit(0);
 }
 
 const { config } = searchConfig;
 
 if (!get(config, 'webpack.stats')) {
   console.error(LOCALES.CLI_INVALID_CONFIGURATION_ERROR);
-  process.exit(1);
+  process.exit(0);
 }
 
 const webpackArtifactFilepath = get(config, 'webpack.stats');
 
 if (!pathExistsSync(webpackArtifactFilepath)) {
   console.error(LOCALES.CLI_MISSING_STATS_FILE_ERROR);
-  process.exit(1);
+  process.exit(0);
 }
 
 const artifactsData = [
