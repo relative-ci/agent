@@ -30,7 +30,7 @@ const getOnEmit = (options) => async (compilation, callback) => {
 
     callback();
   } catch (err) {
-    callback(err);
+    logger.warn(err);
   }
 };
 

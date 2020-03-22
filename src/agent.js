@@ -50,19 +50,19 @@ export const agent = (artifactsData, config, logger = console) => {
   debug('Job parameters', params);
 
   if (!params.key) {
-    throw new Error(LOCALES.AGENT_MISSING_KEY_ERROR);
+    return logger.warn(LOCALES.AGENT_MISSING_KEY_ERROR);
   }
 
   if (!params.slug) {
-    throw new Error(LOCALES.AGENT_MISSING_SLUG_ERROR);
+    return logger.warn(LOCALES.AGENT_MISSING_SLUG_ERROR);
   }
 
   if (!params.commit) {
-    throw new Error(LOCALES.AGENT_MISSING_COMMIT_ERROR);
+    return logger.warn(LOCALES.AGENT_MISSING_COMMIT_ERROR);
   }
 
   if (!params.branch) {
-    throw new Error(LOCALES.AGENT_MISSING_BRANCH_ERROR);
+    return logger.warn(LOCALES.AGENT_MISSING_BRANCH_ERROR);
   }
 
   // Filter only the necessary data
