@@ -49,14 +49,14 @@ module.exports = (data, options, logger) => {
       debug('Response', response);
 
       if (response.code) {
-        logger.error(response);
+        logger.warn(response);
         return;
       }
 
       const { res } = response;
 
       if (!res) {
-        logger.error(LOCALES.GENERIC_ERROR, response);
+        logger.warn(LOCALES.GENERIC_ERROR, response);
         return;
       }
 
@@ -66,5 +66,5 @@ module.exports = (data, options, logger) => {
       logger.info(`Job #${buildNumber} done.`);
       logger.info(buildSizeInfo);
     })
-    .catch((err) => logger.error(err));
+    .catch((err) => logger.warn(err));
 };
