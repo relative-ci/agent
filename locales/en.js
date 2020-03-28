@@ -2,7 +2,7 @@ const SETUP_INFO = 'Read more about RelativeCI agent setup at https://relative-c
 
 module.exports.GENERIC_ERROR = 'Something went wrong';
 
-module.exports.CLI_MISSING_CONFIGURATION_ERROR = `relative-ci.config.js file is missing! ${SETUP_INFO}`;
+module.exports.CLI_MISSING_CONFIGURATION_ERROR = `relativeci.config.js file is missing! ${SETUP_INFO}`;
 module.exports.CLI_INVALID_CONFIGURATION_ERROR = `The path to your webpack stats file is missing! ${SETUP_INFO}`;
 module.exports.CLI_MISSING_STATS_FILE_ERROR = `The webpack stats file does not exists! ${SETUP_INFO}`;
 
