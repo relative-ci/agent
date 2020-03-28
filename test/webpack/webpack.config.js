@@ -1,4 +1,4 @@
-const { RelativeCiAgentWebpackPlugin } = require('../../');
+const { RelativeCiAgentWebpackPlugin } = require('../..');
 
 module.exports = {
   mode: 'production',
