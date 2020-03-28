@@ -10,7 +10,7 @@
   "scripts": {
     "build": "babel src -d lib",
     "lint": "eslint .",
-    "test": "mocha test/extract/*.js",
+    "test": "jest test",
     "prepublishOnly": "npm run build"
   },
   "engines": {
@@ -45,7 +45,10 @@
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-plugin-import": "^2.20.1",
-    "mocha": "^7.1.0"
+    "eslint-plugin-jest": "^23.8.2",
+    "jest": "^25.2.3",
+    "memory-fs": "^0.5.0",
+    "webpack": "^4.42.1"
   },
   "dependencies": {
     "core-js": "^3.6.4",

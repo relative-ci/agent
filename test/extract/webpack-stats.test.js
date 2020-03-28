@@ -1,9 +1,7 @@
-const assert = require('assert');
-
 const extract = require('../../lib/extract/webpack-stats');
 
 describe('Extract Webpack stats', () => {
-  it('should pick up assets', () => {
+  test('should pick up assets', () => {
     const ACTUAL = {
       assets: [
         {
@@ -40,10 +38,10 @@ describe('Extract Webpack stats', () => {
       modules: [],
     };
 
-    assert.deepStrictEqual(extract(ACTUAL), EXPECTED);
+    expect(extract(ACTUAL)).toEqual(EXPECTED);
   });
 
-  it('should pick up assets with pathIgnorePattern', () => {
+  test('should pick up assets with pathIgnorePattern', () => {
     const ACTUAL = {
       assets: [
         {
@@ -76,10 +74,10 @@ describe('Extract Webpack stats', () => {
       modules: [],
     };
 
-    assert.deepStrictEqual(extract(ACTUAL, { pathIgnorePattern: 'file1.js(|.map)$' }), EXPECTED);
+    expect(extract(ACTUAL, { pathIgnorePattern: 'file1.js(|.map)$' })).toEqual(EXPECTED);
   });
 
-  it('should pick up entrypoints', () => {
+  test('should pick up entrypoints', () => {
     const ACTUAL = {
       entrypoints: {
         main: {
@@ -119,10 +117,10 @@ describe('Extract Webpack stats', () => {
       modules: [],
     };
 
-    assert.deepStrictEqual(extract(ACTUAL), EXPECTED);
+    expect(extract(ACTUAL)).toEqual(EXPECTED);
   });
 
-  it('should pick up chunks', () => {
+  test('should pick up chunks', () => {
     const ACTUAL = {
       chunks: [
         {
@@ -161,10 +159,10 @@ describe('Extract Webpack stats', () => {
       modules: [],
     };
 
-    assert.deepStrictEqual(extract(ACTUAL), EXPECTED);
+    expect(extract(ACTUAL)).toEqual(EXPECTED);
   });
 
-  it('should pick up modules', () => {
+  test('should pick up modules', () => {
     const ACTUAL = {
       modules: [
         {
@@ -190,6 +188,6 @@ describe('Extract Webpack stats', () => {
       ],
     };
 
-    assert.deepStrictEqual(extract(ACTUAL), EXPECTED);
+    expect(extract(ACTUAL)).toEqual(EXPECTED);
   });
 });
