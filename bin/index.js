@@ -4,7 +4,7 @@ const { get } = require('lodash');
 const { readJSONSync, pathExistsSync } = require('fs-extra');
 const { cosmiconfigSync } = require('cosmiconfig');
 
-const { agent } = require('../');
+const { agent } = require('..');
 const { debug } = require('../lib/utils');
 const LOCALES = require('../locales/en');
 
