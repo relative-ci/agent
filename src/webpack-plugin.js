@@ -1,5 +1,6 @@
 import process from 'process';
 import { get, merge } from 'lodash';
+import { validate } from '@bundle-stats/utils/lib/webpack';
 
 import { agent } from './agent';
 import { getEnvCI } from './utils';
@@ -24,6 +25,13 @@ const getOnEmit = (options) => async (compilation, callback) => {
   const logger = compilation.getInfrastructureLogger
     ? compilation.getInfrastructureLogger(PLUGIN_NAME)
     : console;
+
+  const invalidData = validate(data);
+
+  if (invalidData) {
+    logger.warn(invalidData);
+    return;
+  }
 
   try {
     await agent([{ key: 'webpack.stats', data }], agentOptions, logger);
