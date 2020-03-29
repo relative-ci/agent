@@ -3,6 +3,7 @@
 const { get } = require('lodash');
 const { readJSONSync, pathExistsSync } = require('fs-extra');
 const { cosmiconfigSync } = require('cosmiconfig');
+const { validate } = require('@bundle-stats/utils/lib/webpack');
 
 const { agent } = require('..');
 const { debug } = require('../lib/utils');
@@ -28,6 +29,15 @@ const webpackArtifactFilepath = get(config, 'webpack.stats');
 
 if (!pathExistsSync(webpackArtifactFilepath)) {
   console.error(LOCALES.CLI_MISSING_STATS_FILE_ERROR);
+  process.exit(0);
+}
+
+const data = readJSONSync(webpackArtifactFilepath);
+
+const invalidData = validate(data);
+
+if (invalidData) {
+  console.error(invalidData);
   process.exit(0);
 }
 
