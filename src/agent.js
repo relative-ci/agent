@@ -1,16 +1,16 @@
 import dotenv from 'dotenv';
 import { set } from 'lodash';
+import { filter } from '@bundle-stats/utils/lib/webpack';
 
 import pck from '../package.json';
 import * as LOCALES from '../locales/en';
 import send from './send';
 import { debug, getCommitMessage, getEnvCI } from './utils';
-import { extractWebpackStats } from './extract';
 
 const DEFAULT_ENDPOINT = 'https://api.relative-ci.com/save';
 const WEBPACK_STATS = 'webpack.stats';
 const SOURCE_EXTRACTORS = {
-  [WEBPACK_STATS]: extractWebpackStats,
+  [WEBPACK_STATS]: filter,
 };
 
 const getFilteredData = (artifactsData) => artifactsData.reduce(
