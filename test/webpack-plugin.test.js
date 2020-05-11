@@ -4,6 +4,7 @@ const webpack = require('webpack');
 const MemoryFS = require('memory-fs');
 const fetch = require('isomorphic-fetch');
 
+const pckg = require('../package.json');
 const appConfig = require('./webpack/webpack.config');
 
 const ENV_DEFAULT = {
@@ -90,7 +91,7 @@ describe('webpack-plugin', () => {
               },
             },
           },
-          agentVersion: '1.2.0',
+          agentVersion: pckg.version,
         }),
       });
 
