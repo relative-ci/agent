@@ -14,7 +14,7 @@
     "prepublishOnly": "npm run build"
   },
   "engines": {
-    "node": ">= 8.0"
+    "node": ">= 10.0"
   },
   "keywords": [
     "webpack",
