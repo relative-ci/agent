@@ -17,7 +17,7 @@ describe('CLI', () => {
 
   test('should return error if webpack stats data is invalid', (done) => {
     exec('cd test/cli/invalid-data && ../../../bin/index.js', (error, stdout, sterr) => {
-      expect(sterr).toContain('Assets property is missing');
+      expect(sterr).toContain('Invalid webpack stats structure');
       done();
     });
   });
