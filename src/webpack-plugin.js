@@ -3,7 +3,7 @@ import { get, merge } from 'lodash';
 import { validate } from '@bundle-stats/utils/lib/webpack';
 
 import { agent } from './agent';
-import { getEnvCI } from './utils';
+import { debug, getEnvCI } from './utils';
 
 const PLUGIN_NAME = 'RelativeCiAgent';
 
@@ -61,6 +61,8 @@ export class RelativeCiAgentWebpackPlugin {
       },
       this.options,
     );
+
+    debug(options);
 
     // Skip if not enabled
     if (!options.enabled) {
