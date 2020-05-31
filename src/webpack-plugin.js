@@ -66,6 +66,7 @@ export class RelativeCiAgentWebpackPlugin {
 
     // Skip if not enabled
     if (!options.enabled) {
+      debug('RelativeCIAgentWebpackPlugin is disabled, skip sending data');
       return;
     }
 
