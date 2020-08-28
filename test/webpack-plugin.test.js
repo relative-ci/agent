@@ -75,7 +75,7 @@ describe('webpack-plugin', () => {
           rawData: {
             webpack: {
               stats: {
-                hash: '98509c50838fad964aca',
+                hash: stats.hash,
                 assets: [{ name: 'main.js', size: 957 }],
                 entrypoints: { main: { assets: ['main.js'] } },
                 chunks: [
