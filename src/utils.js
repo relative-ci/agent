@@ -10,6 +10,7 @@ const CI_ENV_VAR_NAMES = [
   'isCi',
   'pr',
   'prBranch',
+  'service',
   'slug',
 ];
 

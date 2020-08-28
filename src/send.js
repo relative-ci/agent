@@ -15,6 +15,7 @@ module.exports = (data, options, logger) => {
     commit,
     pr,
     slug,
+    service,
 
     commitMessage,
 
@@ -24,6 +25,7 @@ module.exports = (data, options, logger) => {
   const payload = {
     key,
     project: slug,
+    service,
     job: {
       commit,
       branch,
