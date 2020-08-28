@@ -68,6 +68,7 @@ describe('webpack-plugin', () => {
         body: JSON.stringify({
           key: '123',
           project: 'organization/project',
+          service: 'circleci',
           job: {
             commit: 'abcd1234',
             branch: 'master',
