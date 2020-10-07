@@ -40,7 +40,7 @@ module.exports = (data, options, logger) => {
 
   debug('Payload', payload);
 
-  fetch(endpoint, {
+  return fetch(endpoint, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json; charset=utf-8',
