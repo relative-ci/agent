@@ -1,4 +1,5 @@
 import process from 'process';
+import webpack from 'webpack';
 import { get, merge } from 'lodash';
 import { validate } from '@bundle-stats/utils/lib/webpack';
 
@@ -18,7 +19,9 @@ const DEFAULT_OPTIONS = {
   },
 };
 
-const getOnEmit = (options) => async (compilation, callback) => {
+const isWebpack5 = parseInt(webpack.version, 10) === 5;
+
+const generateReports = async (compilation, options) => {
   const { stats: statsOptions, ...agentOptions } = options;
   const data = compilation.getStats().toJson(statsOptions);
 
@@ -33,13 +36,7 @@ const getOnEmit = (options) => async (compilation, callback) => {
     return;
   }
 
-  try {
-    await agent([{ key: 'webpack.stats', data }], agentOptions, logger);
-
-    callback();
-  } catch (err) {
-    logger.warn(err);
-  }
+  agent([{ key: 'webpack.stats', data }], agentOptions, logger);
 };
 
 export class RelativeCiAgentWebpackPlugin {
@@ -70,6 +67,23 @@ export class RelativeCiAgentWebpackPlugin {
       return;
     }
 
-    compiler.hooks.emit.tapAsync(PLUGIN_NAME, getOnEmit(options));
+    if (isWebpack5) {
+      compiler.hooks.make.tap(PLUGIN_NAME, (compilation) => {
+        compilation.hooks.processAssets.tap(
+          { name: PLUGIN_NAME, stage: webpack.Compilation.PROCESS_ASSETS_STAGE_REPORT },
+          () => generateReports(compilation, options),
+        );
+      });
+
+      return;
+    }
+
+    compiler.hooks.emit.tapAsync(
+      PLUGIN_NAME,
+      async (compilation, callback) => {
+        await generateReports(compilation, options);
+        callback();
+      },
+    );
   }
 }
