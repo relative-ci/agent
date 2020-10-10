@@ -70,7 +70,7 @@ export class RelativeCiAgentWebpackPlugin {
     if (isWebpack5) {
       compiler.hooks.make.tap(PLUGIN_NAME, (compilation) => {
         compilation.hooks.processAssets.tap(
-          { name: PLUGIN_NAME, stage: webpack.Compilation.PROCESS_ASSETS_STAGE_ANALYSE },
+          { name: PLUGIN_NAME, stage: webpack.Compilation.PROCESS_ASSETS_STAGE_REPORT },
           () => generateReports(compilation, options),
         );
       });
