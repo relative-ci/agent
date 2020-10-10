@@ -7,6 +7,8 @@ const fetch = require('isomorphic-fetch');
 const { merge } = require('lodash');
 
 const pckg = require('../package.json');
+const webpack4Stats = require('./__snapshots__/webpack-4-stats.json');
+const webpack5Stats = require('./__snapshots__/webpack-5-stats.json');
 const appConfig = require('./webpack/webpack.config');
 
 const ENV_DEFAULT = {
@@ -96,18 +98,7 @@ describe('webpack-plugin', () => {
             webpack: {
               stats: {
                 hash: stats.hash,
-                assets: [{ name: 'main.js', size: 957 }],
-                entrypoints: { main: { assets: ['main.js'] } },
-                chunks: [
-                  {
-                    id: 0,
-                    entry: true,
-                    initial: true,
-                    files: ['main.js'],
-                    names: ['main'],
-                  },
-                ],
-                modules: [{ name: './src/index.js', size: 29, chunks: [0] }],
+                ...webpack4Stats,
               },
             },
           },
@@ -143,18 +134,7 @@ describe('webpack-plugin', () => {
             webpack: {
               stats: {
                 hash: stats.hash,
-                assets: [{ name: 'main.js', size: 28 }],
-                entrypoints: { main: { assets: [{ name: 'main.js' }] } },
-                chunks: [
-                  {
-                    id: 179,
-                    entry: true,
-                    initial: true,
-                    files: ['main.js'],
-                    names: ['main'],
-                  },
-                ],
-                modules: [{ name: './src/index.js', size: 29, chunks: [179] }],
+                ...webpack5Stats,
               },
             },
           },

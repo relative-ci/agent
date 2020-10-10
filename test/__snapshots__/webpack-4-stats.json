@@ -1,0 +1,37 @@
+{
+  "assets": [
+    {
+      "name": "main.js",
+      "size": 957
+    }
+  ],
+  "entrypoints": {
+    "main": {
+      "assets": [
+        "main.js"
+      ]
+    }
+  },
+  "chunks": [
+    {
+      "id": 0,
+      "entry": true,
+      "initial": true,
+      "files": [
+        "main.js"
+      ],
+      "names": [
+        "main"
+      ]
+    }
+  ],
+  "modules": [
+    {
+      "name": "./src/index.js",
+      "size": 29,
+      "chunks": [
+        0
+      ]
+    }
+  ]
+}
