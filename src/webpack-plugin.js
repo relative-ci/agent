@@ -21,7 +21,7 @@ const DEFAULT_OPTIONS = {
 
 const isWebpack5 = parseInt(webpack.version, 10) === 5;
 
-const generateReports = async (compilation, options) => {
+const sendStats = async (compilation, options) => {
   const { stats: statsOptions, ...agentOptions } = options;
   const data = compilation.getStats().toJson(statsOptions);
 
@@ -63,7 +63,7 @@ export class RelativeCiAgentWebpackPlugin {
 
     // Skip if not enabled
     if (!options.enabled) {
-      debug('RelativeCIAgentWebpackPlugin is disabled, skip sending data');
+      debug(`${PLUGIN_NAME} is disabled, skip sending data`);
       return;
     }
 
@@ -71,7 +71,7 @@ export class RelativeCiAgentWebpackPlugin {
       compiler.hooks.make.tap(PLUGIN_NAME, (compilation) => {
         compilation.hooks.processAssets.tap(
           { name: PLUGIN_NAME, stage: webpack.Compilation.PROCESS_ASSETS_STAGE_REPORT },
-          () => generateReports(compilation, options),
+          () => sendStats(compilation, options),
         );
       });
 
@@ -81,7 +81,7 @@ export class RelativeCiAgentWebpackPlugin {
     compiler.hooks.emit.tapAsync(
       PLUGIN_NAME,
       async (compilation, callback) => {
-        await generateReports(compilation, options);
+        await sendStats(compilation, options);
         callback();
       },
     );
