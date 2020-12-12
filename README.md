@@ -6,7 +6,6 @@
 
 [![npm](https://img.shields.io/npm/v/@relative-ci/agent.svg)](https://www.npmjs.com/package/@relative-ci/agent)
 [![node version](https://img.shields.io/node/v/@relative-ci/agent.svg)](https://www.npmjs.com/package/@relative-ci/agent)
-![Dependabot](https://api.dependabot.com/badges/status?host=github&repo=relative-ci/agent)
 [![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/relative-ci/agent.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/relative-ci/agent/context:javascript)
 
 > Send webpack stats and CI build information to [RelativeCI](https://relative-ci.com?utm_source=github-agent).
