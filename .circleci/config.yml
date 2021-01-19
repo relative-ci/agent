@@ -1,0 +1,21 @@
+jobs:
+  test:
+    executor:
+      name: node/default
+      tag: '10.23'
+    steps:
+      - checkout
+      - node/install-packages
+      - run:
+          command: npm run build
+      - run:
+          command: npm run lint
+      - run:
+          command: npm run test
+orbs:
+  node: circleci/node@4.1.0
+version: 2.1
+workflows:
+  test_my_app:
+    jobs:
+      - test
