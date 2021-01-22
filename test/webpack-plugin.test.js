@@ -20,6 +20,9 @@ const ENV_DEFAULT = {
   CIRCLE_BRANCH: 'master',
   CIRCLE_PROJECT_USERNAME: 'organization',
   CIRCLE_PROJECT_REPONAME: 'project',
+  CIRCLE_BUILD_URL: '#',
+  CIRCLE_BUILD_NUM: 123,
+  CIRCLE_PR_NUMBER: 10,
 };
 
 const MOCK_RESULT = {
@@ -48,6 +51,9 @@ const getMockRequest = (customPayload) => ({
       job: {
         commit: 'abcd1234',
         branch: 'master',
+        prNumber: '10',
+        buildNumber: '123',
+        buildUrl: '#',
       },
       rawData: {
         webpack: {
