@@ -1,3 +1,10 @@
+.circleci
+.github
+.editorconfig
+.eslintignore
+.eslintrc.js
+assets
+jest.config.js
+jsconfig.json
 src
 test
-assets
