@@ -39,7 +39,7 @@ export const agent = (artifactsData, config, logger = console) => {
     agentVersion: pck.version,
 
     ...envCIVars,
-    branch: envCIVars.branch || envCIVars.prBranch,
+    branch: envCIVars.prBranch || envCIVars.branch,
     slug,
 
     ...includeCommitMessage ? {
