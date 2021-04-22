@@ -54,7 +54,7 @@
   },
   "dependencies": {
     "@bundle-stats/utils": "^2.1.1",
-    "@relative-ci/env-ci": "^5.3.0",
+    "@relative-ci/env-ci": "^5.3.1",
     "core-js": "^3.6.4",
     "cosmiconfig": "^7.0.0",
     "debug": "^4.1.1",
