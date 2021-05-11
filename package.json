@@ -58,7 +58,7 @@
     "core-js": "^3.6.4",
     "cosmiconfig": "^7.0.0",
     "debug": "^4.1.1",
-    "dotenv": "^8.2.0",
+    "dotenv": "^9.0.2",
     "fs-extra": "^9.0.0",
     "isomorphic-fetch": "^3.0.0",
     "lodash": "^4.17.15"
