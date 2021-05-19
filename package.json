@@ -53,7 +53,7 @@
     "webpack5": "npm:webpack@^5.0.0-rc.1"
   },
   "dependencies": {
-    "@bundle-stats/utils": "^2.1.1",
+    "@bundle-stats/utils": "^3.0.0",
     "@relative-ci/env-ci": "^5.3.1",
     "core-js": "^3.6.4",
     "cosmiconfig": "^7.0.0",
