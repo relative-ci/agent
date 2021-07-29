@@ -47,7 +47,7 @@
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-plugin-import": "^2.20.1",
     "eslint-plugin-jest": "^24.1.0",
-    "jest": "^26.0.1",
+    "jest": "^27.0.6",
     "memory-fs": "^0.5.0",
     "webpack": "^4.42.1",
     "webpack5": "npm:webpack@^5.0.0-rc.1"
@@ -58,8 +58,8 @@
     "core-js": "^3.6.4",
     "cosmiconfig": "^7.0.0",
     "debug": "^4.1.1",
-    "dotenv": "^8.2.0",
-    "fs-extra": "^9.0.0",
+    "dotenv": "^10.0.0",
+    "fs-extra": "^10.0.0",
     "isomorphic-fetch": "^3.0.0",
     "lodash": "^4.17.15"
   },
