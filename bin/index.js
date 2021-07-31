@@ -3,7 +3,7 @@
 const { get } = require('lodash');
 const { readJSONSync, pathExistsSync } = require('fs-extra');
 const { cosmiconfigSync } = require('cosmiconfig');
-const { validate } = require('@bundle-stats/utils/lib/webpack');
+const validate = require('@bundle-stats/plugin-webpack-validate').default;
 
 const { agent } = require('..');
 const { debug } = require('../lib/utils');
