@@ -1,7 +1,7 @@
 import process from 'process';
 import webpack from 'webpack';
 import { get, merge } from 'lodash';
-import { validate } from '@bundle-stats/utils/lib/webpack';
+import validate from '@bundle-stats/plugin-webpack-validate';
 
 import { agent } from './agent';
 import { debug, getEnvCI } from './utils';
