@@ -18,33 +18,35 @@ const getFilteredData = (artifactsData) => artifactsData.reduce(
   {},
 );
 
-export const agent = (artifactsData, config, logger = console) => {
+export const agent = (artifactsData, config, args = {}, logger = console) => {
   dotenv.config();
   const envCIVars = getEnvCI();
-
   debug('env-ci params', envCIVars);
 
+  // Resolve params
+  const envVars = {
+    slug: args.slug || process.env.RELATIVE_CI_SLUG || envCIVars.slug,
+    // env-ci is reporting the branch of the PR as prBranch
+    branch: args.branch || envCIVars.prBranch || envCIVars.branch,
+    pr: args.pr || envCIVars.pr,
+    commit: args.commit || envCIVars.commit,
+
+    build: args.build || envCIVars.build,
+    buildUrl: args.buildUrl || envCIVars.buildUrl,
+    isCi: args.isCi || envCIVars.isCi,
+    service: args.service || envCIVars.service,
+  };
+
+  debug('resolved params', envVars);
+
   const { includeCommitMessage } = config;
-
-  let slug = process.env.RELATIVE_CI_SLUG;
-
-  if (!slug) {
-    debug('RELATIVE_CI_SLUG not available, using env-ci');
-    slug = envCIVars.slug;
-  }
-
   const params = {
     key: process.env.RELATIVE_CI_KEY,
     endpoint: process.env.RELATIVE_CI_ENDPOINT || DEFAULT_ENDPOINT,
     agentVersion: pck.version,
 
-    ...envCIVars,
-    branch: envCIVars.prBranch || envCIVars.branch,
-    slug,
-
-    ...includeCommitMessage ? {
-      commitMessage: getCommitMessage(),
-    } : {},
+    ...envVars,
+    ...includeCommitMessage && { commitMessage: getCommitMessage() },
   };
 
   debug('Job parameters', params);

@@ -37,7 +37,7 @@ const sendStats = async (compilation, options) => {
     return;
   }
 
-  agent([{ key: 'webpack.stats', data }], config, logger);
+  agent([{ key: 'webpack.stats', data }], config, undefined, logger);
 };
 
 export class RelativeCiAgentWebpackPlugin {
