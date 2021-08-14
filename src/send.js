@@ -89,6 +89,7 @@ export default async (data, params, config, logger) => {
     logger.info(`Job #${buildNumber} done.`);
     logger.info(buildSizeInfo);
   } catch (err) {
-    logger.warn(err);
+    logger.warn(err.message);
+    debug('@relative-ci/agent could not send the data', err);
   }
 };
