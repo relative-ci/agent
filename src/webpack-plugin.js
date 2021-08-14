@@ -10,6 +10,7 @@ const PLUGIN_NAME = 'RelativeCiAgent';
 
 const DEFAULT_OPTIONS = {
   includeCommitMessage: true,
+  payloadFilepath: null,
   stats: {
     context: process.cwd(),
     assets: true,
@@ -22,7 +23,7 @@ const DEFAULT_OPTIONS = {
 const isWebpack5 = parseInt(webpack.version, 10) === 5;
 
 const sendStats = async (compilation, options) => {
-  const { stats: statsOptions, ...agentOptions } = options;
+  const { stats: statsOptions, ...config } = options;
   const data = compilation.getStats().toJson(statsOptions);
 
   const logger = compilation.getInfrastructureLogger
@@ -36,7 +37,7 @@ const sendStats = async (compilation, options) => {
     return;
   }
 
-  agent([{ key: 'webpack.stats', data }], agentOptions, logger);
+  agent([{ key: 'webpack.stats', data }], config, logger);
 };
 
 export class RelativeCiAgentWebpackPlugin {

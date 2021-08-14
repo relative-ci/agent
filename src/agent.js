@@ -68,5 +68,5 @@ export const agent = (artifactsData, config, logger = console) => {
   // Filter only the necessary data
   const filteredData = getFilteredData(artifactsData);
 
-  return send(filteredData, params, logger);
+  return send(filteredData, params, config, logger);
 };
