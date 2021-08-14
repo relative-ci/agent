@@ -1,3 +1,4 @@
+const fs = require('fs');
 const { get } = require('lodash');
 const fetch = require('isomorphic-fetch');
 
@@ -41,6 +42,13 @@ module.exports = (data, options, logger) => {
   logger.info('Send stats to RelativeCI', `branch=${branch}`, `commit=${commit}`);
   debug('Payload', payload);
   debug('Payload size', Buffer.byteLength(JSON.stringify(payload)));
+
+  if (debug.enabled) {
+    fs.writeFileSync(
+      'relative-ci-agent-payload.json',
+      JSON.stringify(payload, null, 2),
+    );
+  }
 
   return fetch(endpoint, {
     method: 'POST',
