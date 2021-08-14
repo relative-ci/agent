@@ -1,10 +1,11 @@
+const fs = require('fs');
 const { get } = require('lodash');
 const fetch = require('isomorphic-fetch');
 
 const LOCALES = require('../locales/en');
 const { debug } = require('./utils');
 
-module.exports = (data, options, logger) => {
+module.exports = (data, params, config, logger) => {
   const {
     key,
     endpoint,
@@ -20,7 +21,7 @@ module.exports = (data, options, logger) => {
     commitMessage,
 
     agentVersion,
-  } = options;
+  } = params;
 
   const payload = {
     key,
@@ -38,9 +39,24 @@ module.exports = (data, options, logger) => {
     agentVersion,
   };
 
-  logger.info('Send stats to RelativeCI', `branch=${branch}`, `commit=${commit}`);
+  const { payloadFilepath } = config;
+
   debug('Payload', payload);
   debug('Payload size', Buffer.byteLength(JSON.stringify(payload)));
+
+  if (payloadFilepath) {
+    logger.info('Save payload to', payloadFilepath);
+
+    try {
+      // Obfuscate private data
+      const output = { ...payload, key: '***' };
+      fs.writeFileSync(payloadFilepath, JSON.stringify(output, null, 2));
+    } catch (err) {
+      logger.warn('Error saving payload', err.message);
+    }
+  }
+
+  logger.info('Send stats to RelativeCI', `branch=${branch}`, `commit=${commit}`);
 
   return fetch(endpoint, {
     method: 'POST',
