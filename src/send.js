@@ -38,7 +38,9 @@ module.exports = (data, options, logger) => {
     agentVersion,
   };
 
+  logger.info('Send stats to RelativeCI', `branch=${branch}`, `commit=${commit}`);
   debug('Payload', payload);
+  debug('Payload size', Buffer.byteLength(JSON.stringify(payload)));
 
   return fetch(endpoint, {
     method: 'POST',
