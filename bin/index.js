@@ -59,6 +59,7 @@ const args = yargs(hideBin(process.argv))
   .option('prBranch', { describe: 'Pull Request branch', default: '' })
   .option('service', { describe: 'CI service', default: '' })
   .option('slug', { describe: 'Project slug', default: '' })
+  .option('commit-message', { describe: 'Commit message', default: '', alias: 'commitMessage' })
   .help()
   .argv;
 

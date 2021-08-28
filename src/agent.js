@@ -23,7 +23,7 @@ export const agent = (artifactsData, config, args = {}, logger = console) => {
   const envCIVars = getEnvCI();
   debug('env-ci params', envCIVars);
 
-  // Resolve params
+  // Resolved params
   const envVars = {
     slug: args.slug || process.env.RELATIVE_CI_SLUG || envCIVars.slug,
     // env-ci is reporting the branch of the PR as prBranch
@@ -35,6 +35,8 @@ export const agent = (artifactsData, config, args = {}, logger = console) => {
     buildUrl: args.buildUrl || envCIVars.buildUrl,
     isCi: args.isCi || envCIVars.isCi,
     service: args.service || envCIVars.service,
+
+    commitMessage: args.commitMessage,
   };
 
   debug('resolved params', envVars);
@@ -46,7 +48,10 @@ export const agent = (artifactsData, config, args = {}, logger = console) => {
     agentVersion: pck.version,
 
     ...envVars,
-    ...includeCommitMessage && { commitMessage: getCommitMessage() },
+
+    // Get commit message using git if includeCommitMessage is set and
+    // there is no --commit-messagecommit
+    ...includeCommitMessage && !args.commitMessage && { commitMessage: getCommitMessage() },
   };
 
   debug('Job parameters', params);
