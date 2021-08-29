@@ -3,6 +3,8 @@
 const { get } = require('lodash');
 const { readJSONSync, pathExistsSync } = require('fs-extra');
 const { cosmiconfigSync } = require('cosmiconfig');
+const yargs = require('yargs/yargs');
+const { hideBin } = require('yargs/helpers');
 const validate = require('@bundle-stats/plugin-webpack-validate').default;
 
 const { agent } = require('..');
@@ -10,7 +12,6 @@ const { debug } = require('../lib/utils');
 const LOCALES = require('../locales/en');
 
 const searchConfig = cosmiconfigSync('relativeci').search();
-
 debug('Config', searchConfig);
 
 if (!searchConfig) {
@@ -48,4 +49,16 @@ const artifactsData = [
   },
 ];
 
-agent(artifactsData, config);
+const args = yargs(hideBin(process.argv))
+  .usage('Usage: $0 OPTIONS')
+  .option('commit', { describe: 'Commit SHA', default: '' })
+  .option('commit-message', { describe: 'Commit message', default: '', alias: 'commitMessage' })
+  .option('branch', { describe: 'Branch name', default: '' })
+  .option('pr', { describe: 'Pull Request number', default: '' })
+  .option('slug', { describe: 'Project slug', default: '' })
+  .help()
+  .argv;
+
+debug('CLI arguments', args);
+
+agent(artifactsData, config, args);
