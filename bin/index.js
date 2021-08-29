@@ -7,7 +7,7 @@ const yargs = require('yargs/yargs');
 const { hideBin } = require('yargs/helpers');
 const validate = require('@bundle-stats/plugin-webpack-validate').default;
 
-const { agent } = require('..');
+const { agent } = require('../lib/agent');
 const { debug } = require('../lib/utils');
 const LOCALES = require('../locales/en');
 
