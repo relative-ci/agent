@@ -1,6 +1,6 @@
 const childProcess = require('child_process');
 const { pick } = require('lodash');
-const envCI = require('@relative-ci/env-ci');
+const envCI = require('env-ci');
 
 const CI_ENV_VAR_NAMES = [
   'branch',
