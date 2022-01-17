@@ -1,6 +1,5 @@
-import process from 'process';
 import webpack from 'webpack';
-import { get, merge } from 'lodash';
+import { merge } from 'lodash';
 import validate from '@bundle-stats/plugin-webpack-validate';
 
 import { agent } from './agent';
@@ -12,7 +11,6 @@ const DEFAULT_OPTIONS = {
   includeCommitMessage: true,
   payloadFilepath: null,
   stats: {
-    context: process.cwd(),
     assets: true,
     entrypoints: true,
     chunks: true,
@@ -53,9 +51,6 @@ export class RelativeCiAgentWebpackPlugin {
       DEFAULT_OPTIONS,
       {
         enabled: isCi,
-        stats: {
-          context: get(compiler, 'options.context'),
-        },
       },
       this.options,
     );
