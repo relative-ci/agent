@@ -1,13 +1,11 @@
 jest.mock('isomorphic-fetch');
 
 const webpack = require('webpack');
-const webpack5 = require('webpack5');
 const MemoryFS = require('memory-fs');
 const fetch = require('isomorphic-fetch');
 const { merge } = require('lodash');
 
 const pckg = require('../package.json');
-const webpack4Stats = require('./__snapshots__/webpack-4-stats.json');
 const webpack5Stats = require('./__snapshots__/webpack-5-stats.json');
 const appConfig = require('./webpack/webpack.config');
 
@@ -81,42 +79,6 @@ const clearCustomEnv = () => {
 };
 
 describe('webpack-plugin', () => {
-  test('v4', (done) => {
-    setCustomEnv();
-
-    fetch.mockReturnValue(
-      Promise.resolve({
-        json: () => Promise.resolve(MOCK_RESULT),
-      }),
-    );
-
-    const compiler = webpack(appConfig);
-    compiler.outputFileSystem = new MemoryFS();
-
-    compiler.run((error, stats) => {
-      expect(error).toEqual(null);
-      expect(stats.hasErrors()).toBe(false);
-      expect(fetch).toHaveBeenCalledTimes(1);
-      expect(fetch).toHaveBeenCalledWith(
-        ENV_DEFAULT.RELATIVE_CI_ENDPOINT,
-        getMockRequest({
-          rawData: {
-            webpack: {
-              stats: {
-                hash: stats.hash,
-                ...webpack4Stats,
-              },
-            },
-          },
-        }),
-      );
-
-      clearCustomEnv();
-      jest.clearAllMocks();
-      done();
-    });
-  });
-
   test('v5', (done) => {
     setCustomEnv();
 
@@ -126,7 +88,7 @@ describe('webpack-plugin', () => {
       }),
     );
 
-    const compiler = webpack5(appConfig);
+    const compiler = webpack(appConfig);
     compiler.outputFileSystem = new MemoryFS();
 
     compiler.run((error, stats) => {
