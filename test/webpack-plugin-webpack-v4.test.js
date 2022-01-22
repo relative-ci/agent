@@ -1,5 +1,5 @@
 jest.mock('isomorphic-fetch');
-jest.mock('webpack', () => require('webpack4'));
+jest.mock('webpack', () => require('webpack4')); // eslint-disable-line global-require
 
 const webpack = require('webpack4');
 const MemoryFS = require('memory-fs');
