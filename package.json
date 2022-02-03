@@ -64,7 +64,6 @@
     "fs-extra": "^10.0.0",
     "isomorphic-fetch": "^3.0.0",
     "lodash": "^4.17.15",
-    "webpack4": "npm:webpack@^4.46.0",
     "yargs": "^17.1.1"
   },
   "peerDependencies": {
