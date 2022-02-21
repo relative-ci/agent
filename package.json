@@ -42,7 +42,7 @@
   "homepage": "https://relative-ci.com/documentation/setup",
   "devDependencies": {
     "@babel/cli": "7.8.4",
-    "@babel/core": "7.8.6",
+    "@babel/core": "7.17.5",
     "@babel/preset-env": "7.8.6",
     "@types/jest": "27.0.1",
     "eslint": "8.4.1",
