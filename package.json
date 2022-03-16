@@ -42,16 +42,16 @@
   "homepage": "https://relative-ci.com/documentation/setup",
   "devDependencies": {
     "@babel/cli": "7.17.6",
-    "@babel/core": "7.17.5",
+    "@babel/core": "7.17.7",
     "@babel/preset-env": "7.16.11",
-    "@types/jest": "27.4.0",
+    "@types/jest": "27.4.1",
     "eslint": "8.9.0",
     "eslint-config-airbnb-base": "15.0.0",
     "eslint-plugin-import": "2.25.4",
     "eslint-plugin-jest": "26.1.1",
     "jest": "27.5.1",
     "memory-fs": "0.5.0",
-    "webpack": "5.69.1"
+    "webpack": "5.70.0"
   },
   "dependencies": {
     "@bundle-stats/plugin-webpack-filter": "3.2.5",
