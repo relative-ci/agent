@@ -21,7 +21,7 @@ const DEFAULT_OPTIONS = {
 const isWebpack5 = parseInt(webpack.version, 10) === 5;
 
 const sendStats = async (compilation, options) => {
-  const { stats: statsOptions, ...config } = options;
+  const { stats: statsOptions, args, ...config } = options;
   const data = compilation.getStats().toJson(statsOptions);
 
   const logger = compilation.getInfrastructureLogger
@@ -35,7 +35,7 @@ const sendStats = async (compilation, options) => {
     return;
   }
 
-  agent([{ key: 'webpack.stats', data }], config, undefined, logger);
+  agent([{ key: 'webpack.stats', data }], config, args, logger);
 };
 
 export class RelativeCiAgentWebpackPlugin {
