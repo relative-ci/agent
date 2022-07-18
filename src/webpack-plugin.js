@@ -12,7 +12,6 @@ const DEFAULT_OPTIONS = {
   payloadFilepath: null,
   stats: {
     assets: true,
-    entrypoints: true,
     chunks: true,
     modules: true,
   },

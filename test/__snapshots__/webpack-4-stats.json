@@ -5,13 +5,6 @@
       "size": 957
     }
   ],
-  "entrypoints": {
-    "main": {
-      "assets": [
-        "main.js"
-      ]
-    }
-  },
   "chunks": [
     {
       "id": 0,
