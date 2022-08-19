@@ -41,9 +41,9 @@
   },
   "homepage": "https://relative-ci.com/documentation/setup",
   "devDependencies": {
-    "@babel/cli": "7.18.9",
+    "@babel/cli": "7.18.10",
     "@babel/core": "7.18.10",
-    "@babel/preset-env": "7.18.9",
+    "@babel/preset-env": "7.18.10",
     "@types/jest": "28.1.6",
     "eslint": "8.20.0",
     "eslint-config-airbnb-base": "15.0.0",
@@ -54,8 +54,8 @@
     "webpack": "5.74.0"
   },
   "dependencies": {
-    "@bundle-stats/plugin-webpack-filter": "4.0.1",
-    "@bundle-stats/plugin-webpack-validate": "4.0.1",
+    "@bundle-stats/plugin-webpack-filter": "4.0.5",
+    "@bundle-stats/plugin-webpack-validate": "4.0.5",
     "core-js": "3.23.5",
     "cosmiconfig": "7.0.1",
     "debug": "4.3.4",
