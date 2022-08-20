@@ -56,7 +56,7 @@
   "dependencies": {
     "@bundle-stats/plugin-webpack-filter": "4.0.5",
     "@bundle-stats/plugin-webpack-validate": "4.0.5",
-    "core-js": "3.23.5",
+    "core-js": "3.24.1",
     "cosmiconfig": "7.0.1",
     "debug": "4.3.4",
     "dotenv": "16.0.1",
