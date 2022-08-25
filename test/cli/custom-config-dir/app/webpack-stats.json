@@ -1,0 +1,30 @@
+{
+  "assets": [
+    {
+      "name": "main.js",
+      "size": 28
+    }
+  ],
+  "chunks": [
+    {
+      "id": 179,
+      "entry": true,
+      "initial": true,
+      "files": [
+        "main.js"
+      ],
+      "names": [
+        "main"
+      ]
+    }
+  ],
+  "modules": [
+    {
+      "name": "./src/index.js",
+      "size": 29,
+      "chunks": [
+        179
+      ]
+    }
+  ]
+}

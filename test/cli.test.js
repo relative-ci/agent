@@ -1,6 +1,37 @@
+const http = require('http');
 const { exec } = require('child_process');
 
+const MOCK_RESULT = {
+  res: {
+    job: {
+      internalBuildNumber: 1,
+    },
+  },
+  info: {
+    message: {
+      txt: 'Hello world!',
+    },
+  },
+};
+
+const MOCK_SERVER_PORT = 5998;
+
+const createServer = () => http.createServer((req, res) => {
+  res.write(JSON.stringify(MOCK_RESULT));
+  res.end();
+});
+
 describe('CLI', () => {
+  let server;
+
+  beforeAll(() => {
+    server = createServer().listen(MOCK_SERVER_PORT);
+  });
+
+  afterAll(() => {
+    server.close();
+  });
+
   test('should return error if config is missing', (done) => {
     exec('./bin/index.js', (error, stdout, sterr) => {
       expect(sterr).toContain('relativeci.config.js file is missing!');
@@ -20,5 +51,35 @@ describe('CLI', () => {
       expect(sterr).toContain('Invalid webpack stats structure');
       done();
     });
+  });
+
+  test('should run agent successfully', (done) => {
+    exec(
+      `cd test/cli/valid-data &&
+        RELATIVE_CI_ENDPOINT=http://localhost:${MOCK_SERVER_PORT}/save \
+        RELATIVE_CI_SLUG=org/project \
+        RELATIVE_CI_KEY=abc123 \
+        ../../../bin/index.js
+      `,
+      (_, stdout) => {
+        expect(stdout).toContain('Job #1 done.');
+        done();
+      },
+    );
+  });
+
+  test('should run agent successfully from parent directory', (done) => {
+    exec(
+      `cd test/cli/custom-config-dir &&
+        RELATIVE_CI_ENDPOINT=http://localhost:${MOCK_SERVER_PORT}/save \
+        RELATIVE_CI_SLUG=org/project \
+        RELATIVE_CI_KEY=abc123 \
+        ../../../bin/index.js --config-dir app
+      `,
+      (_, stdout) => {
+        expect(stdout).toContain('Job #1 done.');
+        done();
+      },
+    );
   });
 });
