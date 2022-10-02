@@ -59,7 +59,7 @@
     "core-js": "3.25.0",
     "cosmiconfig": "7.0.1",
     "debug": "4.3.4",
-    "dotenv": "16.0.2",
+    "dotenv": "16.0.3",
     "env-ci": "7.3.0",
     "fs-extra": "10.1.0",
     "isomorphic-fetch": "3.0.0",
