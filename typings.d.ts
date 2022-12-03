@@ -1,6 +1,7 @@
 export class RelativeCiAgentWebpackPlugin {
-  constructor(options?: Partial<BundleStatsWebpackPlugin.Options>) {}
-  apply(compiler: Compiler): void;
+  constructor(options?: Partial<RelativeCiAgentWebpackPlugin.Options>) {}
+
+  apply(compiler: RelativeCiAgentWebpackPlugin.Compiler): void;
 };
 
 declare namespace RelativeCiAgentWebpackPlugin {
@@ -39,4 +40,6 @@ declare namespace RelativeCiAgentWebpackPlugin {
 
     stats?: Partial<WebpackStatsOptions>
   }
+
+  type Compiler = import('webpack').Compiler;
 }
