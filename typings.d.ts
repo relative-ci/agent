@@ -12,12 +12,6 @@ declare namespace RelativeCiAgentWebpackPlugin {
     assets?: Boolean;
 
     /**
-     * Output webpack entrypoints information
-     * Default: `true`.
-     */
-    entrypoints?: Boolean;
-
-    /**
      * Output webpack chunks information
      * Default: `true`.
      */
