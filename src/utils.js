@@ -55,7 +55,7 @@ module.exports.getGitSlug = () => {
 
   try {
     repoURL = childProcess
-      .execSync('git config --get remote.config.url')
+      .execSync('git config remote.config.url')
       .toString()
       .trim();
   } catch (err) {
