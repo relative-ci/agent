@@ -5,7 +5,9 @@ import filter from '@bundle-stats/plugin-webpack-filter';
 import pck from '../package.json';
 import * as LOCALES from '../locales/en';
 import send from './send';
-import { debug, getCommitMessage, getEnvCI } from './utils';
+import {
+  debug, getCommitMessage, getEnvCI, getGitSlug,
+} from './utils';
 
 const DEFAULT_ENDPOINT = 'https://api.relative-ci.com/save';
 const WEBPACK_STATS = 'webpack.stats';
@@ -25,7 +27,7 @@ export const agent = (artifactsData, config, args = {}, logger = console) => {
 
   // Resolved params
   const envVars = {
-    slug: args.slug || process.env.RELATIVE_CI_SLUG || envCIVars.slug,
+    slug: args.slug || process.env.RELATIVE_CI_SLUG || envCIVars.slug || getGitSlug(),
     // env-ci is reporting the branch of the PR as prBranch
     branch: args.branch || envCIVars.prBranch || envCIVars.branch,
     pr: args.pr || envCIVars.pr,
