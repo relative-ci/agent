@@ -6,7 +6,7 @@ import pck from '../package.json';
 import * as LOCALES from '../locales/en';
 import send from './send';
 import {
-  debug, getCommitMessage, getEnvCI, getGitSlug,
+  debug, getCommitMessage, getEnvCI,
 } from './utils';
 
 const DEFAULT_ENDPOINT = 'https://api.relative-ci.com/save';
@@ -27,7 +27,7 @@ export const agent = (artifactsData, config, args = {}, logger = console) => {
 
   // Resolved params
   const envVars = {
-    slug: args.slug || process.env.RELATIVE_CI_SLUG || envCIVars.slug || getGitSlug(),
+    slug: args.slug || process.env.RELATIVE_CI_SLUG || envCIVars.slug,
     // env-ci is reporting the branch of the PR as prBranch
     branch: args.branch || envCIVars.prBranch || envCIVars.branch,
     pr: args.pr || envCIVars.pr,

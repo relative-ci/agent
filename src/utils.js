@@ -32,7 +32,7 @@ const GIT_PATHNAME_SLUG_PATTERN = /^\/(.*)\.git$/;
  * @param {string} repoURL
  * @returns {string}
  */
-module.exports.extractRepoSlug = (repoURL) => {
+const extractRepoSlug = (repoURL) => {
   if (!repoURL) {
     return '';
   }
@@ -50,20 +50,18 @@ module.exports.extractRepoSlug = (repoURL) => {
   }
 };
 
-module.exports.getGitSlug = () => {
-  let repoURL = '';
+module.exports.getEnvCI = () => {
+  const envVars = pick(envCI(), CI_ENV_VAR_NAMES);
 
-  try {
-    repoURL = childProcess
-      .execSync('git config remote.config.url')
-      .toString()
-      .trim();
-  } catch (err) {
-    console.warn(err.message);
-    return '';
+  // env-ci does not provide a slug for jenkins
+  // https://github.com/semantic-release/env-ci/blob/master/services/jenkins.js#LL18
+  // https://www.jenkins.io/doc/book/pipeline/jenkinsfile/#using-environment-variables
+  // https://plugins.jenkins.io/git/#plugin-content-environment-variables
+  if (envVars.service === 'jenkins' && !envVars.slug) {
+    envVars.slug = extractRepoSlug(process.env.GIT_URL);
   }
 
-  return module.exports.extractRepoSlug(repoURL);
+  return envVars;
 };
 
-module.exports.getEnvCI = () => pick(envCI(), CI_ENV_VAR_NAMES);
+module.exports.extractRepoSlug = extractRepoSlug;
