@@ -1,3 +1,6 @@
+/**
+ * @typedef {import('../').EnvCI} EnvCI
+ */
 const childProcess = require('child_process');
 const { pick } = require('lodash');
 const envCI = require('env-ci');
@@ -51,6 +54,7 @@ const extractRepoSlug = (repoURL) => {
 };
 
 module.exports.getEnvCI = () => {
+  /** @type {EnvCI} */
   const envVars = pick(envCI(), CI_ENV_VAR_NAMES);
 
   // env-ci does not provide a slug for jenkins

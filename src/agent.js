@@ -1,8 +1,12 @@
+/**
+ * @typedef {import('../').AgentConfig} AgentConfig
+ * @typedef {import('../').AgentArgs} AgentArgs
+ */
 import dotenv from 'dotenv';
 import { set } from 'lodash';
 import filter from '@bundle-stats/plugin-webpack-filter';
 
-import pck from '../package.json';
+import packageInfo from '../package.json';
 import * as LOCALES from '../locales/en';
 import send from './send';
 import {
@@ -20,6 +24,13 @@ const getFilteredData = (artifactsData) => artifactsData.reduce(
   {},
 );
 
+/**
+ * @param {Array<object>} artifactsData
+ * @param {AgentConfig} config
+ * @param {AgentArgs} [args]
+ * @param {Console} [logger]
+ * @return {void|Promise<void>}
+ */
 export const agent = (artifactsData, config, args = {}, logger = console) => {
   dotenv.config();
   const envCIVars = getEnvCI();
@@ -45,14 +56,15 @@ export const agent = (artifactsData, config, args = {}, logger = console) => {
 
   const { includeCommitMessage } = config;
   const params = {
+    agentVersion: packageInfo.version,
+
     key: process.env.RELATIVE_CI_KEY,
     endpoint: process.env.RELATIVE_CI_ENDPOINT || DEFAULT_ENDPOINT,
-    agentVersion: pck.version,
 
     ...envVars,
 
     // Get commit message using git if includeCommitMessage is set and
-    // there is no --commit-messagecommit
+    // there is no --commit-message argument
     ...includeCommitMessage && !args.commitMessage && { commitMessage: getCommitMessage() },
   };
 
