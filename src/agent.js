@@ -5,7 +5,9 @@ import filter from '@bundle-stats/plugin-webpack-filter';
 import pck from '../package.json';
 import * as LOCALES from '../locales/en';
 import send from './send';
-import { debug, getCommitMessage, getEnvCI } from './utils';
+import {
+  debug, getCommitMessage, getEnvCI,
+} from './utils';
 
 const DEFAULT_ENDPOINT = 'https://api.relative-ci.com/save';
 const WEBPACK_STATS = 'webpack.stats';
