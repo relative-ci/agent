@@ -1,3 +1,40 @@
+export interface AgentConfig {
+  /**
+   * Read commit message from the repo
+   * Default: `true`.
+   */
+  includeCommitMessage?: boolean;
+
+  /**
+   * Absolute path for debug payload filepath
+   * Default: `undefined`.
+   */
+  payloadFilepath?: string;
+}
+
+export interface AgentArgs {
+  slug?: string;
+  branch?: string;
+  prBranch?: string;
+  pr?: string;
+  commit?: string;
+  build?: string;
+  buildUrl?: string;
+  commitMessage?: string;
+}
+
+export interface EnvCI {
+  isCi: boolean;
+  branch?: string;
+  build?: string;
+  buildUrl?: string;
+  commit?: string;
+  pr?: string;
+  prBranch?: string;
+  service?: string;
+  slug?: string;
+}
+
 export class RelativeCiAgentWebpackPlugin {
   constructor(options?: Partial<RelativeCiAgentWebpackPlugin.Options>) {}
 
@@ -25,18 +62,12 @@ declare namespace RelativeCiAgentWebpackPlugin {
     modules?: Boolean;
   }
 
-  interface Options {
+  interface Options extends AgentConfig {
     /**
-     * Read commit message from the repo
-     * Default: `true`.
+     * Send webpack stats to RelativeCI
+     * Default: `env-ci` `isCi` value
      */
-    includeCommitMessage?: Boolean;
-
-    /**
-     * Absolute path for debug payload filepath
-     * Default: `undefined`.
-     */
-    payloadFilepath?: string;
+    enabled?: boolean;
 
     stats?: Partial<WebpackStatsOptions>
   }
