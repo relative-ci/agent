@@ -46,7 +46,7 @@ jobs:
     # Run only for version tags
     if: contains(github.ref, 'refs/tags/v')
     needs:
-      - build
+      - test
     runs-on: ubuntu-latest
     permissions:
       id-token: write
