@@ -12,3 +12,8 @@
 > Send bundle stats and CI build information to [RelativeCI](https://relative-ci.com?utm_source=github-agent).
 
 To get started, follow [RelativeCI Setup guide](https://relative-ci.com/documentation/setup?utm_source=github-agent).
+
+## Other agents
+
+- [GitHub action](https://github.com/relative-ci/agent-action)
+- [CircleCI orbit (soon)](https://github.com/relative-ci/roadmap/issues/46)
