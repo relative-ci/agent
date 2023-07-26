@@ -43,10 +43,13 @@ jobs:
             lib/**/*
 
   publish:
+    # Run only for version tags
+    if: contains(github.ref, 'refs/tags/v')
     needs:
       - build
-    if: contains(github.ref, 'refs/tags/v')
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
     steps:
       - uses: actions/checkout@v3
 
@@ -66,3 +69,10 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: dist-files
+
+      - name: Publish
+        run: npm run release
+        env:
+          NPM_CONFIG_PROVENANCE: true
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
