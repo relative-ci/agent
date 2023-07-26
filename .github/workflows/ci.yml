@@ -65,6 +65,9 @@ jobs:
           node-version-file: ".nvmrc"
           cache: ${{ steps.cache.outputs.PACKAGE }}
 
+      - name: Install dependencies
+        run: npm ci
+
       - name: Download dist files
         uses: actions/download-artifact@v3
         with:
