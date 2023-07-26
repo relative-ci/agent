@@ -34,3 +34,35 @@ jobs:
       - name: Test
         run: npm run test
 
+      - name: Upload dist files
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist-files
+          retention-days: 1
+          path: |
+            lib/**/*
+
+  publish:
+    needs:
+      - build
+    if: contains(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      # Cache packages when the branch is not update-dependencies or dependabot/*
+      - name: Resolve caching
+        id: cache
+        if: ${{ github.ref_name != 'update-dependencies' && !startsWith(github.ref_name, 'dependabot/') }}
+        run: echo "PACKAGE=npm" >> $GITHUB_OUTPUT
+
+      - name: Use Node.js
+        uses: actions/setup-node@v3.7.0
+        with:
+          node-version-file: ".nvmrc"
+          cache: ${{ steps.cache.outputs.PACKAGE }}
+
+      - name: Download dist files
+        uses: actions/download-artifact@v3
+        with:
+          name: dist-files
