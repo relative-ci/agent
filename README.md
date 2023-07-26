@@ -6,6 +6,7 @@
 
 [![npm](https://img.shields.io/npm/v/@relative-ci/agent.svg)](https://www.npmjs.com/package/@relative-ci/agent)
 [![node version](https://img.shields.io/node/v/@relative-ci/agent.svg)](https://www.npmjs.com/package/@relative-ci/agent)
+[![ci](https://github.com/relative-ci/agent/actions/workflows/ci.yml/badge.svg)](https://github.com/relative-ci/agent/actions/workflows/ci.yml)
 [![CodeQL](https://github.com/relative-ci/agent/actions/workflows/codeql.yml/badge.svg)](https://github.com/relative-ci/agent/actions/workflows/codeql.yml)
 
 > Send bundle stats and CI build information to [RelativeCI](https://relative-ci.com?utm_source=github-agent).
