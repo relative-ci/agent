@@ -1,6 +1,6 @@
 {
   "name": "@relative-ci/agent",
-  "version": "4.1.5",
+  "version": "4.1.6-beta.5",
   "description": "Relative CI agent",
   "repository": "relative-ci/agent",
   "main": "lib/index.js",
