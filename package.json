@@ -11,7 +11,7 @@
   "scripts": {
     "build": "babel src -d lib",
     "lint": "eslint .",
-    "bump": "./scripts/version.sh",
+    "bump-version": "./scripts/bump-version.sh",
     "release": "./scripts/release.sh",
     "pretest": "npm install webpack4@npm:webpack@4.42.1",
     "test": "jest test",
