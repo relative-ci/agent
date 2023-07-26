@@ -8,3 +8,5 @@ jest.config.js
 jsconfig.json
 src
 test
+config
+scripts
