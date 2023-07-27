@@ -40,7 +40,7 @@ jobs:
           name: dist-files
           retention-days: 1
           path: |
-            lib/**/*
+            lib*/**/*
 
   test:
     needs:
