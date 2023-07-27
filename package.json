@@ -13,8 +13,10 @@
     "lint": "eslint .",
     "bump": "./scripts/bump.sh",
     "release": "./scripts/release.sh",
-    "pretest": "npm install webpack4@npm:webpack@4.42.1",
-    "test": "jest test",
+    "pretest:webpack-plugin": "npm install webpack4@npm:webpack@4.42.1",
+    "test": "npm run test:cli && npm run test:webpack-plugin",
+    "test:cli": "jest test/cli.test.js",
+    "test:webpack-plugin": "jest test/webpack-plugin",
     "prepublishOnly": "npm run build"
   },
   "engines": {
@@ -68,6 +70,7 @@
     "fs-extra": "11.1.1",
     "isomorphic-fetch": "3.0.0",
     "lodash": "4.17.21",
+    "webpack4": "npm:webpack@^4.42.1",
     "yargs": "17.7.2"
   },
   "peerDependencies": {
