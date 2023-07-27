@@ -79,7 +79,7 @@ const clearCustomEnv = () => {
 };
 
 describe('webpack-plugin', () => {
-  test('v5', (done) => {
+  test('webpack5', (done) => {
     setCustomEnv();
 
     fetch.mockReturnValue(

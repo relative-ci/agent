@@ -8,7 +8,7 @@ on:
   pull_request:
 
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -31,8 +31,43 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Test
-        run: npm run test
+      - name: Upload dist files
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist-files
+          retention-days: 1
+          path: |
+            lib*/**/*
+
+  lint:
+    runs-on: ubuntu-latest
+    needs:
+      - build
+    steps:
+      - uses: actions/checkout@v3
+
+      # Cache packages when the branch is not update-dependencies or dependabot/*
+      - name: Resolve caching
+        id: cache
+        if: ${{ github.ref_name != 'update-dependencies' && !startsWith(github.ref_name, 'dependabot/') }}
+        run: echo "PACKAGE=npm" >> $GITHUB_OUTPUT
+
+      - name: Use Node.js
+        uses: actions/setup-node@v3.8.1
+        with:
+          node-version-file: ".nvmrc"
+          cache: ${{ steps.cache.outputs.PACKAGE }}
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Download dist files
+        uses: actions/download-artifact@v3
+        with:
+          name: dist-files
+
+      - name: Lint
+        run: npm run lint
 
       - name: Upload dist files
         uses: actions/upload-artifact@v3
@@ -40,13 +75,76 @@ jobs:
           name: dist-files
           retention-days: 1
           path: |
-            lib/**/*
+            lib*/**/*
+
+
+  test-cli:
+    runs-on: ubuntu-latest
+    needs:
+      - build
+    strategy:
+      fail-fast: false
+      matrix:
+        node: [20, 18, 16, 14]
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Use Node.js
+        uses: actions/setup-node@v3.7.0
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: Install dependencies
+        run: npm install --package-lock false
+
+      - name: Download dist files
+        uses: actions/download-artifact@v3
+        with:
+          name: dist-files
+
+      - name: Test CLI
+        run: npm run test:cli
+
+  test-webpack-plugin:
+    runs-on: ubuntu-latest
+    needs:
+      - build
+    strategy:
+      fail-fast: false
+      matrix:
+        node: [20, 18, 16, 14]
+        webpack: ['webpack4', 'webpack5']
+        exclude:
+          - webpack: 'webpack4'
+            node: 18
+          - webpack: 'webpack4'
+            node: 20
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Use Node.js
+        uses: actions/setup-node@v3.7.0
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: Install dependencies
+        run: npm install --package-lock false
+
+      - name: Download dist files
+        uses: actions/download-artifact@v3
+        with:
+          name: dist-files
+
+      - name: Test webpack-plugin
+        run: npm run test:webpack-plugin -- -t ${{ matrix.webpack }}
 
   publish:
     # Run only for version tags
     if: contains(github.ref, 'refs/tags/v')
     needs:
-      - test
+      - test-cli
+      - test-webpack-plugin
+      - lint
     runs-on: ubuntu-latest
     permissions:
       id-token: write
