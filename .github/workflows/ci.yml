@@ -8,7 +8,7 @@ on:
   pull_request:
 
 jobs:
-  test:
+  build-and-lint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -31,8 +31,8 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Test
-        run: npm run test
+      - name: Lint
+        run: npm run lint
 
       - name: Upload dist files
         uses: actions/upload-artifact@v3
@@ -41,6 +41,40 @@ jobs:
           retention-days: 1
           path: |
             lib/**/*
+
+  test:
+    needs:
+      - build-and-lint
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        version: [20, 18, 16, 14]
+    steps:
+      - uses: actions/checkout@v3
+
+      # Cache packages when the branch is not update-dependencies or dependabot/*
+      - name: Resolve caching
+        id: cache
+        if: ${{ github.ref_name != 'update-dependencies' && !startsWith(github.ref_name, 'dependabot/') }}
+        run: echo "PACKAGE=npm" >> $GITHUB_OUTPUT
+
+      - name: Use Node.js
+        uses: actions/setup-node@v3.7.0
+        with:
+          node-version: ${{ matrix.version }}
+          cache: ${{ steps.cache.outputs.PACKAGE }}
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Download dist files
+        uses: actions/download-artifact@v3
+        with:
+          name: dist-files
+
+      - name: Test
+        run: npm run test
 
   publish:
     # Run only for version tags
