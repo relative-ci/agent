@@ -3,4 +3,4 @@
 TAG=$(git describe --tags --abbrev=0)
 VERSION=${TAG:1}
 
-npx release-it $VERSION --config ./config/release-it-publish.js --ci --verbose
+npx release-it $VERSION --config ./config/release-it-publish.js --ci -VV
