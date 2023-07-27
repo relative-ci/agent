@@ -49,7 +49,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        version: [20, 18, 16, 14]
+        version: [20, 18, 16]
         webpack: ['webpack4', 'webpack5']
         exclude:
           - webpack: 'webpack4'
