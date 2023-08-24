@@ -57,6 +57,7 @@
     "jest": "29.6.4",
     "memory-fs": "0.5.0",
     "release-it": "16.1.5",
+    "webpack4": "npm:webpack@^4.42.1",
     "webpack": "5.88.2"
   },
   "dependencies": {
@@ -70,7 +71,6 @@
     "fs-extra": "11.1.1",
     "isomorphic-fetch": "3.0.0",
     "lodash": "4.17.21",
-    "webpack4": "npm:webpack@^4.42.1",
     "yargs": "17.7.2"
   },
   "peerDependencies": {
