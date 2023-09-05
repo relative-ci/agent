@@ -11,7 +11,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       # Cache packages when the branch is not update-dependencies or dependabot/*
       - name: Resolve caching
@@ -44,7 +44,7 @@ jobs:
     needs:
       - build
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       # Cache packages when the branch is not update-dependencies or dependabot/*
       - name: Resolve caching
@@ -87,7 +87,7 @@ jobs:
       matrix:
         node: [20, 18, 16, 14]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Use Node.js
         uses: actions/setup-node@v3.7.0
@@ -120,7 +120,7 @@ jobs:
           - webpack: 'webpack4'
             node: 20
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Use Node.js
         uses: actions/setup-node@v3.7.0
@@ -156,7 +156,7 @@ jobs:
     permissions:
       id-token: write
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       # Cache packages when the branch is not update-dependencies or dependabot/*
       - name: Resolve caching
