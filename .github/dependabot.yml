@@ -8,6 +8,10 @@ updates:
       prefix: "chore(deps)"
     target-branch: "update-dependencies"
     open-pull-requests-limit: 10
+    groups:
+      bundle-stats:
+        patterns:
+          - "@bundle-stats/*"
 
   - package-ecosystem: "github-actions"
     directory: "/"
