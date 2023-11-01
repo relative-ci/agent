@@ -1,27 +1,15 @@
 /**
  * @typedef {import('../').EnvCI} EnvCI
  */
-const childProcess = require('child_process');
-const { pick } = require('lodash');
-const envCI = require('env-ci');
+import childProcess from 'child_process';
+import envCI from 'env-ci';
+import getDebug from 'debug';
 
-const CI_ENV_VAR_NAMES = [
-  'branch',
-  'build',
-  'buildUrl',
-  'commit',
-  'isCi',
-  'pr',
-  'prBranch',
-  'service',
-  'slug',
-];
+export const debug = getDebug('relative-ci:agent');
 
-module.exports.debug = require('debug')('relative-ci:agent');
-
-module.exports.getCommitMessage = () => childProcess
-  .execSync('git log -1 --pretty=%B')
-  .toString().trim();
+export function getCommitMessage() {
+  return childProcess.execSync('git log -1 --pretty=%B').toString().trim();
+}
 
 // Match slug on `git@github.com:relative-ci/agent.git`
 const GIT_SSH_URL_SLUG_PATTERN = /^git@(?:.*):(.*)\.git$/;
@@ -35,7 +23,7 @@ const GIT_PATHNAME_SLUG_PATTERN = /^\/(.*)\.git$/;
  * @param {string} repoURL
  * @returns {string}
  */
-const extractRepoSlug = (repoURL) => {
+export function extractRepoSlug(repoURL) {
   if (!repoURL) {
     return '';
   }
@@ -51,11 +39,26 @@ const extractRepoSlug = (repoURL) => {
     console.warn(err.message);
     return '';
   }
-};
+}
 
-module.exports.getEnvCI = () => {
+/**
+ * Extract CI environment variables using env-ci
+ */
+export function getEnvCI() {
+  const envCIvars = envCI();
+
   /** @type {EnvCI} */
-  const envVars = pick(envCI(), CI_ENV_VAR_NAMES);
+  const envVars = {
+    isCi: envCIvars.isCi,
+    service: envCIvars.service,
+    slug: envCIvars.slug,
+    branch: envCIvars.branch,
+    pr: envCIvars.pr,
+    build: envCIvars.build,
+    buildUrl: envCIvars.buildUrl,
+    prBranch: envCIvars.prBranch,
+    commit: envCIvars.commit,
+  };
 
   // env-ci does not provide a slug for jenkins
   // https://github.com/semantic-release/env-ci/blob/master/services/jenkins.js#LL18
@@ -66,6 +69,4 @@ module.exports.getEnvCI = () => {
   }
 
   return envVars;
-};
-
-module.exports.extractRepoSlug = extractRepoSlug;
+}
