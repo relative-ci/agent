@@ -45,19 +45,20 @@ export function extractRepoSlug(repoURL) {
  * Extract CI environment variables using env-ci
  */
 export function getEnvCI() {
+  // Get normalized CI env variables
   const envCIvars = envCI();
 
   /** @type {EnvCI} */
   const envVars = {
-    isCi: envCIvars.isCi,
-    service: envCIvars.service,
-    slug: envCIvars.slug,
-    branch: envCIvars.branch,
-    pr: envCIvars.pr,
-    build: envCIvars.build,
-    buildUrl: envCIvars.buildUrl,
-    prBranch: envCIvars.prBranch,
-    commit: envCIvars.commit,
+    isCi: envCIvars.isCi, // process.env.CI
+    service: 'service' in envCIvars ? envCIvars.service : process.env.SERVICE,
+    slug: 'slug' in envCIvars ? envCIvars.slug : process.env.REPOSITORY,
+    branch: envCIvars.branch || process.env.BRANCH,
+    pr: 'pr' in envCIvars ? envCIvars.pr : process.env.PR,
+    build: 'build' in envCIvars ? envCIvars.build : process.env.BUILD,
+    buildUrl: 'buildUrl' in envCIvars ? envCIvars.buildUrl : process.env.BUILD_URL,
+    prBranch: 'prBranch' in envCIvars ? envCIvars.prBranch : '',
+    commit: envCIvars.commit || process.env.SHA,
   };
 
   // env-ci does not provide a slug for jenkins
