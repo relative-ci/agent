@@ -25,14 +25,14 @@ export interface AgentArgs {
 
 export interface EnvCI {
   isCi: boolean;
+  service?: string;
+  slug?: string;
   branch?: string;
+  pr?: string;
   build?: string;
   buildUrl?: string;
   commit?: string;
-  pr?: string;
-  prBranch?: string;
-  service?: string;
-  slug?: string;
+  commitMessage?: string;
 }
 
 export class RelativeCiAgentWebpackPlugin {
