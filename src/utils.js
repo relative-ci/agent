@@ -51,14 +51,14 @@ export function getEnvCI() {
   /** @type {EnvCI} */
   const envVars = {
     isCi: envCIvars.isCi, // process.env.CI
-    service: 'service' in envCIvars ? envCIvars.service : process.env.SERVICE,
-    slug: 'slug' in envCIvars ? envCIvars.slug : process.env.REPOSITORY,
-    branch: envCIvars.branch || process.env.BRANCH,
-    pr: 'pr' in envCIvars ? envCIvars.pr : process.env.PR,
-    build: 'build' in envCIvars ? envCIvars.build : process.env.BUILD,
-    buildUrl: 'buildUrl' in envCIvars ? envCIvars.buildUrl : process.env.BUILD_URL,
+    service: 'service' in envCIvars ? envCIvars.service : process.env.RELATIV_CI_SERVICE,
+    slug: 'slug' in envCIvars ? envCIvars.slug : process.env.RELATIVE_CI_SLUG,
+    branch: envCIvars.branch || process.env.RELATIVE_CI_BRANCH,
+    pr: 'pr' in envCIvars ? envCIvars.pr : process.env.RELATIVE_CI_PR,
+    build: 'build' in envCIvars ? envCIvars.build : process.env.RELATIVE_CI_BUILD,
+    buildUrl: 'buildUrl' in envCIvars ? envCIvars.buildUrl : process.env.RELATIVE_CI_BUILD_URL,
     prBranch: 'prBranch' in envCIvars ? envCIvars.prBranch : '',
-    commit: envCIvars.commit || process.env.SHA,
+    commit: envCIvars.commit || process.env.RELATIVE_CI_COMMIT,
   };
 
   // env-ci does not provide a slug for jenkins
