@@ -32,7 +32,7 @@ export interface EnvCI {
   build?: string;
   buildUrl?: string;
   commit?: string;
-  prBranch?: string;
+  commitMessage?: string;
 }
 
 export class RelativeCiAgentWebpackPlugin {

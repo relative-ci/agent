@@ -38,9 +38,9 @@ export const agent = (artifactsData, config, args = {}, logger = console) => {
 
   // Resolved params
   const envVars = {
-    slug: args.slug || process.env.RELATIVE_CI_SLUG || envCIVars.slug,
+    slug: args.slug || envCIVars.slug,
     // env-ci is reporting the branch of the PR as prBranch
-    branch: args.branch || envCIVars.prBranch || envCIVars.branch,
+    branch: args.branch || envCIVars.branch,
     pr: args.pr || envCIVars.pr,
     commit: args.commit || envCIVars.commit,
 
@@ -49,7 +49,7 @@ export const agent = (artifactsData, config, args = {}, logger = console) => {
     isCi: envCIVars.isCi,
     service: envCIVars.service,
 
-    commitMessage: args.commitMessage,
+    commitMessage: args.commitMessage || envCIVars.commitMessage,
   };
 
   debug('resolved parameters', envVars);
