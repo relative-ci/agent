@@ -16,7 +16,7 @@ const MOCK_RESULT = {
 
 const MOCK_SERVER_PORT = 5998;
 
-const createServer = () => http.createServer((req, res) => {
+const createServer = () => http.createServer((_, res) => {
   res.write(JSON.stringify(MOCK_RESULT));
   res.end();
 });
@@ -33,21 +33,21 @@ describe('CLI', () => {
   });
 
   test('should return error if config is missing', (done) => {
-    exec('./bin/index.js', (error, stdout, sterr) => {
+    exec('./bin/index.js', (_, __, sterr) => {
       expect(sterr).toContain('relativeci.config.js file is missing!');
       done();
     });
   });
 
   test('should return error if webpack stats is missing', (done) => {
-    exec('cd test/cli/missing-stats && ../../../bin/index.js', (error, stdout, sterr) => {
+    exec('cd test/cli/missing-stats && ../../../bin/index.js', (_, __, sterr) => {
       expect(sterr).toContain('file does not exists');
       done();
     });
   });
 
   test('should return error if webpack stats data is invalid', (done) => {
-    exec('cd test/cli/invalid-data && ../../../bin/index.js', (error, stdout, sterr) => {
+    exec('cd test/cli/invalid-data && ../../../bin/index.js', (_, __, sterr) => {
       expect(sterr).toContain('Invalid webpack stats structure');
       done();
     });
@@ -61,7 +61,8 @@ describe('CLI', () => {
         RELATIVE_CI_KEY=abc123 \
         ../../../bin/index.js
       `,
-      (_, stdout) => {
+      (_, stdout, sterr) => {
+        expect(sterr).toEqual('');
         expect(stdout).toContain('Job #1 done.');
         done();
       },
@@ -76,7 +77,8 @@ describe('CLI', () => {
         RELATIVE_CI_KEY=abc123 \
         ../../../bin/index.js --config-dir app
       `,
-      (_, stdout) => {
+      (_, stdout, sterr) => {
+        expect(sterr).toEqual('');
         expect(stdout).toContain('Job #1 done.');
         done();
       },
