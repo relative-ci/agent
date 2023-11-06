@@ -51,12 +51,12 @@ export function getEnvCI() {
   /** @type {EnvCI} */
   const envVars = {
     isCi: envCIvars.isCi, // process.env.CI
-    service: 'service' in envCIvars ? envCIvars.service : process.env.RELATIV_CI_SERVICE,
-    slug: 'slug' in envCIvars ? envCIvars.slug : process.env.RELATIVE_CI_SLUG,
-    branch: ('prBranch' in envCIvars) ? envCIvars.prBranch : '' || envCIvars.branch || process.env.RELATIVE_CI_PR,
-    pr: 'pr' in envCIvars ? envCIvars.pr : process.env.RELATIVE_CI_PR,
-    build: 'build' in envCIvars ? envCIvars.build : process.env.RELATIVE_CI_BUILD,
-    buildUrl: 'buildUrl' in envCIvars ? envCIvars.buildUrl : process.env.RELATIVE_CI_BUILD_URL,
+    service: ('service' in envCIvars && envCIvars.service) || process.env.RELATIV_CI_SERVICE,
+    slug: ('slug' in envCIvars && envCIvars.slug) || process.env.RELATIVE_CI_SLUG,
+    branch: ('prBranch' in envCIvars && envCIvars.prBranch) || ('branch' in envCIvars && envCIvars.branch) || process.env.RELATIVE_CI_BRANCH,
+    pr: ('pr' in envCIvars && envCIvars.pr) || process.env.RELATIVE_CI_PR,
+    build: ('build' in envCIvars && envCIvars.build) || process.env.RELATIVE_CI_BUILD,
+    buildUrl: ('buildUrl' in envCIvars && envCIvars.buildUrl) || process.env.RELATIVE_CI_BUILD_URL,
     commit: envCIvars.commit || process.env.RELATIVE_CI_COMMIT,
     commitMessage: process.env.RELATIVE_CI_COMMIT_MESSAGE,
   };
