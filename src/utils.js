@@ -51,7 +51,7 @@ export function getEnvCI() {
   /** @type {EnvCI} */
   const envVars = {
     isCi: envCIvars.isCi, // process.env.CI
-    service: ('service' in envCIvars && envCIvars.service) || process.env.RELATIV_CI_SERVICE,
+    service: ('service' in envCIvars && envCIvars.service) || process.env.RELATIVE_CI_SERVICE,
     slug: ('slug' in envCIvars && envCIvars.slug) || process.env.RELATIVE_CI_SLUG,
     branch: ('prBranch' in envCIvars && envCIvars.prBranch) || ('branch' in envCIvars && envCIvars.branch) || process.env.RELATIVE_CI_BRANCH,
     pr: ('pr' in envCIvars && envCIvars.pr) || process.env.RELATIVE_CI_PR,
