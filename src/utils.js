@@ -8,7 +8,15 @@ import getDebug from 'debug';
 export const debug = getDebug('relative-ci:agent');
 
 export function getCommitMessage() {
-  return childProcess.execSync('git log -1 --pretty=%B').toString().trim();
+  let message = '';
+
+  try {
+    message = childProcess.execSync('git log -1 --pretty=%B').toString().trim();
+  } catch (err) {
+    console.error('Error reading the commit message from git');
+  }
+
+  return message;
 }
 
 // Match slug on `git@github.com:relative-ci/agent.git`
