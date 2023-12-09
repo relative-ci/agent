@@ -26,7 +26,9 @@ const args = yargs(hideBin(process.argv))
   .help()
   .argv;
 
-const searchConfig = cosmiconfigSync('relativeci').search(args['config-dir']);
+const searchConfig = cosmiconfigSync('relativeci', {
+  searchStrategy: 'global',
+}).search(args['config-dir']);
 debug('Config', searchConfig);
 
 if (!searchConfig) {
