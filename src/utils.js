@@ -85,7 +85,9 @@ export function getEnvCI() {
   // Get normalized CI env variables
   const envCIvars = envCI();
 
-  return {
+  debug('env-ci environment variables', envCIvars);
+
+  const envVars = {
     isCi: envCIvars.isCi, // process.env.CI
     service: ('service' in envCIvars && envCIvars.service) || process.env.RELATIVE_CI_SERVICE,
     slug: resolveSlug(envCIvars),
@@ -96,4 +98,8 @@ export function getEnvCI() {
     commit: envCIvars.commit || process.env.RELATIVE_CI_COMMIT,
     commitMessage: process.env.RELATIVE_CI_COMMIT_MESSAGE,
   };
+
+  debug('environment variables', envCIvars);
+
+  return envVars;
 }

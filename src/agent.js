@@ -34,7 +34,6 @@ const getFilteredData = (artifactsData) => artifactsData.reduce(
 export const agent = (artifactsData, config, args = {}, logger = console) => {
   dotenv.config();
   const envCIVars = getEnvCI();
-  debug('env-ci environment variables', envCIVars);
 
   // Resolved params
   const envVars = {
