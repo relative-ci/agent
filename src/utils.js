@@ -50,17 +50,45 @@ export function extractRepoSlug(repoURL) {
 }
 
 /**
+ * Resolve repository slug
+ * @param {import('env-ci').CiEnv} envVars
+ * @returns {string}
+ */
+function resolveSlug(envVars) {
+  // Use custom slug environment variable if available
+  if (process.env.RELATIVE_CI_SLUG) {
+    return process.env.RELATIVE_CI_SLUG;
+  }
+
+  // env-ci does not provide a slug for jenkins
+  // https://github.com/semantic-release/env-ci/blob/master/services/jenkins.js#LL18
+  // https://www.jenkins.io/doc/book/pipeline/jenkinsfile/#using-environment-variables
+  // https://plugins.jenkins.io/git/#plugin-content-environment-variables
+  if ('service' in envVars && envVars.service === 'jenkins') {
+    return extractRepoSlug(process.env.GIT_URL);
+  }
+
+  // env-ci does not read repository slug, but buildkite org/project
+  // https://buildkite.com/docs/pipelines/environment-variables#BUILDKITE_REPO
+  if ('service' in envVars && envVars.service === 'buildkite') {
+    return extractRepoSlug(process.env.BUILDKITE_REPO);
+  }
+
+  return 'slug' in envVars ? envVars.slug : '';
+}
+
+/**
  * Extract CI environment variables using env-ci
+ * @returns {EnvCI}
  */
 export function getEnvCI() {
   // Get normalized CI env variables
   const envCIvars = envCI();
 
-  /** @type {EnvCI} */
-  const envVars = {
+  return {
     isCi: envCIvars.isCi, // process.env.CI
     service: ('service' in envCIvars && envCIvars.service) || process.env.RELATIVE_CI_SERVICE,
-    slug: ('slug' in envCIvars && envCIvars.slug) || process.env.RELATIVE_CI_SLUG,
+    slug: resolveSlug(envCIvars),
     branch: ('prBranch' in envCIvars && envCIvars.prBranch) || ('branch' in envCIvars && envCIvars.branch) || process.env.RELATIVE_CI_BRANCH,
     pr: ('pr' in envCIvars && envCIvars.pr) || process.env.RELATIVE_CI_PR,
     build: ('build' in envCIvars && envCIvars.build) || process.env.RELATIVE_CI_BUILD,
@@ -68,14 +96,4 @@ export function getEnvCI() {
     commit: envCIvars.commit || process.env.RELATIVE_CI_COMMIT,
     commitMessage: process.env.RELATIVE_CI_COMMIT_MESSAGE,
   };
-
-  // env-ci does not provide a slug for jenkins
-  // https://github.com/semantic-release/env-ci/blob/master/services/jenkins.js#LL18
-  // https://www.jenkins.io/doc/book/pipeline/jenkinsfile/#using-environment-variables
-  // https://plugins.jenkins.io/git/#plugin-content-environment-variables
-  if (envVars.service === 'jenkins' && !envVars.slug) {
-    envVars.slug = extractRepoSlug(process.env.GIT_URL);
-  }
-
-  return envVars;
 }
