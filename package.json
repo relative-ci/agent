@@ -64,7 +64,7 @@
     "@bundle-stats/plugin-webpack-filter": "4.8.0",
     "@bundle-stats/plugin-webpack-validate": "4.8.0",
     "core-js": "3.33.2",
-    "cosmiconfig": "8.3.6",
+    "cosmiconfig": "9.0.0",
     "debug": "4.3.4",
     "dotenv": "16.3.1",
     "env-ci": "7.3.0",
