@@ -3,7 +3,7 @@ import { get } from 'lodash';
 import fetch from 'isomorphic-fetch';
 
 import LOCALES from '../locales/en';
-import { debug } from './utils';
+import { debug, maskObjectProperties } from './utils';
 
 export default async (data, params, config, logger) => {
   const {
@@ -41,7 +41,7 @@ export default async (data, params, config, logger) => {
 
   const { payloadFilepath } = config;
 
-  debug('Payload', payload);
+  debug('Payload', maskObjectProperties(payload, ['key']));
   debug('Payload size', Buffer.byteLength(JSON.stringify(payload)));
 
   if (payloadFilepath) {

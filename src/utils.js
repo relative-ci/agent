@@ -4,10 +4,39 @@
 import childProcess from 'child_process';
 import envCI from 'env-ci';
 import getDebug from 'debug';
+import get from 'lodash/get';
+import set from 'lodash/set';
+import merge from 'lodash/merge';
 
 const DEFAULT_ENDPOINT = 'https://api.relative-ci.com/save';
+const DEBUG_NAME = 'relative-ci:agent';
+const MASK = '******';
 
-export const debug = getDebug('relative-ci:agent');
+export const debug = getDebug(DEBUG_NAME);
+
+/**
+ * @param {string|number} token
+ * @returns {string}
+ */
+export function maskToken(token) {
+  const text = token.toString();
+  return `${MASK}${text.substring(text.length - 6)}`;
+}
+
+/**
+ * @param {object} data
+ * @param {Array<string>} propertyPaths
+ */
+export function maskObjectProperties(data, propertyPaths) {
+  const normalizedData = merge({}, data);
+
+  propertyPaths.forEach((propertyPath) => {
+    const value = get(normalizedData, propertyPath, '');
+    set(normalizedData, propertyPath, maskToken(value));
+  });
+
+  return normalizedData;
+}
 
 export function getCommitMessage() {
   let message = '';
@@ -96,7 +125,7 @@ export function getEnvVars() {
     commit: process.env.RELATIVE_CI_COMMIT,
     commitMessage: process.env.RELATIVE_CI_COMMIT_MESSAGE,
   };
-  debug('custom environment variables', customEnvVars);
+  debug('custom environment variables', maskObjectProperties(customEnvVars, ['key']));
 
   const resolvedEnvVars = {
     key: customEnvVars.key,
@@ -111,7 +140,7 @@ export function getEnvVars() {
     commit: customEnvVars.commit || envCIvars.commit,
     commitMessage: customEnvVars.commitMessage,
   };
-  debug('resolved environment variables', envCIvars);
+  debug('resolved environment variables', maskObjectProperties(envCIvars, ['key']));
 
   return resolvedEnvVars;
 }
