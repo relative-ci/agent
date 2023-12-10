@@ -23,7 +23,7 @@ export interface AgentArgs {
   commitMessage?: string;
 }
 
-export interface EnvCI {
+export interface EnvVars {
   isCi: boolean;
   service?: string;
   slug?: string;
@@ -33,6 +33,14 @@ export interface EnvCI {
   buildUrl?: string;
   commit?: string;
   commitMessage?: string;
+  /**
+   * RelativeCI project API key
+   */
+  key: string;
+  /**
+   * RelativeCI ingest endpoint
+   */
+  endpoint: string;
 }
 
 export class RelativeCiAgentWebpackPlugin {

@@ -1,6 +1,7 @@
 /**
  * @typedef {import('../').AgentConfig} AgentConfig
  * @typedef {import('../').AgentArgs} AgentArgs
+ * @typedef {import('../').EnvVars} EnvVars
  */
 import dotenv from 'dotenv';
 import { set } from 'lodash';
@@ -10,10 +11,9 @@ import packageInfo from '../package.json';
 import * as LOCALES from '../locales/en';
 import send from './send';
 import {
-  debug, getCommitMessage, getEnvCI,
+  debug, getCommitMessage, getEnvVars,
 } from './utils';
 
-const DEFAULT_ENDPOINT = 'https://api.relative-ci.com/save';
 const WEBPACK_STATS = 'webpack.stats';
 const SOURCE_EXTRACTORS = {
   [WEBPACK_STATS]: filter,
@@ -33,35 +33,35 @@ const getFilteredData = (artifactsData) => artifactsData.reduce(
  */
 export const agent = (artifactsData, config, args = {}, logger = console) => {
   dotenv.config();
-  const envCIVars = getEnvCI();
-  debug('env-ci environment variables', envCIVars);
 
-  // Resolved params
-  const envVars = {
-    slug: args.slug || envCIVars.slug,
-    // env-ci is reporting the branch of the PR as prBranch
-    branch: args.branch || envCIVars.branch,
-    pr: args.pr || envCIVars.pr,
-    commit: args.commit || envCIVars.commit,
+  const envVars = getEnvVars();
 
-    build: envCIVars.build,
-    buildUrl: envCIVars.buildUrl,
-    isCi: envCIVars.isCi,
-    service: envCIVars.service,
+  // Normalized env vars - merge provided args with env vars
+  // @type {EnvVars}
+  const normalizedEnvVars = {
+    slug: args.slug || envVars.slug,
+    branch: args.branch || envVars.branch,
+    pr: args.pr || envVars.pr,
+    commit: args.commit || envVars.commit,
 
-    commitMessage: args.commitMessage || envCIVars.commitMessage,
+    build: envVars.build,
+    buildUrl: envVars.buildUrl,
+    isCi: envVars.isCi,
+    service: envVars.service,
+
+    commitMessage: args.commitMessage || envVars.commitMessage,
+    key: envVars.key,
+    endpoint: envVars.endpoint,
   };
 
-  debug('resolved parameters', envVars);
+  debug('normalized env vars ', normalizedEnvVars);
 
   const { includeCommitMessage } = config;
+
   const params = {
     agentVersion: packageInfo.version,
 
-    key: process.env.RELATIVE_CI_KEY,
-    endpoint: process.env.RELATIVE_CI_ENDPOINT || DEFAULT_ENDPOINT,
-
-    ...envVars,
+    ...normalizedEnvVars,
 
     // Get commit message using git if includeCommitMessage is set and
     // there is no --commit-message argument
