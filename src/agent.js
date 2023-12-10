@@ -10,7 +10,7 @@ import packageInfo from '../package.json';
 import * as LOCALES from '../locales/en';
 import send from './send';
 import {
-  debug, getCommitMessage, getEnvCI,
+  debug, getCommitMessage, getEnvVars,
 } from './utils';
 
 const DEFAULT_ENDPOINT = 'https://api.relative-ci.com/save';
@@ -33,25 +33,25 @@ const getFilteredData = (artifactsData) => artifactsData.reduce(
  */
 export const agent = (artifactsData, config, args = {}, logger = console) => {
   dotenv.config();
-  const envCIVars = getEnvCI();
 
-  // Resolved params
-  const envVars = {
-    slug: args.slug || envCIVars.slug,
-    // env-ci is reporting the branch of the PR as prBranch
-    branch: args.branch || envCIVars.branch,
-    pr: args.pr || envCIVars.pr,
-    commit: args.commit || envCIVars.commit,
+  const envVars = getEnvVars();
 
-    build: envCIVars.build,
-    buildUrl: envCIVars.buildUrl,
-    isCi: envCIVars.isCi,
-    service: envCIVars.service,
+  // Resolved args - merge provided args with env vars
+  const resolvedArgs = {
+    slug: args.slug || envVars.slug,
+    branch: args.branch || envVars.branch,
+    pr: args.pr || envVars.pr,
+    commit: args.commit || envVars.commit,
 
-    commitMessage: args.commitMessage || envCIVars.commitMessage,
+    build: envVars.build,
+    buildUrl: envVars.buildUrl,
+    isCi: envVars.isCi,
+    service: envVars.service,
+
+    commitMessage: args.commitMessage || envVars.commitMessage,
   };
 
-  debug('resolved parameters', envVars);
+  debug('resolved parameters', resolvedArgs);
 
   const { includeCommitMessage } = config;
   const params = {
@@ -60,7 +60,7 @@ export const agent = (artifactsData, config, args = {}, logger = console) => {
     key: process.env.RELATIVE_CI_KEY,
     endpoint: process.env.RELATIVE_CI_ENDPOINT || DEFAULT_ENDPOINT,
 
-    ...envVars,
+    ...resolvedArgs,
 
     // Get commit message using git if includeCommitMessage is set and
     // there is no --commit-message argument

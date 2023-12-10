@@ -3,7 +3,7 @@ import { merge } from 'lodash';
 import validate from '@bundle-stats/plugin-webpack-validate';
 
 import { agent } from './agent';
-import { debug, getEnvCI } from './utils';
+import { debug, getEnvVars } from './utils';
 
 const PLUGIN_NAME = 'RelativeCiAgent';
 
@@ -43,7 +43,7 @@ export class RelativeCiAgentWebpackPlugin {
   }
 
   apply(compiler) {
-    const { isCi } = getEnvCI();
+    const { isCi } = getEnvVars();
 
     const options = merge(
       {},

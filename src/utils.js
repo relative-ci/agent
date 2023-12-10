@@ -78,10 +78,10 @@ function resolveSlug(envVars) {
 }
 
 /**
- * Extract CI environment variables using env-ci
+ * Extract CI environment variables using env-ci and custom fallback env vars
  * @returns {EnvCI}
  */
-export function getEnvCI() {
+export function getEnvVars() {
   // Get normalized CI env variables
   const envCIvars = envCI();
 
