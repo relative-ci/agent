@@ -11,7 +11,7 @@ import packageInfo from '../package.json';
 import * as LOCALES from '../locales/en';
 import send from './send';
 import {
-  debug, getCommitMessage, getEnvVars,
+  debug, getCommitMessage, getEnvVars, maskObjectProperties,
 } from './utils';
 
 const WEBPACK_STATS = 'webpack.stats';
@@ -54,7 +54,7 @@ export const agent = (artifactsData, config, args = {}, logger = console) => {
     endpoint: envVars.endpoint,
   };
 
-  debug('normalized env vars ', normalizedEnvVars);
+  debug('normalized env vars ', maskObjectProperties(normalizedEnvVars, ['key']));
 
   const { includeCommitMessage } = config;
 
@@ -68,7 +68,7 @@ export const agent = (artifactsData, config, args = {}, logger = console) => {
     ...includeCommitMessage && !args.commitMessage && { commitMessage: getCommitMessage() },
   };
 
-  debug('Job parameters', params);
+  debug('Job parameters', maskObjectProperties(params, ['key']));
 
   // Validate parameters
   if (!params.key) {
