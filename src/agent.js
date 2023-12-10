@@ -1,7 +1,7 @@
 /**
  * @typedef {import('../').AgentConfig} AgentConfig
  * @typedef {import('../').AgentArgs} AgentArgs
- * @typedef {import('../').EnvCI} EnvCI
+ * @typedef {import('../').EnvVars} EnvVars
  */
 import dotenv from 'dotenv';
 import { set } from 'lodash';
@@ -37,7 +37,7 @@ export const agent = (artifactsData, config, args = {}, logger = console) => {
   const envVars = getEnvVars();
 
   // Normalized env vars - merge provided args with env vars
-  // @type {EnvCI}
+  // @type {EnvVars}
   const normalizedEnvVars = {
     slug: args.slug || envVars.slug,
     branch: args.branch || envVars.branch,

@@ -1,5 +1,5 @@
 /**
- * @typedef {import('../').EnvCI} EnvCI
+ * @typedef {import('../').EnvVars} EnvVars
  */
 import childProcess from 'child_process';
 import envCI from 'env-ci';
@@ -76,7 +76,7 @@ function resolveSlug(envVars) {
 
 /**
  * Extract CI environment variables using env-ci and custom fallback env vars
- * @returns {EnvCI}
+ * @returns {EnvVars}
  */
 export function getEnvVars() {
   // Get env-ci environment variables

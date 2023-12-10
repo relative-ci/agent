@@ -23,7 +23,7 @@ export interface AgentArgs {
   commitMessage?: string;
 }
 
-export interface EnvCI {
+export interface EnvVars {
   isCi: boolean;
   service?: string;
   slug?: string;
