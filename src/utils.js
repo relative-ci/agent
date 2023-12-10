@@ -57,11 +57,6 @@ export function extractRepoSlug(repoURL) {
  * @returns {string}
  */
 function resolveSlug(envVars) {
-  // Use custom slug environment variable if available
-  if (process.env.RELATIVE_CI_SLUG) {
-    return process.env.RELATIVE_CI_SLUG;
-  }
-
   // env-ci does not provide a slug for jenkins
   // https://github.com/semantic-release/env-ci/blob/master/services/jenkins.js#LL18
   // https://www.jenkins.io/doc/book/pipeline/jenkinsfile/#using-environment-variables
@@ -84,27 +79,39 @@ function resolveSlug(envVars) {
  * @returns {EnvCI}
  */
 export function getEnvVars() {
-  // Get normalized CI env variables
+  // Get env-ci environment variables
   const envCIvars = envCI();
-
   debug('env-ci environment variables', envCIvars);
 
-  const envVars = {
-    isCi: envCIvars.isCi, // process.env.CI
-    service: ('service' in envCIvars && envCIvars.service) || process.env.RELATIVE_CI_SERVICE,
-    slug: resolveSlug(envCIvars),
-    branch: ('prBranch' in envCIvars && envCIvars.prBranch) || ('branch' in envCIvars && envCIvars.branch) || process.env.RELATIVE_CI_BRANCH,
-    pr: ('pr' in envCIvars && envCIvars.pr) || process.env.RELATIVE_CI_PR,
-    build: ('build' in envCIvars && envCIvars.build) || process.env.RELATIVE_CI_BUILD,
-    buildUrl: ('buildUrl' in envCIvars && envCIvars.buildUrl) || process.env.RELATIVE_CI_BUILD_URL,
-    commit: envCIvars.commit || process.env.RELATIVE_CI_COMMIT,
-    commitMessage: process.env.RELATIVE_CI_COMMIT_MESSAGE,
-
+  // Get custom environment variables
+  const customEnvVars = {
     key: process.env.RELATIVE_CI_KEY,
     endpoint: process.env.RELATIVE_CI_ENDPOINT || DEFAULT_ENDPOINT,
+    service: process.env.RELATIVE_CI_SERVICE,
+    slug: process.env.RELATIVE_CI_SLUG,
+    branch: process.env.RELATIVE_CI_BRANCH,
+    pr: process.env.RELATIVE_CI_PR,
+    build: process.env.RELATIVE_CI_BUILD,
+    buildUrl: process.env.RELATIVE_CI_BUILD_URL,
+    commit: process.env.RELATIVE_CI_COMMIT,
+    commitMessage: process.env.RELATIVE_CI_COMMIT_MESSAGE,
   };
+  debug('custom environment variables', customEnvVars);
 
-  debug('environment variables', envCIvars);
+  const resolvedEnvVars = {
+    key: customEnvVars.key,
+    endpoint: customEnvVars.endpoint,
+    isCi: envCIvars.isCi, // process.env.CI
+    service: customEnvVars.service || ('service' in envCIvars && envCIvars.service),
+    slug: customEnvVars.slug || resolveSlug(envCIvars),
+    branch: customEnvVars.branch || ('prBranch' in envCIvars && envCIvars.prBranch) || ('branch' in envCIvars && envCIvars.branch),
+    pr: customEnvVars.pr || ('pr' in envCIvars && envCIvars.pr),
+    build: customEnvVars.build || ('build' in envCIvars && envCIvars.build),
+    buildUrl: customEnvVars.buildUrl || ('buildUrl' in envCIvars && envCIvars.buildUrl),
+    commit: customEnvVars.commit || envCIvars.commit,
+    commitMessage: customEnvVars.commitMessage,
+  };
+  debug('resolved environment variables', envCIvars);
 
-  return envVars;
+  return resolvedEnvVars;
 }

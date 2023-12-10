@@ -33,7 +33,6 @@ export interface EnvCI {
   buildUrl?: string;
   commit?: string;
   commitMessage?: string;
-
   /**
    * RelativeCI project API key
    */
