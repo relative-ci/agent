@@ -33,6 +33,15 @@ export interface EnvCI {
   buildUrl?: string;
   commit?: string;
   commitMessage?: string;
+
+  /**
+   * RelativeCI project API key
+   */
+  key: string;
+  /**
+   * RelativeCI ingest endpoint
+   */
+  endpoint: string;
 }
 
 export class RelativeCiAgentWebpackPlugin {

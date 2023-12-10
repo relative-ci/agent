@@ -1,6 +1,7 @@
 /**
  * @typedef {import('../').AgentConfig} AgentConfig
  * @typedef {import('../').AgentArgs} AgentArgs
+ * @typedef {import('../').EnvCI} EnvCI
  */
 import dotenv from 'dotenv';
 import { set } from 'lodash';
@@ -13,7 +14,6 @@ import {
   debug, getCommitMessage, getEnvVars,
 } from './utils';
 
-const DEFAULT_ENDPOINT = 'https://api.relative-ci.com/save';
 const WEBPACK_STATS = 'webpack.stats';
 const SOURCE_EXTRACTORS = {
   [WEBPACK_STATS]: filter,
@@ -36,8 +36,9 @@ export const agent = (artifactsData, config, args = {}, logger = console) => {
 
   const envVars = getEnvVars();
 
-  // Resolved args - merge provided args with env vars
-  const resolvedArgs = {
+  // Normalized env vars - merge provided args with env vars
+  // @type {EnvCI}
+  const normalizedEnvVars = {
     slug: args.slug || envVars.slug,
     branch: args.branch || envVars.branch,
     pr: args.pr || envVars.pr,
@@ -49,18 +50,18 @@ export const agent = (artifactsData, config, args = {}, logger = console) => {
     service: envVars.service,
 
     commitMessage: args.commitMessage || envVars.commitMessage,
+    key: envVars.key,
+    endpoint: envVars.endpoint,
   };
 
-  debug('resolved parameters', resolvedArgs);
+  debug('normalized env vars ', normalizedEnvVars);
 
   const { includeCommitMessage } = config;
+
   const params = {
     agentVersion: packageInfo.version,
 
-    key: process.env.RELATIVE_CI_KEY,
-    endpoint: process.env.RELATIVE_CI_ENDPOINT || DEFAULT_ENDPOINT,
-
-    ...resolvedArgs,
+    ...normalizedEnvVars,
 
     // Get commit message using git if includeCommitMessage is set and
     // there is no --commit-message argument

@@ -5,6 +5,8 @@ import childProcess from 'child_process';
 import envCI from 'env-ci';
 import getDebug from 'debug';
 
+const DEFAULT_ENDPOINT = 'https://api.relative-ci.com/save';
+
 export const debug = getDebug('relative-ci:agent');
 
 export function getCommitMessage() {
@@ -97,6 +99,9 @@ export function getEnvVars() {
     buildUrl: ('buildUrl' in envCIvars && envCIvars.buildUrl) || process.env.RELATIVE_CI_BUILD_URL,
     commit: envCIvars.commit || process.env.RELATIVE_CI_COMMIT,
     commitMessage: process.env.RELATIVE_CI_COMMIT_MESSAGE,
+
+    key: process.env.RELATIVE_CI_KEY,
+    endpoint: process.env.RELATIVE_CI_ENDPOINT || DEFAULT_ENDPOINT,
   };
 
   debug('environment variables', envCIvars);
