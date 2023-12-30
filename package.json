@@ -75,5 +75,10 @@
   },
   "peerDependencies": {
     "webpack": "^4.0.0 || ^5.0.0-rc.1"
+  },
+  "peerDependenciesMeta": {
+    "webpack": {
+      "optional": true
+    }
   }
 }
