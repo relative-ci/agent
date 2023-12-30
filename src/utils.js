@@ -50,33 +50,33 @@ export function getCommitMessage() {
   return message;
 }
 
-// Match slug on `git@github.com:relative-ci/agent.git`
-const GIT_SSH_URL_SLUG_PATTERN = /^git@(?:.*):(.*)\.git$/;
+// Match slug on SSH URLs (ex: `USER@HOST:PORT/ORG/REPO.git`)
+const GIT_SSH_URL_SLUG_PATTERN = /^(?:.*)@(?:.*):(?:\d+\/)?(.*)\.git$/;
 
-// Match slug on `/relative-ci/agent.git`
+// Match slug on HTTP(S) URLs `https://github.com/relative-ci/agent.git`
 const GIT_PATHNAME_SLUG_PATTERN = /^\/(.*)\.git$/;
 
 /**
  * Extract repository slug(owner/repo) from the repo URL
  *
- * @param {string} repoURL
- * @returns {string}
+ * @param {string} repositoryURL
+ * @returns {string|undefined}
  */
-export function extractRepoSlug(repoURL) {
-  if (!repoURL) {
-    return '';
+export function getSlugFromGitURL(repositoryURL) {
+  if (!repositoryURL) {
+    return undefined;
   }
 
-  if (repoURL.match(/^git@/)) {
-    return repoURL.replace(GIT_SSH_URL_SLUG_PATTERN, '$1');
+  if (repositoryURL.match(GIT_SSH_URL_SLUG_PATTERN)) {
+    return repositoryURL.replace(GIT_SSH_URL_SLUG_PATTERN, '$1');
   }
 
   try {
-    const url = new URL(repoURL);
+    const url = new URL(repositoryURL);
     return url.pathname.replace(GIT_PATHNAME_SLUG_PATTERN, '$1');
   } catch (err) {
-    console.warn(err.message);
-    return '';
+    console.warn(err.message); // eslint-disable-line no-console
+    return undefined;
   }
 }
 
@@ -91,13 +91,13 @@ function resolveSlug(envVars) {
   // https://www.jenkins.io/doc/book/pipeline/jenkinsfile/#using-environment-variables
   // https://plugins.jenkins.io/git/#plugin-content-environment-variables
   if ('service' in envVars && envVars.service === 'jenkins') {
-    return extractRepoSlug(process.env.GIT_URL);
+    return getSlugFromGitURL(process.env.GIT_URL);
   }
 
   // env-ci does not read repository slug, but buildkite org/project
   // https://buildkite.com/docs/pipelines/environment-variables#BUILDKITE_REPO
   if ('service' in envVars && envVars.service === 'buildkite') {
-    return extractRepoSlug(process.env.BUILDKITE_REPO);
+    return getSlugFromGitURL(process.env.BUILDKITE_REPO);
   }
 
   return 'slug' in envVars ? envVars.slug : '';
