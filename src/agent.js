@@ -36,9 +36,9 @@ export const agent = (artifactsData, config, args = {}, logger = console) => {
 
   const envVars = getEnvVars();
 
-  // Normalized env vars - merge provided args with env vars
+  // Normalized params - merge provided args with env vars
   // @type {EnvVars}
-  const normalizedEnvVars = {
+  const normalizedParams = {
     slug: args.slug || envVars.slug,
     branch: args.branch || envVars.branch,
     pr: args.pr || envVars.pr,
@@ -54,23 +54,23 @@ export const agent = (artifactsData, config, args = {}, logger = console) => {
     endpoint: envVars.endpoint,
   };
 
-  debug('normalized env vars ', maskObjectProperties(normalizedEnvVars, ['key']));
+  debug('normalized parameters - agent configuration with environmental variables fallback', maskObjectProperties(normalizedParams, ['key']));
 
   const { includeCommitMessage } = config;
 
   const params = {
     agentVersion: packageInfo.version,
 
-    ...normalizedEnvVars,
+    ...normalizedParams,
 
     // Get commit message using git if includeCommitMessage is set and
     // there is no --commit-message argument or RELATIVE_CI_COMMIT_MESSAGE
-    ...includeCommitMessage && !normalizedEnvVars.commitMessage && {
+    ...includeCommitMessage && !normalizedParams.commitMessage && {
       commitMessage: getCommitMessage(),
     },
   };
 
-  debug('Job parameters', maskObjectProperties(params, ['key']));
+  debug('job parameters', maskObjectProperties(params, ['key']));
 
   // Validate parameters
   if (!params.key) {

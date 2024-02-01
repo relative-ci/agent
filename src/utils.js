@@ -125,7 +125,7 @@ export function getEnvVars() {
     commit: process.env.RELATIVE_CI_COMMIT,
     commitMessage: process.env.RELATIVE_CI_COMMIT_MESSAGE,
   };
-  debug('custom environment variables', maskObjectProperties(customEnvVars, ['key']));
+  debug('RELATIVE_CI environment variables', maskObjectProperties(customEnvVars, ['key']));
 
   const resolvedEnvVars = {
     key: customEnvVars.key,
@@ -140,7 +140,7 @@ export function getEnvVars() {
     commit: customEnvVars.commit || envCIvars.commit,
     commitMessage: customEnvVars.commitMessage,
   };
-  debug('resolved environment variables', maskObjectProperties(envCIvars, ['key']));
+  debug('resolved environment variables', maskObjectProperties(resolvedEnvVars, ['key']));
 
   return resolvedEnvVars;
 }
