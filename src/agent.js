@@ -64,8 +64,10 @@ export const agent = (artifactsData, config, args = {}, logger = console) => {
     ...normalizedEnvVars,
 
     // Get commit message using git if includeCommitMessage is set and
-    // there is no --commit-message argument
-    ...includeCommitMessage && !args.commitMessage && { commitMessage: getCommitMessage() },
+    // there is no --commit-message argument or RELATIVE_CI_COMMIT_MESSAGE
+    ...includeCommitMessage && !normalizedEnvVars.commitMessage && {
+      commitMessage: getCommitMessage(),
+    },
   };
 
   debug('Job parameters', maskObjectProperties(params, ['key']));
