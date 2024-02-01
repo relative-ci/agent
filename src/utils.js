@@ -104,6 +104,19 @@ function resolveSlug(envVars) {
 }
 
 /**
+ * @param {import('env-ci').CiEnv} data
+ * @param {string} key
+ * @returns {string | undefined}
+ */
+function getEnvCIVar(data, key) {
+  if (!data[key]) {
+    return undefined;
+  }
+
+  return data[key];
+}
+
+/**
  * Extract CI environment variables using env-ci and custom fallback env vars
  * @returns {EnvVars}
  */
@@ -131,12 +144,12 @@ export function getEnvVars() {
     key: customEnvVars.key,
     endpoint: customEnvVars.endpoint,
     isCi: envCIvars.isCi, // process.env.CI
-    service: customEnvVars.service || ('service' in envCIvars && envCIvars.service),
+    service: customEnvVars.service || getEnvCIVar(envCIvars, 'service'),
     slug: customEnvVars.slug || resolveSlug(envCIvars),
-    branch: customEnvVars.branch || ('prBranch' in envCIvars && envCIvars.prBranch) || ('branch' in envCIvars && envCIvars.branch),
-    pr: customEnvVars.pr || ('pr' in envCIvars && envCIvars.pr),
-    build: customEnvVars.build || ('build' in envCIvars && envCIvars.build),
-    buildUrl: customEnvVars.buildUrl || ('buildUrl' in envCIvars && envCIvars.buildUrl),
+    branch: customEnvVars.branch || getEnvCIVar(envCIvars, 'prBranch') || getEnvCIVar(envCIvars, 'branch'),
+    pr: customEnvVars.pr || getEnvCIVar(envCIvars, 'pr'),
+    build: customEnvVars.build || getEnvCIVar(envCIvars, 'build'),
+    buildUrl: customEnvVars.buildUrl || getEnvCIVar(envCIvars, 'buildUrl'),
     commit: customEnvVars.commit || envCIvars.commit,
     commitMessage: customEnvVars.commitMessage,
   };
