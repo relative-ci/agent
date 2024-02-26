@@ -59,6 +59,11 @@ export default async (data, params, config, logger) => {
   logger.info('Send stats to RelativeCI', `branch=${branch}`, `commit=${commit}`);
 
   try {
+    debug('Request ready');
+    await new Promise((resolve) => { setTimeout(() => { resolve(); }, 30 * 1000); });
+
+    debug('Request sent');
+
     const response = await fetch(endpoint, {
       method: 'POST',
       headers: {
@@ -66,6 +71,8 @@ export default async (data, params, config, logger) => {
       },
       body: JSON.stringify(payload),
     });
+
+    debug('Response recieved');
 
     const responseData = await response.json();
 
