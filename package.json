@@ -45,7 +45,7 @@
   },
   "homepage": "https://relative-ci.com/documentation/setup",
   "devDependencies": {
-    "@babel/cli": "7.24.1",
+    "@babel/cli": "7.24.6",
     "@babel/core": "7.24.5",
     "@babel/preset-env": "7.24.6",
     "@release-it/conventional-changelog": "8.0.1",
