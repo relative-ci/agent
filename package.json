@@ -47,7 +47,7 @@
   "devDependencies": {
     "@babel/cli": "7.24.7",
     "@babel/core": "7.24.9",
-    "@babel/preset-env": "7.24.7",
+    "@babel/preset-env": "7.24.8",
     "@release-it/conventional-changelog": "8.0.1",
     "@types/jest": "29.5.12",
     "eslint": "8.57.0",
