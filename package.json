@@ -65,7 +65,7 @@
     "@bundle-stats/plugin-webpack-validate": "4.13.4",
     "core-js": "3.37.1",
     "cosmiconfig": "9.0.0",
-    "debug": "4.3.5",
+    "debug": "4.3.6",
     "dotenv": "16.4.5",
     "env-ci": "7.3.0",
     "fs-extra": "11.2.0",
