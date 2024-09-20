@@ -20,7 +20,7 @@ jobs:
         run: echo "PACKAGE=npm" >> $GITHUB_OUTPUT
 
       - name: Use Node.js
-        uses: actions/setup-node@v4.0.3
+        uses: actions/setup-node@v4.0.4
         with:
           node-version-file: ".nvmrc"
           cache: ${{ steps.cache.outputs.PACKAGE }}
@@ -53,7 +53,7 @@ jobs:
         run: echo "PACKAGE=npm" >> $GITHUB_OUTPUT
 
       - name: Use Node.js
-        uses: actions/setup-node@v4.0.3
+        uses: actions/setup-node@v4.0.4
         with:
           node-version-file: ".nvmrc"
           cache: ${{ steps.cache.outputs.PACKAGE }}
@@ -81,7 +81,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Use Node.js
-        uses: actions/setup-node@v4.0.3
+        uses: actions/setup-node@v4.0.4
         with:
           node-version: ${{ matrix.node }}
 
@@ -114,7 +114,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Use Node.js
-        uses: actions/setup-node@v4.0.3
+        uses: actions/setup-node@v4.0.4
         with:
           node-version: ${{ matrix.node }}
 
@@ -156,7 +156,7 @@ jobs:
         run: echo "PACKAGE=npm" >> $GITHUB_OUTPUT
 
       - name: Use Node.js
-        uses: actions/setup-node@v4.0.3
+        uses: actions/setup-node@v4.0.4
         with:
           node-version-file: ".nvmrc"
           cache: ${{ steps.cache.outputs.PACKAGE }}
