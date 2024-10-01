@@ -50,7 +50,7 @@
     "@babel/preset-env": "7.25.4",
     "@release-it/conventional-changelog": "8.0.2",
     "@types/jest": "29.5.13",
-    "eslint": "8.57.0",
+    "eslint": "9.11.1",
     "eslint-config-airbnb-base": "15.0.0",
     "eslint-plugin-import": "2.30.0",
     "eslint-plugin-jest": "28.8.3",
