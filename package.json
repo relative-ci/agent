@@ -58,7 +58,7 @@
     "memory-fs": "0.5.0",
     "release-it": "17.10.0",
     "webpack4": "npm:webpack@^4.42.1",
-    "webpack": "5.96.1"
+    "webpack": "5.97.1"
   },
   "dependencies": {
     "@bundle-stats/plugin-webpack-filter": "4.17.0",
