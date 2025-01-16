@@ -68,7 +68,7 @@
     "debug": "4.4.0",
     "dotenv": "16.4.7",
     "env-ci": "7.3.0",
-    "fs-extra": "11.2.0",
+    "fs-extra": "11.3.0",
     "isomorphic-fetch": "3.0.0",
     "lodash": "4.17.21",
     "yargs": "17.7.2"
