@@ -9,7 +9,7 @@
     "relative-ci-agent": "bin/index.js"
   },
   "scripts": {
-    "build": "babel src -d lib",
+    "build": "rimraf ./lib && rollup -c",
     "lint": "eslint .",
     "bump": "./scripts/bump.sh",
     "release": "./scripts/release.sh",
@@ -45,10 +45,11 @@
   },
   "homepage": "https://relative-ci.com/documentation/setup",
   "devDependencies": {
-    "@babel/cli": "7.26.4",
     "@babel/core": "7.26.7",
     "@babel/preset-env": "7.26.7",
     "@release-it/conventional-changelog": "10.0.0",
+    "@rollup/plugin-babel": "6.0.4",
+    "@rollup/plugin-json": "6.1.0",
     "@types/jest": "29.5.14",
     "eslint": "8.57.0",
     "eslint-config-airbnb-base": "15.0.0",
@@ -57,8 +58,10 @@
     "jest": "29.7.0",
     "memory-fs": "0.5.0",
     "release-it": "18.1.2",
-    "webpack4": "npm:webpack@^4.42.1",
-    "webpack": "5.97.1"
+    "rimraf": "6.0.1",
+    "rollup": "4.32.1",
+    "webpack": "5.97.1",
+    "webpack4": "npm:webpack@^4.42.1"
   },
   "dependencies": {
     "@bundle-stats/plugin-webpack-filter": "4.18.2",

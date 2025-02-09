@@ -7,6 +7,7 @@ import dotenv from 'dotenv';
 import { set } from 'lodash';
 import filter from '@bundle-stats/plugin-webpack-filter';
 
+// @ts-ignore
 import packageInfo from '../package.json';
 import * as LOCALES from '../locales/en';
 import send from './send';

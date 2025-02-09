@@ -2,7 +2,7 @@ import fs from 'fs';
 import { get } from 'lodash';
 import fetch from 'isomorphic-fetch';
 
-import LOCALES from '../locales/en';
+import * as LOCALES from '../locales/en';
 import { debug, maskObjectProperties } from './utils';
 
 export default async (data, params, config, logger) => {
