@@ -3,7 +3,7 @@ import { defineConfig } from 'rollup';
 import replacePlugin from '@rollup/plugin-replace';
 import babelPlugin from '@rollup/plugin-babel';
 
-import packageInfo from './package.json' assert { type: 'json' };
+import packageInfo from './package.json' with { type: 'json' };
 
 const CONTEXT = path.join(process.cwd(), './src');
 const OUTPUT_DIR = 'lib';

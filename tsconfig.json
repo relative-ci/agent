@@ -1,0 +1,15 @@
+{
+  "extends": "@tsconfig/node14/tsconfig.json",
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "noImplicitAny": true,
+    "removeComments": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "preserveConstEnums": true,
+    "strict": true,
+    "allowJs": true,
+    "sourceMap": true,
+    "noEmit": true
+  }
+}
