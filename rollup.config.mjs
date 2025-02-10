@@ -1,5 +1,7 @@
 import path from 'node:path';
 import { defineConfig } from 'rollup';
+import commonjsPlugin from '@rollup/plugin-commonjs';
+import nodeResolvePlugin from '@rollup/plugin-node-resolve';
 import replacePlugin from '@rollup/plugin-replace';
 import babelPlugin from '@rollup/plugin-babel';
 
@@ -31,6 +33,8 @@ export default defineConfig([
         preventAssignment: true,
         AGENT_VERSION: JSON.stringify(packageInfo.version),
       }),
+      commonjsPlugin(),
+      nodeResolvePlugin(),
       babelPlugin({
         babelHelpers: 'bundled',
         exclude: 'node_modules/**',
