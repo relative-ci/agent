@@ -52,7 +52,7 @@ export default async function cli(processArgs) {
 
   const data = readJSONSync(webpackArtifactFilepath);
 
-  const invalidData = validate(data);
+  const invalidData = validate.default(data);
 
   if (invalidData) {
     throw new Error(invalidData);

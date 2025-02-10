@@ -15,7 +15,7 @@ import {
 
 const WEBPACK_STATS = 'webpack.stats';
 const SOURCE_EXTRACTORS = {
-  [WEBPACK_STATS]: filter,
+  [WEBPACK_STATS]: filter.default,
 };
 
 const getFilteredData = (artifactsData) => artifactsData.reduce(

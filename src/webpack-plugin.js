@@ -27,7 +27,7 @@ const sendStats = async (compilation, options) => {
     ? compilation.getInfrastructureLogger(PLUGIN_NAME)
     : console;
 
-  const invalidData = validate(data);
+  const invalidData = validate.default(data);
 
   if (invalidData) {
     logger.warn(invalidData);
