@@ -88,5 +88,10 @@
     "webpack": {
       "optional": true
     }
+  },
+  "overrides": {
+    "eslint-config-airbnb-base": {
+      "eslint": "^9.0.0"
+    }
   }
 }
