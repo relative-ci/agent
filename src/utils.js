@@ -43,7 +43,7 @@ export function getCommitMessage() {
 
   try {
     message = childProcess.execSync('git log -1 --pretty=%B').toString().trim();
-  } catch (err) {
+  } catch (error) { // eslint-disable-line no-unused-vars
     console.error('Error reading the commit message from git');
   }
 
@@ -75,7 +75,7 @@ export function getSlugFromGitURL(repositoryURL) {
     const url = new URL(repositoryURL);
     return url.pathname.replace(GIT_PATHNAME_SLUG_PATTERN, '$1');
   } catch (err) {
-    console.warn(err.message); // eslint-disable-line no-console
+    console.warn(err.message);
     return undefined;
   }
 }
