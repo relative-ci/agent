@@ -47,14 +47,16 @@
   "devDependencies": {
     "@babel/core": "7.26.8",
     "@babel/preset-env": "7.26.8",
+    "@eslint/eslintrc": "3.2.0",
+    "@eslint/js": "9.20.0",
     "@release-it/conventional-changelog": "10.0.0",
     "@rollup/plugin-babel": "6.0.4",
     "@rollup/plugin-commonjs": "28.0.2",
     "@rollup/plugin-node-resolve": "16.0.0",
     "@rollup/plugin-replace": "6.0.2",
-    "@tsconfig/node14": "^14.1.2",
+    "@tsconfig/node14": "14.1.2",
     "@types/jest": "29.5.14",
-    "eslint": "8.57.0",
+    "eslint": "9.20.0",
     "eslint-config-airbnb-base": "15.0.0",
     "eslint-plugin-import": "2.31.0",
     "eslint-plugin-jest": "28.11.0",
@@ -85,6 +87,11 @@
   "peerDependenciesMeta": {
     "webpack": {
       "optional": true
+    }
+  },
+  "overrides": {
+    "eslint-config-airbnb-base": {
+      "eslint": "^9.0.0"
     }
   }
 }

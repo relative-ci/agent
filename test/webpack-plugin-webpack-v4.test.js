@@ -1,7 +1,7 @@
 jest.mock('isomorphic-fetch');
 jest.mock('webpack', () => require('webpack4')); // eslint-disable-line
 
-const webpack = require('webpack4'); // eslint-disable-line
+const webpack = require('webpack4');
 const MemoryFS = require('memory-fs');
 const fetch = require('isomorphic-fetch');
 const { merge } = require('lodash');
