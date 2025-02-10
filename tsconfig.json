@@ -1,15 +1,22 @@
 {
   "extends": "@tsconfig/node14/tsconfig.json",
+  "include": ["src"],
   "compilerOptions": {
-    "allowSyntheticDefaultImports": true,
-    "noImplicitAny": true,
-    "removeComments": true,
-    "resolveJsonModule": true,
-    "esModuleInterop": true,
-    "preserveConstEnums": true,
-    "strict": true,
     "allowJs": true,
+    "declaration": true,
+    "declarationDir": "lib",
     "sourceMap": true,
+    "rootDir": "./src",
+    "strict": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "moduleResolution": "bundler",
+    "module": "esnext",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
     "noEmit": true
   }
 }

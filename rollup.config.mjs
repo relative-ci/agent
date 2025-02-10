@@ -4,6 +4,7 @@ import commonjsPlugin from '@rollup/plugin-commonjs';
 import nodeResolvePlugin from '@rollup/plugin-node-resolve';
 import replacePlugin from '@rollup/plugin-replace';
 import babelPlugin from '@rollup/plugin-babel';
+import typescriptPlugin from '@rollup/plugin-typescript';
 
 import packageInfo from './package.json' with { type: 'json' };
 
@@ -14,7 +15,7 @@ export default defineConfig([
   {
     context: CONTEXT,
     input: {
-      index: './src/index.js',
+      index: './src/index.ts',
       cli: './src/cli.js',
     },
     output: {
@@ -35,6 +36,7 @@ export default defineConfig([
       }),
       commonjsPlugin(),
       nodeResolvePlugin(),
+      typescriptPlugin(),
       babelPlugin({
         babelHelpers: 'bundled',
         exclude: 'node_modules/**',
