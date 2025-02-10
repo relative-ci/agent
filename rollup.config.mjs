@@ -1,7 +1,9 @@
 import path from 'node:path';
 import { defineConfig } from 'rollup';
-import jsonPlugin from '@rollup/plugin-json';
+import replacePlugin from '@rollup/plugin-replace';
 import babelPlugin from '@rollup/plugin-babel';
+
+import packageInfo from './package.json' assert { type: 'json' };
 
 const CONTEXT = path.join(process.cwd(), './src');
 const OUTPUT_DIR = 'lib';
@@ -25,7 +27,10 @@ export default defineConfig([
     },
     external: /node_modules/,
     plugins: [
-      jsonPlugin(),
+      replacePlugin({
+        preventAssignment: true,
+        AGENT_VERSION: JSON.stringify(packageInfo.version),
+      }),
       babelPlugin({
         babelHelpers: 'bundled',
         exclude: 'node_modules/**',

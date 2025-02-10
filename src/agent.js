@@ -7,8 +7,6 @@ import dotenv from 'dotenv';
 import { set } from 'lodash';
 import filter from '@bundle-stats/plugin-webpack-filter';
 
-// @ts-ignore
-import packageInfo from '../package.json';
 import * as LOCALES from '../locales/en';
 import send from './send';
 import {
@@ -60,7 +58,7 @@ export const agent = (artifactsData, config, args = {}, logger = console) => {
   const { includeCommitMessage } = config;
 
   const params = {
-    agentVersion: packageInfo.version,
+    agentVersion: AGENT_VERSION,
 
     ...normalizedParams,
 

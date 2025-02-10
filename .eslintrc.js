@@ -4,6 +4,7 @@ module.exports = {
     'jest/globals': true,
   },
   globals: {
+    AGENT_VERSION: true,
     describe: true,
     it: true,
   },
