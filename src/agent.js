@@ -7,7 +7,6 @@ import dotenv from 'dotenv';
 import { set } from 'lodash';
 import filter from '@bundle-stats/plugin-webpack-filter';
 
-import packageInfo from '../package.json';
 import * as LOCALES from '../locales/en';
 import send from './send';
 import {
@@ -16,7 +15,7 @@ import {
 
 const WEBPACK_STATS = 'webpack.stats';
 const SOURCE_EXTRACTORS = {
-  [WEBPACK_STATS]: filter,
+  [WEBPACK_STATS]: filter.default,
 };
 
 const getFilteredData = (artifactsData) => artifactsData.reduce(
@@ -59,7 +58,7 @@ export const agent = (artifactsData, config, args = {}, logger = console) => {
   const { includeCommitMessage } = config;
 
   const params = {
-    agentVersion: packageInfo.version,
+    agentVersion: AGENT_VERSION,
 
     ...normalizedParams,
 

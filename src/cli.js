@@ -6,7 +6,7 @@ import yargs from 'yargs/yargs';
 import { hideBin } from 'yargs/helpers';
 import validate from '@bundle-stats/plugin-webpack-validate';
 
-import LOCALES from '../locales/en';
+import * as LOCALES from '../locales/en';
 import { agent } from './agent';
 import { debug } from './utils';
 
@@ -52,7 +52,7 @@ export default async function cli(processArgs) {
 
   const data = readJSONSync(webpackArtifactFilepath);
 
-  const invalidData = validate(data);
+  const invalidData = validate.default(data);
 
   if (invalidData) {
     throw new Error(invalidData);
