@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+// eslint-disable-next-line
 const cli = require('../lib/cli').default;
 
 (async () => {
