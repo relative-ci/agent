@@ -14,6 +14,7 @@
     "noUnusedParameters": true,
     "moduleResolution": "bundler",
     "module": "esnext",
+    "resolveJsonModule": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,

@@ -3,6 +3,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import js from '@eslint/js';
 import { FlatCompat } from '@eslint/eslintrc';
+import tseslint from 'typescript-eslint';
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -42,6 +43,16 @@ export default [
           devDependencies: ['**/*.test.js', '*.config.mjs'],
         },
       ],
+    },
+  },
+  ...tseslint.configs.recommended,
+  {
+    files: [
+      'config/*.js',
+      'test/*.test.js',
+    ],
+    rules: {
+      '@typescript-eslint/no-require-imports': 'off',
     },
   },
 ];
