@@ -1,9 +1,31 @@
-import webpack from 'webpack';
+import webpack, { type Compiler, type Configuration } from 'webpack';
 import { merge } from 'lodash';
 import validate from '@bundle-stats/plugin-webpack-validate';
 
 import { agent } from './agent';
 import { debug, getEnvVars } from './utils';
+
+type RelativeCiAgentWebpackPluginOptions = {
+  /**
+   * Plugin is enabled - sends data to RelativeCI
+   * @default env-ci isCi value
+   */
+  enabled?: boolean;
+  /**
+   * Read commit message from git
+   * @default true
+   */
+  includeCommitMessage?: boolean;
+  /**
+   * Output payload on a local file for debugging
+   */
+  payloadFilepath?: string;
+  /**
+   * Webpack stats options
+   * @default assets, chunks, modules
+   */
+  stats?: Configuration['stats'];
+}
 
 const PLUGIN_NAME = 'RelativeCiAgent';
 
@@ -19,7 +41,10 @@ const DEFAULT_OPTIONS = {
 
 const isWebpack5 = parseInt(webpack.version, 10) === 5;
 
-const sendStats = async (compilation, options) => {
+const sendStats = async (
+  compilation: any,
+  options: RelativeCiAgentWebpackPluginOptions,
+) => {
   const { stats: statsOptions, ...config } = options;
   const data = compilation.getStats().toJson(statsOptions);
 
@@ -27,7 +52,7 @@ const sendStats = async (compilation, options) => {
     ? compilation.getInfrastructureLogger(PLUGIN_NAME)
     : console;
 
-  const invalidData = validate.default(data);
+  const invalidData = validate(data);
 
   if (invalidData) {
     logger.warn(invalidData);
@@ -38,14 +63,16 @@ const sendStats = async (compilation, options) => {
 };
 
 export class RelativeCiAgentWebpackPlugin {
-  constructor(options) {
+  options: RelativeCiAgentWebpackPluginOptions;
+
+  constructor(options: RelativeCiAgentWebpackPluginOptions) {
     this.options = options;
   }
 
-  apply(compiler) {
+  apply(compiler: Compiler) {
     const { isCi } = getEnvVars();
 
-    const options = merge(
+    const options: RelativeCiAgentWebpackPluginOptions = merge(
       {},
       DEFAULT_OPTIONS,
       {

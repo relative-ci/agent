@@ -1,4 +1,4 @@
-const { getSlugFromGitURL } = require('../utils');
+import { getSlugFromGitURL } from '../utils';
 
 describe('Utils - getSlugFromGitURL', () => {
   test('should fallback when the data is missing or invalid', () => {

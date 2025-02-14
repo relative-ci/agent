@@ -16,8 +16,9 @@
     "module": "esnext",
     "resolveJsonModule": true,
     "esModuleInterop": true,
-    "skipLibCheck": true,
+    "skipLibCheck": false,
     "forceConsistentCasingInFileNames": true,
-    "noEmit": true
+    "noEmit": true,
+    "types": ["node", "jest", "./typings.d.ts"]
   }
 }

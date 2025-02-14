@@ -16,7 +16,7 @@ export default defineConfig([
     context: CONTEXT,
     input: {
       index: './src/index.ts',
-      cli: './src/cli.js',
+      cli: './src/cli.ts',
     },
     output: {
       dir: OUTPUT_DIR,
