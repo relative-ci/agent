@@ -13,7 +13,7 @@
     "lint": "eslint .",
     "bump": "./scripts/bump.sh",
     "release": "./scripts/release.sh",
-    "pretest:webpack-plugin": "npm install webpack4@npm:webpack@4.42.1",
+    "pretest:webpack-plugin": "npm install webpack4@npm:webpack@^4.47.0",
     "test": "npm run test:cli && npm run test:webpack-plugin",
     "test:cli": "jest test/cli.test.js",
     "test:webpack-plugin": "jest test/webpack-plugin",
@@ -61,6 +61,7 @@
     "@types/fs-extra": "11.0.4",
     "@types/jest": "29.5.14",
     "@types/lodash": "4.17.15",
+    "@types/node-fetch": "2.6.12",
     "eslint": "9.20.0",
     "eslint-config-airbnb-base": "15.0.0",
     "eslint-plugin-import": "2.31.0",
@@ -84,8 +85,8 @@
     "dotenv": "16.4.7",
     "env-ci": "7.3.0",
     "fs-extra": "11.3.0",
-    "isomorphic-fetch": "3.0.0",
     "lodash": "4.17.21",
+    "node-fetch": "2.7.0",
     "yargs": "17.7.2"
   },
   "peerDependencies": {

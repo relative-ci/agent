@@ -1,7 +1,5 @@
 import fs from 'fs';
-import { get } from 'lodash';
-// @ts-expect-error Types not available
-import fetch from 'isomorphic-fetch';
+import fetch from 'node-fetch';
 
 import { type SendParams } from './constants';
 import * as LOCALES from './locales/en';
@@ -9,6 +7,20 @@ import { debug, maskObjectProperties } from './utils';
 
 type SendConfig = {
   payloadFilepath?: string;
+}
+
+type SendResponse = {
+  code?: string;
+  res?: {
+    job?: {
+      internalBuildNumber?: string;
+    };
+  };
+  info?: {
+    message?: {
+      txt?: string;
+    }
+  };
 }
 
 export default async function send(
@@ -78,7 +90,7 @@ export default async function send(
       body: JSON.stringify(payload),
     });
 
-    const responseData = await response.json();
+    const responseData = await response.json() as SendResponse;
 
     debug('Response', responseData);
 
@@ -94,8 +106,8 @@ export default async function send(
       return;
     }
 
-    const buildNumber = get(res, 'job.internalBuildNumber');
-    const buildSizeInfo = get(responseData, 'info.message.txt');
+    const buildNumber = res?.job?.internalBuildNumber;
+    const buildSizeInfo = responseData?.info?.message?.txt;
 
     logger.info(`Job #${buildNumber} done.`);
     logger.info(buildSizeInfo);
