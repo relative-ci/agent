@@ -14,7 +14,8 @@
     "bump": "./scripts/bump.sh",
     "release": "./scripts/release.sh",
     "pretest:webpack-plugin": "npm install webpack4@npm:webpack@^4.47.0",
-    "test": "npm run test:cli && npm run test:webpack-plugin",
+    "test": "npm run test:unit && npm run test:cli && npm run test:webpack-plugin",
+    "test:unit": "jest src",
     "test:cli": "jest test/cli.test.js",
     "test:webpack-plugin": "jest test/webpack-plugin",
     "prepublishOnly": "npm run build"
@@ -71,6 +72,7 @@
     "release-it": "18.1.2",
     "rimraf": "6.0.1",
     "rollup": "4.32.1",
+    "ts-jest": "29.2.5",
     "typescript": "5.7.3",
     "typescript-eslint": "8.24.0",
     "webpack": "5.97.1",
