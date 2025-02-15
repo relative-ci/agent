@@ -1,4 +1,5 @@
-import fs from 'fs';
+import fs from 'fs/promises';
+import path from 'path';
 import fetch from 'node-fetch';
 
 import { type SendParams } from './constants';
@@ -62,18 +63,22 @@ export default async function send(
     rawData: data,
   };
 
-  const { payloadFilepath } = config;
+  const formattedPayload = maskObjectProperties(payload, ['key']);
 
-  debug('Payload', maskObjectProperties(payload, ['key']));
   debug('Payload size', Buffer.byteLength(JSON.stringify(payload)));
 
+  const { payloadFilepath } = config;
+
+  /**
+   * Save payload on disk for debugging
+   */
   if (payloadFilepath) {
     logger.info('Save payload to', payloadFilepath);
 
     try {
-      // Obfuscate private data
-      const output = { ...payload, key: '***' };
-      fs.writeFileSync(payloadFilepath, JSON.stringify(output, null, 2));
+      const payloadBaseDirectory = path.dirname(payloadFilepath);
+      await fs.mkdir(payloadBaseDirectory, { recursive: true });
+      await fs.writeFile(payloadFilepath, JSON.stringify(formattedPayload, null, 2));
     } catch (err) {
       logger.warn('Error saving payload', err instanceof Error ? err.message : undefined);
     }
@@ -99,7 +104,7 @@ export default async function send(
       return;
     }
 
-    const { res } = responseData;
+    const { res, info } = responseData;
 
     if (!res) {
       logger.warn(LOCALES.GENERIC_ERROR, responseData);
@@ -107,7 +112,7 @@ export default async function send(
     }
 
     const buildNumber = res?.job?.internalBuildNumber;
-    const buildSizeInfo = responseData?.info?.message?.txt;
+    const buildSizeInfo = info?.message?.txt;
 
     logger.info(`Job #${buildNumber} done.`);
     logger.info(buildSizeInfo);
