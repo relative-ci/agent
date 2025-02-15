@@ -53,7 +53,8 @@ export default async function cli(processArgs: Array<string>) {
 
   const data = readJSONSync(webpackArtifactFilepath);
 
-  const invalidData = validate(data);
+  // @ts-expect-error incorrect type export
+  const invalidData = validate.default(data);
 
   if (invalidData) {
     throw new Error(invalidData);

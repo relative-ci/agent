@@ -52,7 +52,8 @@ const sendStats = async (
     ? compilation.getInfrastructureLogger(PLUGIN_NAME)
     : console;
 
-  const invalidData = validate(data);
+  // @ts-expect-error incorrect type export
+  const invalidData = validate.default(data);
 
   if (invalidData) {
     logger.warn(invalidData);

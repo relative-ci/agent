@@ -13,7 +13,8 @@ import {
 
 const WEBPACK_STATS = 'webpack.stats';
 const SOURCE_EXTRACTORS = {
-  [WEBPACK_STATS]: filter,
+  // @ts-expect-error incorrect type export
+  [WEBPACK_STATS]: filter.default,
 } as const;
 
 type Artifact = {
