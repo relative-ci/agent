@@ -1,3 +1,7 @@
+export const DEFAULT_ENDPOINT = 'https://api.relative-ci.com/save';
+
+export const MASK = '******';
+
 export type SendAgentParams = {
   /**
    * RelativeCI project API key
