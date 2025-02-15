@@ -6,12 +6,12 @@ import yargs from 'yargs/yargs';
 import { hideBin } from 'yargs/helpers';
 import validate from '@bundle-stats/plugin-webpack-validate';
 
-import * as LOCALES from '../locales/en';
+import * as LOCALES from './locales/en';
 import { agent } from './agent';
 import { debug } from './utils';
 
-export default async function cli(processArgs) {
-  const args = yargs(hideBin(processArgs))
+export default async function cli(processArgs: Array<string>) {
+  const args = await yargs(hideBin(processArgs))
     .usage('Usage: $0 OPTIONS')
 
     .option('config-dir', { describe: 'Config directory', default: '', alias: 'c' })
@@ -27,7 +27,8 @@ export default async function cli(processArgs) {
 
   const searchConfig = cosmiconfigSync('relativeci', {
     searchStrategy: 'global',
-  }).search(args['config-dir']);
+  }).search('config-dir' in args ? args['config-dir'] : undefined);
+
   debug('Config', searchConfig);
 
   if (!searchConfig) {
@@ -52,6 +53,7 @@ export default async function cli(processArgs) {
 
   const data = readJSONSync(webpackArtifactFilepath);
 
+  // @ts-expect-error incorrect type export
   const invalidData = validate.default(data);
 
   if (invalidData) {

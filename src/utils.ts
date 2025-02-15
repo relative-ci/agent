@@ -1,12 +1,11 @@
-/**
- * @typedef {import('../').EnvVars} EnvVars
- */
 import childProcess from 'child_process';
-import envCI from 'env-ci';
+import envCI, { type CiEnv } from 'env-ci';
 import getDebug from 'debug';
 import get from 'lodash/get';
 import set from 'lodash/set';
 import merge from 'lodash/merge';
+
+import { type EnvVars } from './constants';
 
 const DEFAULT_ENDPOINT = 'https://api.relative-ci.com/save';
 const DEBUG_NAME = 'relative-ci:agent';
@@ -14,20 +13,12 @@ const MASK = '******';
 
 export const debug = getDebug(DEBUG_NAME);
 
-/**
- * @param {string|number} token
- * @returns {string}
- */
-export function maskToken(token) {
+export function maskToken(token: string | number): string {
   const text = token.toString();
   return `${MASK}${text.substring(text.length - 6)}`;
 }
 
-/**
- * @param {object} data
- * @param {Array<string>} propertyPaths
- */
-export function maskObjectProperties(data, propertyPaths) {
+export function maskObjectProperties(data: unknown, propertyPaths: Array<string>): unknown {
   const normalizedData = merge({}, data);
 
   propertyPaths.forEach((propertyPath) => {
@@ -38,13 +29,13 @@ export function maskObjectProperties(data, propertyPaths) {
   return normalizedData;
 }
 
-export function getCommitMessage() {
+export function getCommitMessage(): string {
   let message = '';
 
   try {
     message = childProcess.execSync('git log -1 --pretty=%B').toString().trim();
-  } catch (error) { // eslint-disable-line no-unused-vars
-    console.error('Error reading the commit message from git');
+  } catch (error) {
+    console.error('Error reading commit message from git', error);
   }
 
   return message;
@@ -58,11 +49,8 @@ const GIT_PATHNAME_SLUG_PATTERN = /^\/(.*)\.git$/;
 
 /**
  * Extract repository slug(owner/repo) from the repo URL
- *
- * @param {string} repositoryURL
- * @returns {string|undefined}
  */
-export function getSlugFromGitURL(repositoryURL) {
+export function getSlugFromGitURL(repositoryURL?: string): string | undefined {
   if (!repositoryURL) {
     return undefined;
   }
@@ -75,52 +63,46 @@ export function getSlugFromGitURL(repositoryURL) {
     const url = new URL(repositoryURL);
     return url.pathname.replace(GIT_PATHNAME_SLUG_PATTERN, '$1');
   } catch (err) {
-    console.warn(err.message);
+    if (err instanceof Error) {
+      console.warn(err.message);
+    }
     return undefined;
   }
 }
 
 /**
  * Resolve repository slug
- * @param {import('env-ci').CiEnv} envVars
- * @returns {string}
  */
-function resolveSlug(envVars) {
+function resolveSlug(envVars: CiEnv): string {
   // env-ci does not provide a slug for jenkins
   // https://github.com/semantic-release/env-ci/blob/master/services/jenkins.js#LL18
   // https://www.jenkins.io/doc/book/pipeline/jenkinsfile/#using-environment-variables
   // https://plugins.jenkins.io/git/#plugin-content-environment-variables
   if ('service' in envVars && envVars.service === 'jenkins') {
-    return getSlugFromGitURL(process.env.GIT_URL);
+    return getSlugFromGitURL(process.env.GIT_URL || '') || '';
   }
 
   // env-ci does not read repository slug, but buildkite org/project
   // https://buildkite.com/docs/pipelines/environment-variables#BUILDKITE_REPO
   if ('service' in envVars && envVars.service === 'buildkite') {
-    return getSlugFromGitURL(process.env.BUILDKITE_REPO);
+    return getSlugFromGitURL(process.env.BUILDKITE_REPO || '') || '';
   }
 
   return 'slug' in envVars ? envVars.slug : '';
 }
 
-/**
- * @param {import('env-ci').CiEnv} data
- * @param {string} key
- * @returns {string | undefined}
- */
-function getEnvCIVar(data, key) {
-  if (!data[key]) {
+function getEnvCIVar(data: CiEnv, key: string): string | undefined {
+  if (!data[key as keyof typeof data]) {
     return undefined;
   }
 
-  return data[key];
+  return data[key as keyof typeof data] as string;
 }
 
 /**
  * Extract CI environment variables using env-ci and custom fallback env vars
- * @returns {EnvVars}
  */
-export function getEnvVars() {
+export function getEnvVars(): Partial<EnvVars> {
   // Get env-ci environment variables
   const envCIvars = envCI();
   debug('env-ci environment variables', envCIvars);
@@ -141,8 +123,6 @@ export function getEnvVars() {
   debug('RELATIVE_CI environment variables', maskObjectProperties(customEnvVars, ['key']));
 
   const resolvedEnvVars = {
-    key: customEnvVars.key,
-    endpoint: customEnvVars.endpoint,
     isCi: envCIvars.isCi, // process.env.CI
     service: customEnvVars.service || getEnvCIVar(envCIvars, 'service'),
     slug: customEnvVars.slug || resolveSlug(envCIvars),
@@ -152,6 +132,8 @@ export function getEnvVars() {
     buildUrl: customEnvVars.buildUrl || getEnvCIVar(envCIvars, 'buildUrl'),
     commit: customEnvVars.commit || envCIvars.commit,
     commitMessage: customEnvVars.commitMessage,
+    key: customEnvVars.key,
+    endpoint: customEnvVars.endpoint,
   };
   debug('resolved environment variables', maskObjectProperties(resolvedEnvVars, ['key']));
 

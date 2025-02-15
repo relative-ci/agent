@@ -1,13 +1,11 @@
-/**
- * @typedef {import('../').AgentConfig} AgentConfig
- * @typedef {import('../').AgentArgs} AgentArgs
- * @typedef {import('../').EnvVars} EnvVars
- */
 import dotenv from 'dotenv';
 import { set } from 'lodash';
 import filter from '@bundle-stats/plugin-webpack-filter';
 
-import * as LOCALES from '../locales/en';
+import type {
+  AgentArgs, AgentConfig, EnvVars, SendParams,
+} from './constants';
+import * as LOCALES from './locales/en';
 import send from './send';
 import {
   debug, getCommitMessage, getEnvVars, maskObjectProperties,
@@ -15,29 +13,39 @@ import {
 
 const WEBPACK_STATS = 'webpack.stats';
 const SOURCE_EXTRACTORS = {
+  // @ts-expect-error incorrect type export
   [WEBPACK_STATS]: filter.default,
-};
+} as const;
 
-const getFilteredData = (artifactsData) => artifactsData.reduce(
-  (agg, { key, data, options }) => set(agg, key, SOURCE_EXTRACTORS[key](data, options)),
+type Artifact = {
+  key: string;
+  data: any;
+  options?: any;
+}
+
+const getFilteredData = (
+  artifactsData: Array<Artifact>,
+) => artifactsData.reduce(
+  (agg, { key, data, options }) => set(
+    agg,
+    key,
+    SOURCE_EXTRACTORS[key as keyof typeof SOURCE_EXTRACTORS](data, options),
+  ),
   {},
 );
 
-/**
- * @param {Array<object>} artifactsData
- * @param {AgentConfig} config
- * @param {AgentArgs} [args]
- * @param {Console} [logger]
- * @return {void|Promise<void>}
- */
-export const agent = (artifactsData, config, args = {}, logger = console) => {
+export async function agent(
+  artifactsData: Array<Artifact>,
+  config: AgentConfig,
+  args: AgentArgs = {},
+  logger = console,
+): Promise<void> {
   dotenv.config();
 
   const envVars = getEnvVars();
 
   // Normalized params - merge provided args with env vars
-  // @type {EnvVars}
-  const normalizedParams = {
+  const normalizedParams: Partial<EnvVars> = {
     slug: args.slug || envVars.slug,
     branch: args.branch || envVars.branch,
     pr: args.pr || envVars.pr,
@@ -53,7 +61,10 @@ export const agent = (artifactsData, config, args = {}, logger = console) => {
     endpoint: envVars.endpoint,
   };
 
-  debug('normalized parameters - agent configuration with environmental variables fallback', maskObjectProperties(normalizedParams, ['key']));
+  debug(
+    'normalized parameters - agent configuration with environmental variables fallback',
+    maskObjectProperties(normalizedParams, ['key']),
+  );
 
   const { includeCommitMessage } = config;
 
@@ -91,5 +102,5 @@ export const agent = (artifactsData, config, args = {}, logger = console) => {
   // Filter only the necessary data
   const filteredData = getFilteredData(artifactsData);
 
-  return send(filteredData, params, config, logger);
-};
+  return send(filteredData, params as SendParams, config, logger);
+}

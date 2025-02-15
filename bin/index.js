@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
-// eslint-disable-next-line
-const cli = require('../lib/cli').default;
+// @ts-expect-error Module available after build
+const cli = require('../lib/cli').default; // eslint-disable-line
 
 (async () => {
   try {

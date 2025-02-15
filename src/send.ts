@@ -1,11 +1,22 @@
 import fs from 'fs';
 import { get } from 'lodash';
+// @ts-expect-error Types not available
 import fetch from 'isomorphic-fetch';
 
-import * as LOCALES from '../locales/en';
+import { type SendParams } from './constants';
+import * as LOCALES from './locales/en';
 import { debug, maskObjectProperties } from './utils';
 
-export default async (data, params, config, logger) => {
+type SendConfig = {
+  payloadFilepath?: string;
+}
+
+export default async function send(
+  data: Record<string, unknown>,
+  params: SendParams,
+  config: SendConfig,
+  logger: typeof console,
+) {
   const {
     key,
     endpoint,
@@ -27,6 +38,7 @@ export default async (data, params, config, logger) => {
     key,
     project: slug,
     service,
+    agentVersion,
     job: {
       commit,
       branch,
@@ -36,7 +48,6 @@ export default async (data, params, config, logger) => {
       commitMessage,
     },
     rawData: data,
-    agentVersion,
   };
 
   const { payloadFilepath } = config;
@@ -52,7 +63,7 @@ export default async (data, params, config, logger) => {
       const output = { ...payload, key: '***' };
       fs.writeFileSync(payloadFilepath, JSON.stringify(output, null, 2));
     } catch (err) {
-      logger.warn('Error saving payload', err.message);
+      logger.warn('Error saving payload', err instanceof Error ? err.message : undefined);
     }
   }
 
@@ -89,7 +100,9 @@ export default async (data, params, config, logger) => {
     logger.info(`Job #${buildNumber} done.`);
     logger.info(buildSizeInfo);
   } catch (err) {
-    logger.warn(err.message);
+    if (err instanceof Error) {
+      logger.warn(err.message);
+    }
     debug('@relative-ci/agent could not send the data', err);
   }
-};
+}
