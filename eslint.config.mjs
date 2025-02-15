@@ -65,6 +65,7 @@ export default [
     files: [
       'config/*.js',
       '**/*.test.js',
+      'test/utils.js',
     ],
     rules: {
       '@typescript-eslint/no-require-imports': 'off',

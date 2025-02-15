@@ -6,6 +6,7 @@ import replacePlugin from '@rollup/plugin-replace';
 import babelPlugin from '@rollup/plugin-babel';
 import typescriptPlugin from '@rollup/plugin-typescript';
 
+// @ts-expect-error Incorrect ts-eslint tsconfig
 import packageInfo from './package.json' with { type: 'json' };
 
 const CONTEXT = path.join(process.cwd(), './src');
