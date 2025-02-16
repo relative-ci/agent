@@ -2,15 +2,11 @@ import fs from 'fs/promises';
 import path from 'path';
 import fetch from 'node-fetch';
 
-import { type SendParams } from './constants';
 import * as LOCALES from './locales/en';
+import { type IngestConfig, type IngestParams } from './constants';
 import { debug, maskObjectProperties } from './utils';
 
-type SendConfig = {
-  payloadFilepath?: string;
-}
-
-type SendResponse = {
+type IngestResponse = {
   code?: string;
   res?: {
     job?: {
@@ -24,11 +20,11 @@ type SendResponse = {
   };
 }
 
-export default async function send(
+export default async function ingest(
   data: Record<string, unknown>,
-  params: SendParams,
-  config: SendConfig,
-  logger: typeof console,
+  params: IngestParams,
+  config: IngestConfig = {},
+  logger: typeof console = console,
 ) {
   const {
     key,
@@ -95,7 +91,7 @@ export default async function send(
       body: JSON.stringify(payload),
     });
 
-    const responseData = await response.json() as SendResponse;
+    const responseData = await response.json() as IngestResponse;
 
     debug('Response', responseData);
 

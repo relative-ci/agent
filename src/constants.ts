@@ -2,7 +2,7 @@ export const DEFAULT_ENDPOINT = 'https://api.relative-ci.com/save';
 
 export const MASK = '******';
 
-export type SendAgentParams = {
+export type IngestParams = {
   /**
    * RelativeCI project API key
    */
@@ -15,9 +15,6 @@ export type SendAgentParams = {
    * RelativeCI agent version
    */
   agentVersion: string;
-}
-
-export type SendEnvParams = {
   /**
    * Project slug, eg: facebook/react
    */
@@ -29,11 +26,11 @@ export type SendEnvParams = {
   /**
    * Commit branch
    */
-  branch?: string;
+  branch: string;
   /**
    * Commit SHA
    */
-  commit?: string;
+  commit: string;
   /**
    * Pull request number
    */
@@ -50,9 +47,11 @@ export type SendEnvParams = {
    * Commit message
    */
   commitMessage?: string;
-}
+};
 
-export type SendParams = SendAgentParams & SendEnvParams;
+export type IngestConfig = {
+  payloadFilepath?: string;
+}
 
 export type EnvVars = {
   /**

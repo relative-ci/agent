@@ -3,10 +3,10 @@ import { set } from 'lodash';
 import filter from '@bundle-stats/plugin-webpack-filter';
 
 import type {
-  AgentArgs, AgentConfig, EnvVars, SendParams,
+  AgentArgs, AgentConfig, IngestParams, EnvVars,
 } from './constants';
 import * as LOCALES from './locales/en';
-import send from './send';
+import ingest from './ingest';
 import {
   debug, getCommitMessage, getEnvVars, maskObjectProperties,
 } from './utils';
@@ -102,5 +102,5 @@ export async function agent(
   // Filter only the necessary data
   const filteredData = getFilteredData(artifactsData);
 
-  return send(filteredData, params as SendParams, config, logger);
+  return ingest(filteredData, params as IngestParams, config, logger);
 }
