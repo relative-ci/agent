@@ -10,7 +10,7 @@ export type IngestParams = {
   /**
    * RelativeCI ingest endpoint
    */
-  endpoint: string;
+  endpoint?: string;
   /**
    * RelativeCI agent version
    */
@@ -94,10 +94,6 @@ export type EnvVars = {
    * RelativeCI project API key
    */
   key: string;
-  /**
-   * RelativeCI ingest endpoint
-   */
-  endpoint: string;
 };
 
 export type AgentArgs = {

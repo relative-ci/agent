@@ -1,6 +1,6 @@
 import envCI, { type CiEnv } from 'env-ci';
 
-import { type EnvVars, DEFAULT_ENDPOINT } from '../constants';
+import { type EnvVars } from '../constants';
 import { debug } from './debug';
 import { maskObjectProperties } from './mask-object-property';
 import { getSlug } from './get-slug';
@@ -24,7 +24,7 @@ export function getEnvVars(): Partial<EnvVars> {
   // Get custom environment variables
   const customEnvVars = {
     key: process.env.RELATIVE_CI_KEY,
-    endpoint: process.env.RELATIVE_CI_ENDPOINT || DEFAULT_ENDPOINT,
+    endpoint: process.env.RELATIVE_CI_ENDPOINT,
     service: process.env.RELATIVE_CI_SERVICE,
     slug: process.env.RELATIVE_CI_SLUG,
     branch: process.env.RELATIVE_CI_BRANCH,
@@ -47,7 +47,6 @@ export function getEnvVars(): Partial<EnvVars> {
     commit: customEnvVars.commit || envCIvars.commit,
     commitMessage: customEnvVars.commitMessage,
     key: customEnvVars.key,
-    endpoint: customEnvVars.endpoint,
   };
   debug('resolved environment variables', maskObjectProperties(resolvedEnvVars, ['key']));
 
