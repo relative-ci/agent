@@ -4,59 +4,7 @@ export const MASK = '******';
 
 export const SOURCE_WEBPACK_STATS = 'webpack.stats';
 export type Source = typeof SOURCE_WEBPACK_STATS;
-
 export type SourceFilterFn = (data: unknown) => unknown;
-
-export type IngestParams = {
-  /**
-   * RelativeCI project API key
-   */
-  key: string;
-  /**
-   * RelativeCI ingest endpoint
-   */
-  endpoint?: string;
-  /**
-   * RelativeCI agent version
-   */
-  agentVersion: string;
-  /**
-   * Project slug, eg: facebook/react
-   */
-  slug: string;
-  /**
-   * CI service
-   */
-  service?: string;
-  /**
-   * Commit branch
-   */
-  branch: string;
-  /**
-   * Commit SHA
-   */
-  commit: string;
-  /**
-   * Pull request number
-   */
-  pr?: string;
-  /**
-   * Build id
-   */
-  build?: string;
-  /**
-   * Build URL
-   */
-  buildUrl?: string;
-  /**
-   * Commit message
-   */
-  commitMessage?: string;
-};
-
-export type IngestConfig = {
-  payloadFilepath?: string;
-}
 
 export type EnvVars = {
   /**
@@ -64,25 +12,30 @@ export type EnvVars = {
    */
   isCi: boolean;
   /**
+   * RelativeCI project API key
+   */
+  key: string;
+  /**
    * RelativeCI ingest endpoint
    */
   endpoint?: string;
+  /**
+   * Project repository slug
+   * @example facebook/react
+   */
+  slug?: string;
   /**
    * CI service
    */
   service?: string;
   /**
-   * Commit branch
+   * Branch name
    */
   branch?: string;
   /**
    * Commit SHA
    */
   commit?: string;
-  /**
-   * Project slug, eg: facebook/react
-   */
-  slug?: string;
   /**
    * Pull request number
    */
@@ -99,35 +52,50 @@ export type EnvVars = {
    * Commit message
    */
   commitMessage?: string;
-  /**
-   * RelativeCI project API key
-   */
-  key: string;
 };
 
-export type AgentArgs = {
-  slug?: string;
-  branch?: string;
-  prBranch?: string;
-  pr?: string;
-  commit?: string;
-  build?: string;
-  buildUrl?: string;
-  commitMessage?: string;
-}
+export type PluginArgs = {
+  slug?: EnvVars['slug'];
+  branch?: EnvVars['slug'];
+  pr?: EnvVars['pr'];
+  commit?: EnvVars['commit'];
+  build?: EnvVars['build'];
+  buildUrl?: EnvVars['buildUrl'];
+  commitMessage?: EnvVars['commitMessage'];
+};
 
-export interface AgentConfig {
+export type PluginConfig = {
   /**
    * Read commit message from the repo
    * Default: `true`.
    */
   includeCommitMessage?: boolean;
-
   /**
    * Absolute path for debug payload filepath
    * Default: `undefined`.
    */
   payloadFilepath?: string;
-}
+};
+
+export type IngestParams = {
+  key: EnvVars['key'];
+  endpoint?: EnvVars['endpoint'];
+  slug: EnvVars['slug'];
+  service?: EnvVars['service'];
+  branch: EnvVars['branch'];
+  commit: EnvVars['commit'];
+  pr?: EnvVars['pr'];
+  build?: EnvVars['build'];
+  buildUrl?: EnvVars['buildUrl'];
+  commitMessage?: EnvVars['commitMessage'];
+  /**
+   * RelativeCI agent version
+   */
+  agentVersion: string;
+};
+
+export type IngestConfig = {
+  payloadFilepath?: PluginConfig['payloadFilepath'];
+};
 
 export type IngestData = Record<string, unknown>;
