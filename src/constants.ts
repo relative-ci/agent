@@ -59,6 +59,10 @@ export type EnvVars = {
    */
   isCi: boolean;
   /**
+   * RelativeCI ingest endpoint
+   */
+  endpoint?: string;
+  /**
    * CI service
    */
   service?: string;

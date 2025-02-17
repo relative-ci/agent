@@ -11,15 +11,32 @@ describe('Ingest', () => {
   });
 
   test('send data to the ingest endpoint', async () => {
+    fetch.mockResolvedValueOnce({
+      json: () => Promise.resolve({
+        res: {
+          job: {
+            internalBuildNumber: '10',
+          },
+        },
+        info: {
+          message: {
+            txt: 'Done',
+          },
+        },
+      }),
+    } as any);
+
     await ingest({}, {
       key: 'abc-123',
-      endpoint: 'http://localhost/ingest',
+      endpoint: 'http://localhost',
       agentVersion: '0.0.0',
       slug: 'org/project',
       commit: 'abcd1234',
-      branch: 'main',
+      branch: 'master',
     });
 
     expect(fetch).toHaveBeenCalled();
   });
+
+  test('received invalid data from the ingest endpoint', () => {});
 });
