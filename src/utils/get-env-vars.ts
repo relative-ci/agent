@@ -1,27 +1,29 @@
-import envCI, { type CiEnv } from 'env-ci';
+import envCi, { type CiEnv } from 'env-ci';
 
 import { type EnvVars } from '../constants';
 import { debug } from './debug';
 import { maskObjectProperties } from './mask-object-property';
 import { getSlug } from './get-slug';
 
-function getEnvVarValue(data: CiEnv, key: string): string | undefined {
-  if (!data[key as keyof typeof data]) {
+function getEnvVarValue(envVars: CiEnv, envVarName: string): string | undefined {
+  const name = envVarName as keyof typeof envVars;
+
+  if (!envVars[name]) {
     return undefined;
   }
 
-  return data[key as keyof typeof data] as string;
+  return envVars[name] as string;
 }
 
 /**
- * Extract CI environment variables using env-ci and custom fallback env vars
+ * Load environment variables - fallback to env-ci environment variables
  */
 export function getEnvVars(): Partial<EnvVars> {
-  // Get env-ci environment variables
-  const envCIvars = envCI();
-  debug('env-ci environment variables', envCIvars);
+  // CI environment variables
+  const ciEnvVars = envCi();
+  debug('CI environment variables', ciEnvVars);
 
-  // Get custom environment variables
+  // RelativeCI environment variables
   const customEnvVars = {
     key: process.env.RELATIVE_CI_KEY,
     endpoint: process.env.RELATIVE_CI_ENDPOINT,
@@ -37,18 +39,19 @@ export function getEnvVars(): Partial<EnvVars> {
   debug('RELATIVE_CI environment variables', maskObjectProperties(customEnvVars, ['key']));
 
   const resolvedEnvVars = {
-    isCi: envCIvars.isCi, // process.env.CI
-    service: customEnvVars.service || getEnvVarValue(envCIvars, 'service'),
-    slug: customEnvVars.slug || getSlug(envCIvars),
-    branch: customEnvVars.branch || getEnvVarValue(envCIvars, 'prBranch') || getEnvVarValue(envCIvars, 'branch'),
-    pr: customEnvVars.pr || getEnvVarValue(envCIvars, 'pr'),
-    build: customEnvVars.build || getEnvVarValue(envCIvars, 'build'),
-    buildUrl: customEnvVars.buildUrl || getEnvVarValue(envCIvars, 'buildUrl'),
-    commit: customEnvVars.commit || envCIvars.commit,
-    commitMessage: customEnvVars.commitMessage,
+    isCi: ciEnvVars.isCi,
     key: customEnvVars.key,
+    endpoint: customEnvVars.endpoint,
+    service: customEnvVars.service || getEnvVarValue(ciEnvVars, 'service'),
+    slug: customEnvVars.slug || getSlug(ciEnvVars),
+    branch: customEnvVars.branch || getEnvVarValue(ciEnvVars, 'prBranch') || getEnvVarValue(ciEnvVars, 'branch'),
+    pr: customEnvVars.pr || getEnvVarValue(ciEnvVars, 'pr'),
+    build: customEnvVars.build || getEnvVarValue(ciEnvVars, 'build'),
+    buildUrl: customEnvVars.buildUrl || getEnvVarValue(ciEnvVars, 'buildUrl'),
+    commit: customEnvVars.commit || ciEnvVars.commit,
+    commitMessage: customEnvVars.commitMessage,
   };
-  debug('resolved environment variables', maskObjectProperties(resolvedEnvVars, ['key']));
+  debug('Environment variables', maskObjectProperties(resolvedEnvVars, ['key']));
 
   return resolvedEnvVars;
 }
