@@ -2,8 +2,12 @@ import dotenv from 'dotenv';
 import { set } from 'lodash';
 import filter from '@bundle-stats/plugin-webpack-filter';
 
-import type {
-  AgentArgs, AgentConfig, IngestParams, EnvVars,
+import {
+  type AgentArgs, type AgentConfig, type IngestParams, type EnvVars,
+  type IngestData,
+  type Source,
+  type SourceFilterFn,
+  SOURCE_WEBPACK_STATS,
 } from './constants';
 import * as LOCALES from './locales/en';
 import ingest from './ingest';
@@ -11,30 +15,34 @@ import {
   debug, getCommitMessage, getEnvVars, maskObjectProperties,
 } from './utils';
 
-const WEBPACK_STATS = 'webpack.stats';
-const SOURCE_EXTRACTORS = {
-  // @ts-expect-error incorrect type export
-  [WEBPACK_STATS]: filter.default,
+const SOURCE_FILTERS: Record<Source, SourceFilterFn> = {
+  // @ts-expect-error incorrect types
+  [SOURCE_WEBPACK_STATS]: filter.default,
 } as const;
 
 type Artifact = {
   key: string;
-  data: any;
-  options?: any;
+  data: unknown;
 }
 
-const getFilteredData = (
-  artifactsData: Array<Artifact>,
-) => artifactsData.reduce(
-  (agg, { key, data, options }) => set(
-    agg,
-    key,
-    SOURCE_EXTRACTORS[key as keyof typeof SOURCE_EXTRACTORS](data, options),
-  ),
-  {},
-);
+/**
+ * Filter artifact data based on the source type and map them by key
+ */
+function filterData(artifactsData: Array<Artifact>): IngestData {
+  const dataByKey = {};
 
-export async function agent(
+  artifactsData.forEach(({ key, data }) => {
+    set(
+      dataByKey,
+      key,
+      SOURCE_FILTERS[key as Source](data),
+    );
+  });
+
+  return dataByKey;
+}
+
+export default async function agent(
   artifactsData: Array<Artifact>,
   config: AgentConfig,
   args: AgentArgs = {},
@@ -99,8 +107,7 @@ export async function agent(
     return logger.warn(LOCALES.AGENT_MISSING_BRANCH_ERROR);
   }
 
-  // Filter only the necessary data
-  const filteredData = getFilteredData(artifactsData);
+  const ingestData = filterData(artifactsData);
 
-  return ingest(filteredData, params as IngestParams, config, logger);
+  return ingest(ingestData, params as IngestParams, config, logger);
 }

@@ -7,7 +7,7 @@ import { hideBin } from 'yargs/helpers';
 import validate from '@bundle-stats/plugin-webpack-validate';
 
 import * as LOCALES from './locales/en';
-import { agent } from './agent';
+import agent from './agent';
 import { debug } from './utils';
 
 export default async function cli(processArgs: Array<string>) {

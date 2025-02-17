@@ -2,6 +2,11 @@ export const DEFAULT_ENDPOINT = 'https://api.relative-ci.com/save';
 
 export const MASK = '******';
 
+export const SOURCE_WEBPACK_STATS = 'webpack.stats';
+export type Source = typeof SOURCE_WEBPACK_STATS;
+
+export type SourceFilterFn = (data: unknown) => unknown;
+
 export type IngestParams = {
   /**
    * RelativeCI project API key
@@ -124,3 +129,5 @@ export interface AgentConfig {
    */
   payloadFilepath?: string;
 }
+
+export type IngestData = Record<string, unknown>;

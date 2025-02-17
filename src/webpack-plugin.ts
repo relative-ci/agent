@@ -2,8 +2,8 @@ import webpack, { type Compiler, type Configuration } from 'webpack';
 import { merge } from 'lodash';
 import validate from '@bundle-stats/plugin-webpack-validate';
 
-import { agent } from './agent';
 import { debug, getEnvVars } from './utils';
+import agent from './agent';
 
 type RelativeCiAgentWebpackPluginOptions = {
   /**

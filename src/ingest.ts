@@ -3,7 +3,12 @@ import path from 'path';
 import fetch from 'node-fetch';
 
 import * as LOCALES from './locales/en';
-import { DEFAULT_ENDPOINT, type IngestConfig, type IngestParams } from './constants';
+import {
+  DEFAULT_ENDPOINT,
+  type IngestConfig,
+  type IngestData,
+  type IngestParams,
+} from './constants';
 import { debug, maskObjectProperties } from './utils';
 
 type IngestResponse = {
@@ -21,7 +26,7 @@ type IngestResponse = {
 }
 
 export default async function ingest(
-  data: Record<string, unknown>,
+  data: IngestData,
   params: IngestParams,
   config: IngestConfig = {},
   logger: typeof console = console,
