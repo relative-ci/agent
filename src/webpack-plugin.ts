@@ -2,8 +2,11 @@ import webpack, { type Compiler, type Configuration } from 'webpack';
 import { merge } from 'lodash';
 import validate from '@bundle-stats/plugin-webpack-validate';
 
-import { agent } from './agent';
 import { debug, getEnvVars } from './utils';
+import { normalizeParams } from './utils/normalize-params';
+import { SOURCE_WEBPACK_STATS } from './constants';
+import ingest from './ingest';
+import { filterArtifacts } from './utils/filter-artifacts';
 
 type RelativeCiAgentWebpackPluginOptions = {
   /**
@@ -56,11 +59,20 @@ const sendStats = async (
   const invalidData = validate.default(data);
 
   if (invalidData) {
-    logger.warn(invalidData);
-    return;
+    return logger.warn(invalidData);
   }
 
-  agent([{ key: 'webpack.stats', data }], config, undefined, logger);
+  let params;
+
+  try {
+    params = normalizeParams({}, config);
+  } catch (error) {
+    return logger.warn(error);
+  }
+
+  const artifactsData = filterArtifacts([{ key: SOURCE_WEBPACK_STATS, data }]);
+
+  return ingest(artifactsData, params, config, logger);
 };
 
 export class RelativeCiAgentWebpackPlugin {

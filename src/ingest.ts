@@ -1,25 +1,39 @@
-import fs from 'fs';
-import { get } from 'lodash';
-// @ts-expect-error Types not available
-import fetch from 'isomorphic-fetch';
+import fs from 'fs/promises';
+import path from 'path';
+import fetch from 'node-fetch';
 
-import { type SendParams } from './constants';
 import * as LOCALES from './locales/en';
+import {
+  DEFAULT_ENDPOINT,
+  type IngestConfig,
+  type IngestData,
+  type IngestParams,
+} from './constants';
 import { debug, maskObjectProperties } from './utils';
 
-type SendConfig = {
-  payloadFilepath?: string;
+type IngestResponse = {
+  code?: string;
+  res?: {
+    job?: {
+      internalBuildNumber?: string;
+    };
+  };
+  info?: {
+    message?: {
+      txt?: string;
+    }
+  };
 }
 
-export default async function send(
-  data: Record<string, unknown>,
-  params: SendParams,
-  config: SendConfig,
-  logger: typeof console,
+export default async function ingest(
+  data: IngestData,
+  params: IngestParams,
+  config: IngestConfig = {},
+  logger: typeof console = console,
 ) {
   const {
     key,
-    endpoint,
+    endpoint = DEFAULT_ENDPOINT,
 
     branch,
     build,
@@ -50,18 +64,22 @@ export default async function send(
     rawData: data,
   };
 
-  const { payloadFilepath } = config;
+  const formattedPayload = maskObjectProperties(payload, ['key']);
 
-  debug('Payload', maskObjectProperties(payload, ['key']));
   debug('Payload size', Buffer.byteLength(JSON.stringify(payload)));
 
+  const { payloadFilepath } = config;
+
+  /**
+   * Save payload on disk for debugging
+   */
   if (payloadFilepath) {
     logger.info('Save payload to', payloadFilepath);
 
     try {
-      // Obfuscate private data
-      const output = { ...payload, key: '***' };
-      fs.writeFileSync(payloadFilepath, JSON.stringify(output, null, 2));
+      const payloadBaseDirectory = path.dirname(payloadFilepath);
+      await fs.mkdir(payloadBaseDirectory, { recursive: true });
+      await fs.writeFile(payloadFilepath, JSON.stringify(formattedPayload, null, 2));
     } catch (err) {
       logger.warn('Error saving payload', err instanceof Error ? err.message : undefined);
     }
@@ -78,7 +96,7 @@ export default async function send(
       body: JSON.stringify(payload),
     });
 
-    const responseData = await response.json();
+    const responseData = await response.json() as IngestResponse;
 
     debug('Response', responseData);
 
@@ -87,15 +105,15 @@ export default async function send(
       return;
     }
 
-    const { res } = responseData;
+    const { res, info } = responseData;
 
     if (!res) {
       logger.warn(LOCALES.GENERIC_ERROR, responseData);
       return;
     }
 
-    const buildNumber = get(res, 'job.internalBuildNumber');
-    const buildSizeInfo = get(responseData, 'info.message.txt');
+    const buildNumber = res?.job?.internalBuildNumber;
+    const buildSizeInfo = info?.message?.txt;
 
     logger.info(`Job #${buildNumber} done.`);
     logger.info(buildSizeInfo);

@@ -1,8 +1,8 @@
-jest.mock('isomorphic-fetch');
+jest.mock('node-fetch');
 
 const webpack = require('webpack');
 const MemoryFS = require('memory-fs');
-const fetch = require('isomorphic-fetch');
+const fetch = require('node-fetch');
 
 const webpack5Stats = require('./__snapshots__/webpack-5-stats.json');
 const {
