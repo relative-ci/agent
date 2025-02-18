@@ -4,7 +4,9 @@ import commonjsPlugin from '@rollup/plugin-commonjs';
 import nodeResolvePlugin from '@rollup/plugin-node-resolve';
 import replacePlugin from '@rollup/plugin-replace';
 import babelPlugin from '@rollup/plugin-babel';
+import typescriptPlugin from '@rollup/plugin-typescript';
 
+// @ts-expect-error Incorrect ts-eslint tsconfig
 import packageInfo from './package.json' with { type: 'json' };
 
 const CONTEXT = path.join(process.cwd(), './src');
@@ -14,8 +16,8 @@ export default defineConfig([
   {
     context: CONTEXT,
     input: {
-      index: './src/index.js',
-      cli: './src/cli.js',
+      index: './src/index.ts',
+      cli: './src/cli.ts',
     },
     output: {
       dir: OUTPUT_DIR,
@@ -35,6 +37,7 @@ export default defineConfig([
       }),
       commonjsPlugin(),
       nodeResolvePlugin(),
+      typescriptPlugin(),
       babelPlugin({
         babelHelpers: 'bundled',
         exclude: 'node_modules/**',

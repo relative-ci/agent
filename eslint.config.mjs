@@ -3,7 +3,11 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import js from '@eslint/js';
 import { FlatCompat } from '@eslint/eslintrc';
+// Eslint fails to resolve the package
+// eslint-disable-next-line
+import tseslint from 'typescript-eslint';
 
+// @ts-expect-error ts-eslint doesn't pick up correctly the tscoonfig options
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
 const compat = new FlatCompat({
@@ -13,14 +17,12 @@ const compat = new FlatCompat({
 });
 
 export default [
+  ...compat.extends('airbnb-base'),
   {
     ignores: ['lib'],
   },
-  ...compat.extends('airbnb-base'),
   {
-    plugins: {
-      jest,
-    },
+    plugins: { jest },
     languageOptions: {
       globals: {
         ...jest.environments.globals.globals,
@@ -42,6 +44,31 @@ export default [
           devDependencies: ['**/*.test.js', '*.config.mjs'],
         },
       ],
+    },
+  },
+  ...tseslint.configs.recommended,
+  {
+    files: ['**/*.ts'],
+    rules: {
+      'import/extensions': ['error', 'never', { ts: 'never' }],
+      '@typescript-eslint/no-explicit-any': 'warn',
+    },
+    settings: {
+      'import/resolver': {
+        node: {
+          extensions: ['.js', '.mjs', '.ts'],
+        },
+      },
+    },
+  },
+  {
+    files: [
+      'config/*.js',
+      '**/*.test.js',
+      'test/utils.js',
+    ],
+    rules: {
+      '@typescript-eslint/no-require-imports': 'off',
     },
   },
 ];
