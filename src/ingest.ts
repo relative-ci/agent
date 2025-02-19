@@ -13,6 +13,7 @@ import { debug, maskObjectProperties } from './utils';
 
 type IngestResponse = {
   code?: string;
+  reportUrl?: string;
   res?: {
     job?: {
       internalBuildNumber?: string;
@@ -85,7 +86,7 @@ export default async function ingest(
     }
   }
 
-  logger.info('Send stats to RelativeCI', `branch=${branch}`, `commit=${commit}`);
+  logger.info('Send bundle stats to RelativeCI', `branch=${branch}`, `commit=${commit}`);
 
   try {
     const response = await fetch(endpoint, {
@@ -105,7 +106,7 @@ export default async function ingest(
       return;
     }
 
-    const { res, info } = responseData;
+    const { res, info, reportUrl } = responseData;
 
     if (!res) {
       logger.warn(LOCALES.GENERIC_ERROR, responseData);
@@ -117,6 +118,7 @@ export default async function ingest(
 
     logger.info(`Job #${buildNumber} done.`);
     logger.info(buildSizeInfo);
+    logger.info('View bundle report:', reportUrl);
   } catch (err) {
     if (err instanceof Error) {
       logger.warn(err.message);
