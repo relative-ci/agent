@@ -6,6 +6,7 @@
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
   "bin": {
+    "relative-ci": "bin/index.js",
     "relative-ci-agent": "bin/index.js"
   },
   "scripts": {
