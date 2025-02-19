@@ -1,11 +1,12 @@
 {
   "name": "@relative-ci/agent",
   "version": "4.2.14",
-  "description": "Relative CI agent",
+  "description": "Send bundle stats and CI build information to RelativeCI",
   "repository": "relative-ci/agent",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
   "bin": {
+    "relative-ci": "bin/index.js",
     "relative-ci-agent": "bin/index.js"
   },
   "scripts": {
@@ -25,6 +26,9 @@
   },
   "keywords": [
     "webpack",
+    "vitejs",
+    "rspack",
+    "rollup",
     "bundle-size",
     "bundle-analyzer",
     "bundle-stats",
