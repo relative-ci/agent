@@ -2,7 +2,7 @@ import webpack, { type Compiler, type Configuration } from 'webpack';
 import { merge } from 'lodash';
 import validate from '@bundle-stats/plugin-webpack-validate';
 
-import { debug, getEnvVars } from './utils';
+import { debug, getEnvVars, logResponse } from './utils';
 import { normalizeParams } from './utils/normalize-params';
 import { SOURCE_WEBPACK_STATS } from './constants';
 import ingest from './ingest';
@@ -47,7 +47,7 @@ const isWebpack5 = parseInt(webpack.version, 10) === 5;
 const sendStats = async (
   compilation: any,
   options: RelativeCiAgentWebpackPluginOptions,
-) => {
+): Promise<void> => {
   const { stats: statsOptions, ...config } = options;
   const data = compilation.getStats().toJson(statsOptions);
 
@@ -59,7 +59,8 @@ const sendStats = async (
   const invalidData = validate.default(data);
 
   if (invalidData) {
-    return logger.warn(invalidData);
+    logger.warn(invalidData);
+    return;
   }
 
   let params;
@@ -67,12 +68,18 @@ const sendStats = async (
   try {
     params = normalizeParams({}, config);
   } catch (error) {
-    return logger.warn(error);
+    logger.warn(error);
+    return;
   }
 
   const artifactsData = filterArtifacts([{ key: SOURCE_WEBPACK_STATS, data }]);
 
-  return ingest(artifactsData, params, config, logger);
+  try {
+    const response = await ingest(artifactsData, params, config, logger);
+    logResponse(response);
+  } catch (error) {
+    logger.warn(error); // catch error to prevent failure on error
+  }
 };
 
 export class RelativeCiAgentWebpackPlugin {

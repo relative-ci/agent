@@ -99,3 +99,24 @@ export type IngestConfig = {
 };
 
 export type IngestData = Record<string, unknown>;
+
+export type IngestResponseError = {
+  code: string;
+  message: string;
+};
+
+export type IngestResponseSuccess = {
+  reportUrl?: string;
+  res?: {
+    job?: {
+      internalBuildNumber?: string;
+    };
+  };
+  info?: {
+    message?: {
+      txt?: string;
+    }
+  };
+}
+
+export type IngestResponse = IngestResponseError & IngestResponseSuccess;

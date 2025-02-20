@@ -2,6 +2,9 @@ const SETUP_INFO = 'Read more about RelativeCI agent setup at https://relative-c
 
 export const GENERIC_ERROR = 'Something went wrong';
 
+export const INGEST_ERROR = 'Error ingesting data!';
+export const INGEST_INVALID_DATA = 'Ingest API responded with invalid data';
+
 export const CLI_MISSING_CONFIGURATION_ERROR = `relativeci.config.js file is missing! ${SETUP_INFO}`;
 export const CLI_INVALID_CONFIGURATION_ERROR = `The path to your webpack stats file is missing! ${SETUP_INFO}`;
 export const CLI_MISSING_STATS_FILE_ERROR = `The webpack stats file does not exists! ${SETUP_INFO}`;

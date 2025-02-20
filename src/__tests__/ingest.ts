@@ -5,6 +5,19 @@ import ingest from '../ingest';
 jest.mock('node-fetch', () => jest.fn());
 const fetch = nodeFetch as jest.MockedFunction<typeof nodeFetch>;
 
+const PARAMS = {
+  key: 'abc-123',
+  endpoint: 'http://localhost',
+  agentVersion: '0.0.0',
+  slug: 'organization/project',
+  commit: 'abcd1234',
+  branch: 'master',
+  build: '123',
+  buildUrl: '#',
+  pr: '12',
+  commitMessage: 'Commit message',
+};
+
 describe('Ingest', () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -26,18 +39,7 @@ describe('Ingest', () => {
       }),
     } as any);
 
-    await ingest({}, {
-      key: 'abc-123',
-      endpoint: 'http://localhost',
-      agentVersion: '0.0.0',
-      slug: 'organization/project',
-      commit: 'abcd1234',
-      branch: 'master',
-      build: '123',
-      buildUrl: '#',
-      pr: '12',
-      commitMessage: 'Commit message',
-    });
+    await ingest({}, PARAMS);
 
     expect(fetch).toHaveBeenCalledWith(
       'http://localhost',
@@ -64,19 +66,52 @@ describe('Ingest', () => {
     );
   });
 
-  test.only('should show error when the ingest action fails', async () => {
+  test('should throw error when fetch fails', async () => {
     fetch.mockRejectedValueOnce(new Error('Network error'));
 
-    await ingest({}, {
-      key: 'abc-123',
-      endpoint: 'http://localhost',
-      agentVersion: '0.0.0',
-      slug: 'organization/project',
-      commit: 'abcd1234',
-      branch: 'master',
-    });
+    try {
+      await ingest({}, PARAMS);
+    } catch (error: any) {
+      expect(error.cause.message).toEqual('Network error');
+    }
+  });
 
-    expect(fetch).toHaveBeenCalled();
-    expect(fetch).rejects.toBeTruthy();
+  test('should throw error when fetch returns invalid json', async () => {
+    fetch.mockResolvedValueOnce({
+      json: () => Promise.resolve(null),
+    } as any);
+
+    try {
+      await ingest({}, PARAMS);
+    } catch (error: any) {
+      expect(error.message).toMatch(/invalid data/);
+    }
+  });
+
+  test('should throw error when ingest returns error', async () => {
+    fetch.mockResolvedValueOnce({
+      json: () => Promise.resolve({
+        code: 'INGEST_FAILED',
+        message: 'Ingest failed',
+      }),
+    } as any);
+
+    try {
+      await ingest({}, PARAMS);
+    } catch (error: any) {
+      expect(error.message).toMatch(/Ingest failed/);
+    }
+  });
+
+  test('should throw error when ingest response is invalid', async () => {
+    fetch.mockResolvedValueOnce({
+      json: () => Promise.resolve({ }),
+    } as any);
+
+    try {
+      await ingest({}, PARAMS);
+    } catch (error: any) {
+      expect(error.message).toMatch(/invalid data/);
+    }
   });
 });

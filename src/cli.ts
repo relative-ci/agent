@@ -7,11 +7,12 @@ import { hideBin } from 'yargs/helpers';
 import validate from '@bundle-stats/plugin-webpack-validate';
 
 import * as LOCALES from './locales/en';
-import { debug } from './utils';
-import { normalizeParams } from './utils/normalize-params';
-import ingest from './ingest';
-import { filterArtifacts } from './utils/filter-artifacts';
 import { SOURCE_WEBPACK_STATS } from './constants';
+import { debug } from './utils/debug';
+import { logResponse } from './utils/log-response';
+import { normalizeParams } from './utils/normalize-params';
+import { filterArtifacts } from './utils/filter-artifacts';
+import ingest from './ingest';
 
 export default async function cli(processArgs: Array<string>) {
   const args = await yargs(hideBin(processArgs))
@@ -68,5 +69,10 @@ export default async function cli(processArgs: Array<string>) {
   const params = normalizeParams(args, config);
   const artifactsData = filterArtifacts([{ key: SOURCE_WEBPACK_STATS, data }]);
 
-  await ingest(artifactsData, params, config);
+  try {
+    const response = await ingest(artifactsData, params, config);
+    logResponse(response);
+  } catch (error) {
+    console.error(error); // catch error to prevent failing on error
+  }
 }
