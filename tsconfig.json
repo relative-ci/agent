@@ -12,11 +12,10 @@
     "noFallthroughCasesInSwitch": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "moduleResolution": "bundler",
-    "module": "esnext",
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "skipLibCheck": false,
+    "lib": ["esnext"],
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
     "types": ["node", "jest", "./typings.d.ts"]
