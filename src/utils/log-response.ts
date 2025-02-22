@@ -1,6 +1,8 @@
 import { type IngestResponseSuccess } from '../constants';
 
-export function logResponse(response: IngestResponseSuccess, logger = console): void {
+import { logger as basicLogger } from './logger';
+
+export function logResponse(response: IngestResponseSuccess, logger = basicLogger): void {
   const { res, info, reportUrl } = response;
   if (res?.job?.internalBuildNumber) {
     logger.info(`Job #${res.job.internalBuildNumber} done.`);

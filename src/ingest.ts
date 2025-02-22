@@ -10,13 +10,15 @@ import {
   type IngestResponseSuccess,
   type IngestResponse,
 } from './constants';
-import { debug, logger as basicLogger, maskObjectProperties } from './utils';
+import {
+  debug, logger as basicLogger, maskObjectProperties, type Logger,
+} from './utils';
 
 export default async function ingest(
   data: IngestData,
   params: IngestParams,
   config: IngestConfig = {},
-  logger: typeof basicLogger = basicLogger,
+  logger: Logger = basicLogger,
 ): Promise<IngestResponseSuccess> {
   const {
     key,
