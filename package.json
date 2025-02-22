@@ -9,6 +9,20 @@
     "relative-ci": "bin/index.js",
     "relative-ci-agent": "bin/index.js"
   },
+  "exports": {
+    ".": {
+      "require": "./lib/index.js",
+      "types": "./lib/index.d.ts"
+    },
+    "./injest": {
+      "require": "./lib/injest.js",
+      "types": "./lib/injest.d.ts"
+    },
+    "./utils": {
+      "require": "./lib/utils/index.js",
+      "types": "./lib/utils/index.d.ts"
+    }
+  },
   "scripts": {
     "build": "rimraf ./lib && npx tsc && rollup -c",
     "lint": "eslint .",
