@@ -1,5 +1,7 @@
 const SETUP_INFO = 'Read more about RelativeCI agent setup at https://relative-ci.com/documentation/setup.';
 
+export const VALIDATE_ERROR = 'Invalid stats structure.';
+
 export const GENERIC_ERROR = 'Something went wrong';
 
 export const INGEST_ERROR = 'Error ingesting data!';

@@ -69,10 +69,6 @@ export default async function cli(processArgs: Array<string>) {
   const params = normalizeParams(args, config);
   const artifactsData = filterArtifacts([{ key: SOURCE_WEBPACK_STATS, data }]);
 
-  try {
-    const response = await ingest(artifactsData, params, config);
-    logResponse(response);
-  } catch (error) {
-    console.error(error); // catch error to prevent failing on error
-  }
+  const response = await ingest(artifactsData, params, config);
+  logResponse(response);
 }

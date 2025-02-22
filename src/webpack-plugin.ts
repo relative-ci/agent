@@ -2,6 +2,7 @@ import webpack, { type Compiler, type Configuration } from 'webpack';
 import merge from 'lodash/merge';
 import validate from '@bundle-stats/plugin-webpack-validate';
 
+import * as LOCALES from './locales/en';
 import { debug, getEnvVars, logResponse } from './utils';
 import { normalizeParams } from './utils/normalize-params';
 import { SOURCE_WEBPACK_STATS } from './constants';
@@ -55,27 +56,18 @@ const sendStats = async (
     ? compilation.getInfrastructureLogger(PLUGIN_NAME)
     : console;
 
-  // @ts-expect-error incorrect type export
-  const invalidData = validate.default(data);
-
-  if (invalidData) {
-    logger.warn(invalidData);
-    return;
-  }
-
-  let params;
-
   try {
-    params = normalizeParams({}, config);
-  } catch (error) {
-    logger.warn(error);
-    return;
-  }
+    // @ts-expect-error incorrect type export
+    const invalidData = validate.default(data);
 
-  const artifactsData = filterArtifacts([{ key: SOURCE_WEBPACK_STATS, data }]);
+    if (invalidData) {
+      throw new Error(LOCALES.VALIDATE_ERROR);
+    }
 
-  try {
+    const params = normalizeParams({}, config);
+    const artifactsData = filterArtifacts([{ key: SOURCE_WEBPACK_STATS, data }]);
     const response = await ingest(artifactsData, params, config, logger);
+
     logResponse(response);
   } catch (error) {
     logger.warn(error); // catch error to prevent failure on error
