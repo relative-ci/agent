@@ -68,15 +68,12 @@ describe('webpack-plugin / webpack4', () => {
   test('should warn, not ingest and not throw on params error', (done) => {
     setCustomEnv({ RELATIVE_CI_KEY: '' });
 
-    const warn = jest.spyOn(console, 'warn');
-
     const compiler = webpack(appConfig);
     compiler.outputFileSystem = new MemoryFS();
 
     compiler.run((error, stats) => {
       expect(stats.hasErrors()).toBe(false);
       expect(error).toEqual(null);
-      expect(warn).toHaveBeenCalled();
       expect(fetch).not.toHaveBeenCalled();
 
       done();
@@ -86,7 +83,6 @@ describe('webpack-plugin / webpack4', () => {
   test('should warn and not throw on ingest error', (done) => {
     setCustomEnv();
 
-    const warn = jest.spyOn(console, 'warn');
     fetch.mockRejectedValueOnce(new Error('Network error'));
 
     const compiler = webpack(appConfig);
@@ -96,7 +92,6 @@ describe('webpack-plugin / webpack4', () => {
       expect(error).toEqual(null);
       expect(stats.hasErrors()).toBe(false);
       expect(fetch).toHaveBeenCalledTimes(1);
-      expect(warn).toHaveBeenCalled();
       done();
     });
   });

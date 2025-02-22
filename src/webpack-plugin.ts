@@ -1,4 +1,6 @@
-import webpack, { Compilation, WebpackError, type Compiler, type Configuration } from 'webpack';
+import webpack, {
+  Compilation, type Compiler, type Configuration,
+} from 'webpack';
 import merge from 'lodash/merge';
 import validate from '@bundle-stats/plugin-webpack-validate';
 
@@ -50,10 +52,10 @@ const DEFAULT_OPTIONS = {
 
 const isWebpack5 = parseInt(webpack.version, 10) === 5;
 
-const sendStats = async (
+async function sendStats(
   compilation: Compilation,
   options: RelativeCiAgentWebpackPluginOptions,
-): Promise<void> => {
+): Promise<void> {
   const { stats: statsOptions, failOnError, ...config } = options;
   const data = compilation.getStats().toJson(statsOptions);
 
@@ -76,13 +78,12 @@ const sendStats = async (
     logResponse(response);
   } catch (error: any) {
     if (failOnError) {
-      const webpackError = new WebpackError(error.message);
-      compilation.errors.push(webpackError);
+      compilation.errors.push(error);
     } else {
       logger.warn(error); // catch error to prevent failure on error
     }
   }
-};
+}
 
 export class RelativeCiAgentWebpackPlugin {
   options: RelativeCiAgentWebpackPluginOptions;
