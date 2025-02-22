@@ -1,8 +1,9 @@
 import * as LOCALES from '../locales/en';
-import type {
-  IngestParams,
-  PluginArgs,
-  PluginConfig,
+import {
+  DEFAULT_ENDPOINT,
+  type IngestParams,
+  type PluginArgs,
+  type PluginConfig,
 } from '../constants';
 import { getEnvVars } from './get-env-vars';
 import { debug } from './debug';
@@ -29,7 +30,7 @@ export function normalizeParams(pluginArgs: PluginArgs, config: PluginConfig): I
     service: envVars.service,
 
     key: envVars.key,
-    endpoint: envVars.endpoint,
+    endpoint: envVars.endpoint || DEFAULT_ENDPOINT,
     agentVersion: AGENT_VERSION,
 
     /**

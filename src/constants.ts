@@ -18,7 +18,7 @@ export type EnvVars = {
   /**
    * RelativeCI ingest endpoint
    */
-  endpoint?: string;
+  endpoint: string;
   /**
    * Project repository slug
    * @example facebook/react
@@ -79,7 +79,7 @@ export type PluginConfig = {
 
 export type IngestParams = {
   key: EnvVars['key'];
-  endpoint?: EnvVars['endpoint'];
+  endpoint: EnvVars['endpoint'];
   slug: EnvVars['slug'];
   service?: EnvVars['service'];
   branch: EnvVars['branch'];

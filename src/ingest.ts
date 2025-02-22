@@ -4,7 +4,6 @@ import fetch from 'node-fetch';
 
 import * as LOCALES from './locales/en';
 import {
-  DEFAULT_ENDPOINT,
   type IngestConfig,
   type IngestData,
   type IngestParams,
@@ -21,7 +20,7 @@ export default async function ingest(
 ): Promise<IngestResponseSuccess> {
   const {
     key,
-    endpoint = DEFAULT_ENDPOINT,
+    endpoint,
 
     branch,
     build,
