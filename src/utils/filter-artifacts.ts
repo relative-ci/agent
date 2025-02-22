@@ -1,4 +1,4 @@
-import { set } from 'lodash';
+import set from 'lodash/set';
 import filter from '@bundle-stats/plugin-webpack-filter';
 
 import {

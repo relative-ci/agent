@@ -1,5 +1,5 @@
 import path from 'path';
-import { get } from 'lodash';
+import get from 'lodash/get';
 import { readJSONSync, pathExistsSync } from 'fs-extra';
 import { cosmiconfigSync } from 'cosmiconfig';
 import yargs from 'yargs/yargs';

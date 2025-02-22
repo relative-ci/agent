@@ -1,5 +1,5 @@
 import webpack, { type Compiler, type Configuration } from 'webpack';
-import { merge } from 'lodash';
+import merge from 'lodash/merge';
 import validate from '@bundle-stats/plugin-webpack-validate';
 
 import { debug, getEnvVars, logResponse } from './utils';
