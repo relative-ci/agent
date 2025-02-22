@@ -17,17 +17,29 @@ export default defineConfig([
     input: {
       index: './src/index.ts',
       cli: './src/cli.ts',
+      ingest: './src/ingest.ts',
+      utils: './src/utils/index.ts',
     },
-    output: {
-      dir: OUTPUT_DIR,
-      format: 'commonjs',
-      exports: 'named',
-      entryFileNames: '[name].js',
-      chunkFileNames: '[name].js',
-      sourcemap: true,
-      preserveModules: true,
-      preserveModulesRoot: CONTEXT,
-    },
+    output: [
+      {
+        dir: OUTPUT_DIR,
+        format: 'cjs',
+        exports: 'named',
+        entryFileNames: 'cjs/[name].js',
+        sourcemap: true,
+        preserveModules: true,
+        preserveModulesRoot: CONTEXT,
+      },
+      {
+        dir: OUTPUT_DIR,
+        format: 'esm',
+        exports: 'named',
+        entryFileNames: 'esm/[name].js',
+        sourcemap: true,
+        preserveModules: true,
+        preserveModulesRoot: CONTEXT,
+      },
+    ],
     external: /node_modules/,
     plugins: [
       replacePlugin({
@@ -36,7 +48,9 @@ export default defineConfig([
       }),
       commonjsPlugin(),
       nodeResolvePlugin(),
-      typescriptPlugin(),
+      typescriptPlugin({
+        declarationDir: path.join(OUTPUT_DIR, 'types'),
+      }),
     ],
   },
 ]);
