@@ -1,6 +1,6 @@
 {
   "name": "@relative-ci/agent",
-  "version": "4.3.0-beta.5",
+  "version": "4.3.0-beta.6",
   "description": "Send bundle stats and CI build information to RelativeCI",
   "repository": "relative-ci/agent",
   "main": "./lib/cjs/index.js",
