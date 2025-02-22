@@ -3,7 +3,6 @@ import { defineConfig } from 'rollup';
 import commonjsPlugin from '@rollup/plugin-commonjs';
 import nodeResolvePlugin from '@rollup/plugin-node-resolve';
 import replacePlugin from '@rollup/plugin-replace';
-import babelPlugin from '@rollup/plugin-babel';
 import typescriptPlugin from '@rollup/plugin-typescript';
 
 // @ts-expect-error Incorrect ts-eslint tsconfig
@@ -38,10 +37,6 @@ export default defineConfig([
       commonjsPlugin(),
       nodeResolvePlugin(),
       typescriptPlugin(),
-      babelPlugin({
-        babelHelpers: 'bundled',
-        exclude: 'node_modules/**',
-      }),
     ],
   },
 ]);
