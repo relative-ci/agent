@@ -53,6 +53,16 @@ describe('CLI', () => {
     });
   });
 
+  test('should return error if params are failing', (done) => {
+    exec(`cd test/cli/valid-data &&
+      RELATIVE_CI_ENDPOINT=http://localhost:${MOCK_SERVER_PORT}/save \
+      RELATIVE_CI_SLUG=org/project \
+      ../../../bin/index.js`, (_, __, sterr) => {
+      expect(sterr).toContain('parameter is missing');
+      done();
+    });
+  });
+
   test('should run agent successfully', (done) => {
     exec(
       `cd test/cli/valid-data &&

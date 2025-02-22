@@ -4,37 +4,23 @@ import fetch from 'node-fetch';
 
 import * as LOCALES from './locales/en';
 import {
-  DEFAULT_ENDPOINT,
   type IngestConfig,
   type IngestData,
   type IngestParams,
+  type IngestResponseSuccess,
+  type IngestResponse,
 } from './constants';
-import { debug, maskObjectProperties } from './utils';
-
-type IngestResponse = {
-  code?: string;
-  reportUrl?: string;
-  res?: {
-    job?: {
-      internalBuildNumber?: string;
-    };
-  };
-  info?: {
-    message?: {
-      txt?: string;
-    }
-  };
-}
+import { debug, logger as basicLogger, maskObjectProperties } from './utils';
 
 export default async function ingest(
   data: IngestData,
   params: IngestParams,
   config: IngestConfig = {},
-  logger: typeof console = console,
-) {
+  logger: typeof basicLogger = basicLogger,
+): Promise<IngestResponseSuccess> {
   const {
     key,
-    endpoint = DEFAULT_ENDPOINT,
+    endpoint,
 
     branch,
     build,
@@ -82,11 +68,14 @@ export default async function ingest(
       await fs.mkdir(payloadBaseDirectory, { recursive: true });
       await fs.writeFile(payloadFilepath, JSON.stringify(formattedPayload, null, 2));
     } catch (err) {
-      logger.warn('Error saving payload', err instanceof Error ? err.message : undefined);
+      // On error, catch and log
+      logger.warn(`Error saving payload to "${payloadFilepath}"`, err instanceof Error ? err.message : undefined);
     }
   }
 
   logger.info('Send bundle stats to RelativeCI', `branch=${branch}`, `commit=${commit}`);
+
+  let responseData: IngestResponse | null = null;
 
   try {
     const response = await fetch(endpoint, {
@@ -96,33 +85,23 @@ export default async function ingest(
       },
       body: JSON.stringify(payload),
     });
-
-    const responseData = await response.json() as IngestResponse;
-
+    responseData = await response.json() as IngestResponse;
     debug('Response', responseData);
-
-    if (responseData.code) {
-      logger.warn(responseData);
-      return;
-    }
-
-    const { res, info, reportUrl } = responseData;
-
-    if (!res) {
-      logger.warn(LOCALES.GENERIC_ERROR, responseData);
-      return;
-    }
-
-    const buildNumber = res?.job?.internalBuildNumber;
-    const buildSizeInfo = info?.message?.txt;
-
-    logger.info(`Job #${buildNumber} done.`);
-    logger.info(buildSizeInfo);
-    logger.info('View bundle report:', reportUrl);
-  } catch (err) {
-    if (err instanceof Error) {
-      logger.warn(err.message);
-    }
-    debug('@relative-ci/agent could not send the data', err);
+  } catch (error) {
+    throw new Error(LOCALES.INGEST_ERROR, { cause: error });
   }
+
+  if (!responseData) {
+    throw new Error(LOCALES.INGEST_INVALID_DATA);
+  }
+
+  if (responseData.code) {
+    throw new Error(responseData.message, { cause: responseData });
+  }
+
+  if (!responseData.res) {
+    throw new Error(LOCALES.INGEST_INVALID_DATA, { cause: responseData });
+  }
+
+  return responseData;
 }
