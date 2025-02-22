@@ -1,11 +1,11 @@
-import webpack, { type Compiler, type Configuration } from 'webpack';
+import webpack, { Compilation, WebpackError, type Compiler, type Configuration } from 'webpack';
 import merge from 'lodash/merge';
 import validate from '@bundle-stats/plugin-webpack-validate';
 
 import * as LOCALES from './locales/en';
 import { debug, getEnvVars, logResponse } from './utils';
 import { normalizeParams } from './utils/normalize-params';
-import { SOURCE_WEBPACK_STATS } from './constants';
+import { PluginConfig, SOURCE_WEBPACK_STATS } from './constants';
 import ingest from './ingest';
 import { filterArtifacts } from './utils/filter-artifacts';
 
@@ -16,14 +16,19 @@ type RelativeCiAgentWebpackPluginOptions = {
    */
   enabled?: boolean;
   /**
+   * Throw error when validation or ingestion fails
+   * @default {false}
+   */
+  failOnError?: boolean;
+  /**
    * Read commit message from git
    * @default true
    */
-  includeCommitMessage?: boolean;
+  includeCommitMessage?: PluginConfig['includeCommitMessage'];
   /**
    * Output payload on a local file for debugging
    */
-  payloadFilepath?: string;
+  payloadFilepath?: PluginConfig['payloadFilepath'];
   /**
    * Webpack stats options
    * @default assets, chunks, modules
@@ -46,14 +51,14 @@ const DEFAULT_OPTIONS = {
 const isWebpack5 = parseInt(webpack.version, 10) === 5;
 
 const sendStats = async (
-  compilation: any,
+  compilation: Compilation,
   options: RelativeCiAgentWebpackPluginOptions,
 ): Promise<void> => {
-  const { stats: statsOptions, ...config } = options;
+  const { stats: statsOptions, failOnError, ...config } = options;
   const data = compilation.getStats().toJson(statsOptions);
 
-  const logger = compilation.getInfrastructureLogger
-    ? compilation.getInfrastructureLogger(PLUGIN_NAME)
+  const logger = compilation.compiler?.getInfrastructureLogger
+    ? compilation.compiler.getInfrastructureLogger(PLUGIN_NAME)
     : console;
 
   try {
@@ -69,8 +74,13 @@ const sendStats = async (
     const response = await ingest(artifactsData, params, config, logger);
 
     logResponse(response);
-  } catch (error) {
-    logger.warn(error); // catch error to prevent failure on error
+  } catch (error: any) {
+    if (failOnError) {
+      const webpackError = new WebpackError(error.message);
+      compilation.errors.push(webpackError);
+    } else {
+      logger.warn(error); // catch error to prevent failure on error
+    }
   }
 };
 

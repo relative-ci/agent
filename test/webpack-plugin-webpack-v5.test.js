@@ -9,6 +9,7 @@ const {
   ENV_DEFAULT, clearCustomEnv, getMockRequest, setCustomEnv,
 } = require('./utils');
 const appConfig = require('./webpack/webpack.config');
+const appFailOnErrorConfig = require('./webpack/webpack-fail-on-error.config');
 
 const MOCK_RESULT = {
   res: {
@@ -42,7 +43,7 @@ describe('webpack-plugin / webpack5', () => {
     compiler.outputFileSystem = new MemoryFS();
 
     compiler.run((error, stats) => {
-      expect(error).toEqual(null);
+      expect(error).toBeNull();
       expect(stats.hasErrors()).toBe(false);
       expect(fetch).toHaveBeenCalledTimes(1);
       expect(fetch).toHaveBeenCalledWith(
@@ -73,7 +74,7 @@ describe('webpack-plugin / webpack5', () => {
 
     compiler.run((error, stats) => {
       expect(stats.hasErrors()).toBe(false);
-      expect(error).toEqual(null);
+      expect(error).toBeNull();
       expect(warn).toHaveBeenCalled();
       expect(fetch).not.toHaveBeenCalled();
 
@@ -91,11 +92,32 @@ describe('webpack-plugin / webpack5', () => {
     compiler.outputFileSystem = new MemoryFS();
 
     compiler.run((error, stats) => {
-      expect(error).toEqual(null);
+      expect(error).toBeNull();
       expect(stats.hasErrors()).toBe(false);
       expect(fetch).toHaveBeenCalledTimes(1);
       expect(warn).toHaveBeenCalled();
       done();
     });
+  });
+
+  test.only('should throw and fail on ingest error when failOnError is true', (done) => {
+    setCustomEnv();
+
+    fetch.mockRejectedValueOnce(new Error('Network error'));
+
+    const compiler = webpack(appFailOnErrorConfig);
+    compiler.outputFileSystem = new MemoryFS();
+
+    try {
+      compiler.run((error, stats) => {
+        expect(error).toBeNull();
+        expect(stats.hasErrors()).toBe(true);
+        expect(stats.toJson().errors[0]).toMatchObject({ message: /Error ingesting data/ });
+        done();
+      });
+    } catch (err) {
+      console.log(err);
+      done();
+    }
   });
 });

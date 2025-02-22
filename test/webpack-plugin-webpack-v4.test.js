@@ -7,6 +7,7 @@ const fetch = require('node-fetch');
 
 const webpackStats = require('./__snapshots__/webpack-4-stats.json');
 const appConfig = require('./webpack/webpack.config');
+const appFailOnErrorConfig = require('./webpack/webpack-fail-on-error.config');
 const {
   ENV_DEFAULT, clearCustomEnv, getMockRequest, setCustomEnv,
 } = require('./utils');
@@ -24,7 +25,7 @@ const MOCK_RESULT = {
   },
 };
 
-describe('webpack-plugin', () => {
+describe('webpack-plugin / webpack4', () => {
   afterEach(() => {
     clearCustomEnv();
     jest.clearAllMocks();
@@ -98,5 +99,26 @@ describe('webpack-plugin', () => {
       expect(warn).toHaveBeenCalled();
       done();
     });
+  });
+
+  test('should throw and fail on ingest error when failOnError is true', (done) => {
+    setCustomEnv();
+
+    fetch.mockRejectedValueOnce(new Error('Network error'));
+
+    const compiler = webpack(appFailOnErrorConfig);
+    compiler.outputFileSystem = new MemoryFS();
+
+    try {
+      compiler.run((error, stats) => {
+        expect(error).toBeNull();
+        expect(stats.hasErrors()).toBe(true);
+        expect(stats.toJson().errors[0]).toMatch(/Error ingesting data/);
+        done();
+      });
+    } catch (err) {
+      console.log(err);
+      done();
+    }
   });
 });
