@@ -12,13 +12,16 @@
   "exports": {
     ".": {
       "require": "./lib/index.js",
+      "import": "./lib/index.js",
       "types": "./lib/index.d.ts"
     },
-    "./injest": {
-      "require": "./lib/injest.js",
-      "types": "./lib/injest.d.ts"
+    "./ingest": {
+      "require": "./lib/ingest.js",
+      "import": "./lib/ingest.js",
+      "types": "./lib/ingest.d.ts"
     },
     "./utils": {
+      "require": "./lib/utils/index.js",
       "require": "./lib/utils/index.js",
       "types": "./lib/utils/index.d.ts"
     }
