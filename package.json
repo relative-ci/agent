@@ -3,24 +3,28 @@
   "version": "4.2.14",
   "description": "Send bundle stats and CI build information to RelativeCI",
   "repository": "relative-ci/agent",
-  "main": "./lib/index.js",
-  "types": "./lib/index.d.ts",
+  "main": "./lib/cjs/index.js",
+  "module": "./lib/esm/index.js",
+  "types": "./lib/types/index.d.ts",
   "bin": {
     "relative-ci": "bin/index.js",
     "relative-ci-agent": "bin/index.js"
   },
   "exports": {
     ".": {
-      "require": "./lib/index.js",
-      "types": "./lib/index.d.ts"
+      "require": "./lib/cjs/index.js",
+      "import": "./lib/esm/index.js",
+      "types": "./lib/types/index.d.ts"
     },
-    "./injest": {
-      "require": "./lib/injest.js",
-      "types": "./lib/injest.d.ts"
+    "./ingest": {
+      "require": "./lib/cjs/ingest.js",
+      "import": "./lib/esm/ingest.js",
+      "types": "./lib/types/ingest.d.ts"
     },
     "./utils": {
-      "require": "./lib/utils/index.js",
-      "types": "./lib/utils/index.d.ts"
+      "require": "./lib/cjs/utils.js",
+      "import": "./lib/esm/utils.js",
+      "types": "./lib/types/utils/index.d.ts"
     }
   },
   "scripts": {

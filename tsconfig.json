@@ -1,23 +1,29 @@
 {
   "extends": "@tsconfig/node14/tsconfig.json",
-  "include": ["src"],
   "compilerOptions": {
-    "allowJs": true,
-    "declaration": true,
-    "declarationDir": "lib",
-    "sourceMap": true,
+    /* dirs */
     "rootDir": "./src",
-    "strict": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
+    "declarationDir": "./lib/types",
+    "types": ["node", "jest", "./typings.d.ts"],
+    /* module config */
+    "module": "esnext",
+    "moduleResolution": "node",
+    "lib": ["esnext"],
     "resolveJsonModule": true,
     "esModuleInterop": true,
+    /* behaviour options */
+    "strict": true,
+    "allowJs": true,
+    "noFallthroughCasesInSwitch": true,
+    "declaration": true,
+    "sourceMap": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
     "skipLibCheck": false,
-    "lib": ["esnext"],
     "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
-    "types": ["node", "jest", "./typings.d.ts"]
-  }
+    "noEmit": true
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "lib"]
 }
