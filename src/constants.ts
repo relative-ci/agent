@@ -4,7 +4,7 @@ export const MASK = '******';
 
 export const SOURCE_WEBPACK_STATS = 'webpack.stats';
 export type Source = typeof SOURCE_WEBPACK_STATS;
-export type SourceFilterFn = (data: unknown) => unknown;
+export type SourceFilterFn = (data: any) => any;
 
 export type EnvVars = {
   /**
