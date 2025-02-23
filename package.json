@@ -24,7 +24,7 @@
     "./ingest": {
       "require": "./lib/cjs/ingest.js",
       "import": "./lib/esm/ingest.js",
-      "types": "./lib/types/ingest.d.ts"
+      "types": "./lib/types/ingest/index.d.ts"
     },
     "./utils": {
       "require": "./lib/cjs/utils.js",
