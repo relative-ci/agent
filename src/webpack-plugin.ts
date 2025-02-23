@@ -64,8 +64,7 @@ async function sendStats(
     : console;
 
   try {
-    // @ts-expect-error incorrect type export
-    const invalidData = validate.default(data);
+    const invalidData = validate(data);
 
     if (invalidData) {
       throw new Error(LOCALES.VALIDATE_ERROR);

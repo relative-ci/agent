@@ -9,8 +9,7 @@ import {
 } from '../constants';
 
 const SOURCE_FILTERS: Record<Source, SourceFilterFn> = {
-  // @ts-expect-error incorrect types
-  [SOURCE_WEBPACK_STATS]: filter.default,
+  [SOURCE_WEBPACK_STATS]: filter,
 } as const;
 
 type Artifact = {
