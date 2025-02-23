@@ -1,5 +1,6 @@
 import set from 'lodash/set';
-import filter from '@bundle-stats/plugin-webpack-filter';
+// @ts-expect-error explicit cjs import
+import filter from '@bundle-stats/plugin-webpack-filter/lib';
 
 import {
   type IngestData,
@@ -9,7 +10,6 @@ import {
 } from '../constants';
 
 const SOURCE_FILTERS: Record<Source, SourceFilterFn> = {
-  // @ts-expect-error incorrect types
   [SOURCE_WEBPACK_STATS]: filter.default,
 } as const;
 
