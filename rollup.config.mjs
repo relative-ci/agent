@@ -17,6 +17,7 @@ export default defineConfig([
     input: {
       index: './src/index.ts',
       cli: './src/cli.ts',
+      artifacts: './src/artifacts/index.ts',
       ingest: './src/ingest.ts',
       utils: './src/utils/index.ts',
     },
