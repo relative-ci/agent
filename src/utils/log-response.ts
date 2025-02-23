@@ -13,6 +13,6 @@ export function logResponse(response: IngestResponseSuccess, logger = basicLogge
   }
 
   if (reportUrl) {
-    logger.info('View bundle report:', reportUrl);
+    logger.info(`View bundle report: ${reportUrl}`);
   }
 }

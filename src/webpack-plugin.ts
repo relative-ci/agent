@@ -2,14 +2,12 @@ import webpack, {
   Compilation, type Compiler, type Configuration,
 } from 'webpack';
 import merge from 'lodash/merge';
-import validate from '@bundle-stats/plugin-webpack-validate';
 
-import * as LOCALES from './locales/en';
 import { debug, getEnvVars, logResponse } from './utils';
 import { normalizeParams } from './utils/normalize-params';
 import { PluginConfig, SOURCE_WEBPACK_STATS } from './constants';
 import ingest from './ingest';
-import { filterArtifacts } from './utils/filter-artifacts';
+import { filterArtifacts, validateWebpackStats } from './artifacts';
 
 type RelativeCiAgentWebpackPluginOptions = {
   /**
@@ -64,11 +62,7 @@ async function sendStats(
     : console;
 
   try {
-    const invalidData = validate(data);
-
-    if (invalidData) {
-      throw new Error(LOCALES.VALIDATE_ERROR);
-    }
+    validateWebpackStats(data);
 
     const params = normalizeParams({}, config);
     const artifactsData = filterArtifacts([{ key: SOURCE_WEBPACK_STATS, data }]);

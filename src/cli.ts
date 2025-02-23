@@ -4,14 +4,13 @@ import { readJSONSync, pathExistsSync } from 'fs-extra';
 import { cosmiconfigSync } from 'cosmiconfig';
 import yargs from 'yargs/yargs';
 import { hideBin } from 'yargs/helpers';
-import validate from '@bundle-stats/plugin-webpack-validate';
 
 import * as LOCALES from './locales/en';
 import { SOURCE_WEBPACK_STATS } from './constants';
+import { filterArtifacts, validateWebpackStats } from './artifacts';
 import { debug } from './utils/debug';
 import { logResponse } from './utils/log-response';
 import { normalizeParams } from './utils/normalize-params';
-import { filterArtifacts } from './utils/filter-artifacts';
 import ingest from './ingest';
 
 export default async function cli(processArgs: Array<string>) {
@@ -57,11 +56,7 @@ export default async function cli(processArgs: Array<string>) {
 
   const data = readJSONSync(webpackArtifactFilepath);
 
-  const invalidData = validate(data);
-
-  if (invalidData) {
-    throw new Error(invalidData);
-  }
+  validateWebpackStats(data);
 
   debug('CLI arguments', args);
 

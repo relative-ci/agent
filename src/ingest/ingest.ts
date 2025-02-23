@@ -2,17 +2,17 @@ import fs from 'fs/promises';
 import path from 'path';
 import fetch from 'node-fetch';
 
-import * as LOCALES from './locales/en';
+import * as LOCALES from '../locales/en';
 import {
   type IngestConfig,
   type IngestData,
   type IngestParams,
   type IngestResponseSuccess,
   type IngestResponse,
-} from './constants';
+} from '../constants';
 import {
   debug, logger as basicLogger, maskObjectProperties, type Logger,
-} from './utils';
+} from '../utils';
 
 export default async function ingest(
   data: IngestData,
