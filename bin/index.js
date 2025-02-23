@@ -2,4 +2,11 @@
 
 const cli = require('../lib/cjs/cli'); // eslint-disable-line
 
-cli(process.argv);
+(async () => {
+  try {
+    await cli(process.argv);
+  } catch (error) {
+    console.error(error);
+    process.exit(1);
+  }
+})();

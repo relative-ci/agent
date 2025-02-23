@@ -48,7 +48,7 @@ describe('CLI', () => {
 
   test('should return error if webpack stats data is invalid', (done) => {
     exec('cd test/cli/invalid-data && ../../../bin/index.js', (_, __, sterr) => {
-      expect(sterr).toContain('Invalid webpack stats structure');
+      expect(sterr).toContain('Invalid stats structure');
       done();
     });
   });
