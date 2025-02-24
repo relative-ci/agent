@@ -64,7 +64,7 @@
   },
   "homepage": "https://relative-ci.com/documentation/setup",
   "devDependencies": {
-    "@eslint/eslintrc": "3.2.0",
+    "@eslint/eslintrc": "3.3.0",
     "@eslint/js": "9.20.0",
     "@release-it/conventional-changelog": "10.0.0",
     "@rollup/plugin-commonjs": "28.0.2",
