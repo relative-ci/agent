@@ -1,6 +1,4 @@
-import merge from 'lodash/merge';
-import set from 'lodash/set';
-import get from 'lodash/get';
+import _ from 'lodash';
 
 import { MASK } from '../constants';
 
@@ -14,12 +12,12 @@ function maskValue(value: unknown): string {
 }
 
 export function maskObjectProperties(data: Record<string, unknown>, paths: Array<string>): unknown {
-  const normalizedData = merge({}, data);
+  const normalizedData = _.merge({}, data);
 
   paths.forEach((propertyPath) => {
-    const value = get(normalizedData, propertyPath, '');
+    const value = _.get(normalizedData, propertyPath, '');
 
-    set(normalizedData, propertyPath, maskValue(value));
+    _.set(normalizedData, propertyPath, maskValue(value));
   });
 
   return normalizedData;

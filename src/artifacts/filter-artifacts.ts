@@ -1,4 +1,4 @@
-import set from 'lodash/set';
+import _ from 'lodash';
 import filter from '@bundle-stats/plugin-webpack-filter';
 
 import {
@@ -24,7 +24,7 @@ export function filterArtifacts(artifactsData: Array<Artifact>): IngestData {
   const dataByKey = {};
 
   artifactsData.forEach(({ key, data }) => {
-    set(
+    _.set(
       dataByKey,
       key,
       SOURCE_FILTERS[key as Source](data),
