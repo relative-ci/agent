@@ -33,7 +33,8 @@
     }
   },
   "scripts": {
-    "build": "rimraf ./lib && npx tsc && rollup -c",
+    "build": "rimraf ./lib && npx tsc -p ./tsconfig.esm.json && rollup -c && npm run build-type",
+    "build-type": "echo '{\"type\":\"commonjs\"}' > lib/cjs/package.json && echo '{\"type\":\"module\"}' > lib/esm/package.json",
     "lint": "eslint .",
     "bump": "./scripts/bump.sh",
     "release": "./scripts/release.sh",
