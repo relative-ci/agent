@@ -1,4 +1,4 @@
-const merge = require('lodash/merge');
+const _ = require('lodash');
 const packageInfo = require('../package.json');
 
 const ENV_DEFAULT = {
@@ -22,7 +22,7 @@ module.exports.getMockRequest = (customPayload) => ({
   headers: {
     'Content-Type': 'application/json; charset=utf-8',
   },
-  body: JSON.stringify(merge(
+  body: JSON.stringify(_.merge(
     {
       key: '123',
       project: 'organization/project',

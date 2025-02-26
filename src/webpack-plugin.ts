@@ -1,7 +1,7 @@
 import webpack, {
   Compilation, type Compiler, type Configuration,
 } from 'webpack';
-import merge from 'lodash/merge';
+import _ from 'lodash';
 
 import { debug, getEnvVars, logResponse } from './utils';
 import { normalizeParams } from './utils/normalize-params';
@@ -88,7 +88,7 @@ export class RelativeCiAgentWebpackPlugin {
   apply(compiler: Compiler) {
     const { isCi } = getEnvVars();
 
-    const options: RelativeCiAgentWebpackPluginOptions = merge(
+    const options: RelativeCiAgentWebpackPluginOptions = _.merge(
       {},
       DEFAULT_OPTIONS,
       {
