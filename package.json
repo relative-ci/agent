@@ -76,7 +76,7 @@
     "@types/env-ci": "3.1.4",
     "@types/fs-extra": "11.0.4",
     "@types/jest": "29.5.14",
-    "@types/lodash": "4.17.15",
+    "@types/lodash": "4.17.16",
     "@types/node-fetch": "2.6.12",
     "eslint": "9.21.0",
     "eslint-config-airbnb-base": "15.0.0",
