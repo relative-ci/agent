@@ -88,7 +88,7 @@
     "rimraf": "6.0.1",
     "rollup": "4.34.9",
     "ts-jest": "29.2.6",
-    "typescript": "5.7.3",
+    "typescript": "5.8.2",
     "typescript-eslint": "8.26.0",
     "webpack": "5.97.1",
     "webpack4": "npm:webpack@^4.47.0"
