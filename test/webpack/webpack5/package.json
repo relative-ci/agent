@@ -1,0 +1,19 @@
+{
+  "name": "@relative-ci/agent-test-webpack-5",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "webpack --mode=production --config webpack.config.js",
+    "build-esm": "cd config-module && npm run build",
+    "build-mjs": "webpack --mode=production --config webpack.config.mjs",
+    "build-ts": "cross-env NODE_OPTIONS='--loader ts-node/esm' NODE_NO_WARNINGS=1 webpack --mode=production --config webpack.config.ts",
+    "build-fail-on-error": "webpack --mode=production --config webpack-fail-on-error.config.js"
+  },
+  "devDependencies": {
+    "@relative-ci/agent": "*",
+    "cross-env": "^7.0.3",
+    "memory-fs": "^0.5.0",
+    "ts-node": "^10.9.2",
+    "webpack": "^5",
+    "webpack-cli": "^6.0.1"
+  }
+}

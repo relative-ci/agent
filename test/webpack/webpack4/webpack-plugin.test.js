@@ -2,17 +2,17 @@ jest.mock('node-fetch');
 
 const webpack = require('webpack');
 const MemoryFS = require('memory-fs');
+// eslint-disable-next-line
 const fetch = require('node-fetch');
 
-const { INGEST_MOCK } = require('./utils');
-const webpack5Stats = require('./__snapshots__/webpack-5-stats.json');
+const webpackStats = require('../../__snapshots__/webpack-4-stats.json');
+const appConfig = require('./webpack.config');
+const appFailOnErrorConfig = require('./webpack-fail-on-error.config');
 const {
-  ENV_DEFAULT, clearCustomEnv, getMockRequest, setCustomEnv,
-} = require('./utils');
-const appConfig = require('./webpack/webpack.config');
-const appFailOnErrorConfig = require('./webpack/webpack-fail-on-error.config');
+  ENV_DEFAULT, INGEST_MOCK, clearCustomEnv, getMockRequest, setCustomEnv,
+} = require('../../utils');
 
-describe('webpack-plugin / webpack5', () => {
+describe('webpack-plugin / webpack4', () => {
   afterEach(() => {
     clearCustomEnv();
     jest.clearAllMocks();
@@ -31,7 +31,7 @@ describe('webpack-plugin / webpack5', () => {
     compiler.outputFileSystem = new MemoryFS();
 
     compiler.run((error, stats) => {
-      expect(error).toBeNull();
+      expect(error).toEqual(null);
       expect(stats.hasErrors()).toBe(false);
       expect(fetch).toHaveBeenCalledTimes(1);
       expect(fetch).toHaveBeenCalledWith(
@@ -41,7 +41,7 @@ describe('webpack-plugin / webpack5', () => {
             webpack: {
               stats: {
                 hash: stats.hash,
-                ...webpack5Stats,
+                ...webpackStats,
               },
             },
           },
@@ -52,24 +52,15 @@ describe('webpack-plugin / webpack5', () => {
     });
   });
 
-  test('should warn, not ingest, and not throw on params error', (done) => {
+  test('should warn, not ingest and not throw on params error', (done) => {
     setCustomEnv({ RELATIVE_CI_KEY: '' });
 
     const compiler = webpack(appConfig);
     compiler.outputFileSystem = new MemoryFS();
 
-    const log = jest.spyOn(compiler, 'infrastructureLogger');
-
     compiler.run((error, stats) => {
       expect(stats.hasErrors()).toBe(false);
-      expect(error).toBeNull();
-      expect(log).toHaveBeenLastCalledWith(
-        'RelativeCiAgent',
-        'warn',
-        expect.arrayContaining([
-          expect.objectContaining({ message: expect.stringContaining('"key" parameter is missing') }),
-        ]),
-      );
+      expect(error).toEqual(null);
       expect(fetch).not.toHaveBeenCalled();
 
       done();
@@ -84,19 +75,10 @@ describe('webpack-plugin / webpack5', () => {
     const compiler = webpack(appConfig);
     compiler.outputFileSystem = new MemoryFS();
 
-    const log = jest.spyOn(compiler, 'infrastructureLogger');
-
     compiler.run((error, stats) => {
-      expect(error).toBeNull();
+      expect(error).toEqual(null);
       expect(stats.hasErrors()).toBe(false);
       expect(fetch).toHaveBeenCalledTimes(1);
-      expect(log).toHaveBeenLastCalledWith(
-        'RelativeCiAgent',
-        'warn',
-        expect.arrayContaining([
-          expect.objectContaining({ message: 'Error ingesting data!' }),
-        ]),
-      );
       done();
     });
   });
@@ -113,7 +95,7 @@ describe('webpack-plugin / webpack5', () => {
       compiler.run((error, stats) => {
         expect(error).toBeNull();
         expect(stats.hasErrors()).toBe(true);
-        expect(stats.toJson().errors[0]).toMatchObject({ message: /Error ingesting data/ });
+        expect(stats.toJson().errors[0]).toMatch(/Error ingesting data/);
         done();
       });
     } catch (err) {

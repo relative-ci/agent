@@ -1,0 +1,6 @@
+{
+  "name": "@relative-ci/agent-test-cli",
+  "devDependencies": {
+    "@relative-ci/agent": "*"
+  }
+}

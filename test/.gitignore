@@ -1,0 +1,4 @@
+# Ignore npm lock files for test package.jsons
+package-lock.json
+# Ignore output build folders
+dist

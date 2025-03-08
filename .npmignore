@@ -12,3 +12,4 @@ test
 **/__tests__/*
 config
 scripts
+verdaccio.yaml
