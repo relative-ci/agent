@@ -85,7 +85,7 @@ export class RelativeCiAgentWebpackPlugin {
     this.options = options;
   }
 
-  apply(compiler: Compiler) {
+  apply(compiler: Compiler): void {
     const { isCi } = getEnvVars();
 
     const options: RelativeCiAgentWebpackPluginOptions = _.merge(

@@ -75,7 +75,7 @@ export default async function ingest(
     }
   }
 
-  logger.info('Send bundle stats to RelativeCI', `branch=${branch}`, `commit=${commit}`);
+  logger.log('Send bundle stats to RelativeCI', `branch=${branch}`, `commit=${commit}`);
 
   let responseData: IngestResponse | null = null;
 
