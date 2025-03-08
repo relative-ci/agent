@@ -1,13 +1,12 @@
 const { exec } = require('child_process');
-const { createServer } = require('../utils');
 
-const MOCK_SERVER_PORT = 5998;
+const { MOCK_SERVER_URL, serve: createServer } = require('../utils');
 
 describe('CLI', () => {
   let server;
 
   beforeAll(() => {
-    server = createServer().listen(MOCK_SERVER_PORT);
+    server = createServer();
   });
 
   afterAll(() => {
@@ -37,7 +36,7 @@ describe('CLI', () => {
 
   test('should return error if params are failing', (done) => {
     exec(`cd test/cli/valid-data &&
-      RELATIVE_CI_ENDPOINT=http://localhost:${MOCK_SERVER_PORT}/save \
+      RELATIVE_CI_ENDPOINT=${MOCK_SERVER_URL}/save \
       RELATIVE_CI_SLUG=org/project \
       npx relative-ci`, (_, __, sterr) => {
       expect(sterr).toContain('parameter is missing');
@@ -48,7 +47,7 @@ describe('CLI', () => {
   test('should run agent successfully', (done) => {
     exec(
       `cd test/cli/valid-data &&
-        RELATIVE_CI_ENDPOINT=http://localhost:${MOCK_SERVER_PORT}/save \
+        RELATIVE_CI_ENDPOINT=${MOCK_SERVER_URL}/save \
         RELATIVE_CI_SLUG=org/project \
         RELATIVE_CI_KEY=abc123 \
         npx relative-ci
@@ -64,7 +63,7 @@ describe('CLI', () => {
   test('should run agent successfully from parent directory', (done) => {
     exec(
       `cd test/cli/custom-config-dir &&
-        RELATIVE_CI_ENDPOINT=http://localhost:${MOCK_SERVER_PORT}/save \
+        RELATIVE_CI_ENDPOINT=${MOCK_SERVER_URL}/save \
         RELATIVE_CI_SLUG=org/project \
         RELATIVE_CI_KEY=abc123 \
         npx relative-ci --config-dir app
