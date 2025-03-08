@@ -115,7 +115,7 @@
     "env-ci": "7.3.0",
     "fs-extra": "11.3.0",
     "lodash": "4.17.21",
-    "node-fetch": "2.7.0",
+    "node-fetch": "3.3.2",
     "yargs": "17.7.2"
   },
   "peerDependencies": {
