@@ -41,10 +41,10 @@
     "bump": "./scripts/bump.sh",
     "release": "./scripts/release.sh",
     "pretest:package-cli": "cd test/cli && npm install",
-    "pretest:package-webpack": "cd test/webpack/webpack4 && npm install --cwd ../webpack5 && npm install --cwd test/webpack/webpack5",
+    "pretest:package-webpack-plugin": "cd test/webpack/webpack4 && npm install && cd ../webpack5 && npm install",
     "test": "jest src",
     "test:package-cli": "jest test/cli",
-    "test:webpack-plugin": "jest test/webpack",
+    "test:package-webpack-plugin": "jest test/webpack",
     "prepublishOnly": "npm run build"
   },
   "engines": {

@@ -15,7 +15,7 @@ describe('CLI', () => {
   });
 
   test('should return error if config is missing', (done) => {
-    exec('npx relative-ci', (_, __, sterr) => {
+    exec('cd test/cli && npx relative-ci', (_, __, sterr) => {
       expect(sterr).toContain('relativeci.config.js file is missing!');
       done();
     });
