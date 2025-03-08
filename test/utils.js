@@ -80,9 +80,16 @@ const INGEST_MOCK = {
   },
 };
 
+const MOCK_SERVER_PORT = 5998;
+
+module.exports.MOCK_SERVER_PORT = MOCK_SERVER_PORT;
+module.exports.MOCK_SERVER_URL = `http://localhost:${MOCK_SERVER_PORT}`;
+
 module.exports.INGEST_MOCK = INGEST_MOCK;
 
-module.exports.createServer = () => http.createServer((__, res) => {
-  res.write(JSON.stringify(INGEST_MOCK));
-  res.end();
-});
+module.exports.serve = () => http.createServer(
+  (__, res) => {
+    res.write(JSON.stringify(INGEST_MOCK));
+    res.end();
+  },
+).listen(MOCK_SERVER_PORT);
