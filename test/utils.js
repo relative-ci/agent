@@ -1,4 +1,5 @@
-const merge = require('lodash/merge');
+const http = require('http');
+const _ = require('lodash');
 const packageInfo = require('../package.json');
 
 const ENV_DEFAULT = {
@@ -22,7 +23,7 @@ module.exports.getMockRequest = (customPayload) => ({
   headers: {
     'Content-Type': 'application/json; charset=utf-8',
   },
-  body: JSON.stringify(merge(
+  body: JSON.stringify(_.merge(
     {
       key: '123',
       project: 'organization/project',
@@ -65,3 +66,23 @@ module.exports.clearCustomEnv = () => {
     process.env[key] = undefined;
   });
 };
+
+const INGEST_MOCK = {
+  res: {
+    job: {
+      internalBuildNumber: 1,
+    },
+  },
+  info: {
+    message: {
+      txt: 'Hello world!',
+    },
+  },
+};
+
+module.exports.INGEST_MOCK = INGEST_MOCK;
+
+module.exports.createServer = () => http.createServer((__, res) => {
+  res.write(JSON.stringify(INGEST_MOCK));
+  res.end();
+});

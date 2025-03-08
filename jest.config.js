@@ -4,4 +4,5 @@ module.exports = {
   transform: {
     '^.+.tsx?$': ['ts-jest', {}],
   },
+  modulePathIgnorePatterns: ['<rootDir>/.verdaccio-storage'],
 };

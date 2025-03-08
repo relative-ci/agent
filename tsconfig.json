@@ -1,29 +1,15 @@
 {
-  "extends": "@tsconfig/node14/tsconfig.json",
   "compilerOptions": {
-    /* dirs */
-    "rootDir": "./src",
-    "declarationDir": "./lib/types",
-    "types": ["node", "jest", "./typings.d.ts"],
-    /* module config */
-    "module": "esnext",
+    "module": "ESNext",
     "moduleResolution": "node",
-    "lib": ["esnext"],
-    "resolveJsonModule": true,
-    "esModuleInterop": true,
-    /* behaviour options */
-    "strict": true,
     "allowJs": true,
-    "noFallthroughCasesInSwitch": true,
-    "declaration": true,
-    "sourceMap": true,
-    "noImplicitReturns": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "skipLibCheck": false,
-    "forceConsistentCasingInFileNames": true,
-    "noEmit": true
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "lib": ["es2020", "es2022.error"]
   },
-  "include": ["src"],
-  "exclude": ["node_modules", "lib"]
+  "ts-node": {
+    "compilerOptions": {
+      "module": "CommonJS"
+    }
+  }
 }
