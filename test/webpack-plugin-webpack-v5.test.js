@@ -11,7 +11,6 @@ const {
 } = require('./utils');
 const appConfig = require('./webpack/webpack.config');
 const appFailOnErrorConfig = require('./webpack/webpack-fail-on-error.config');
-const { isComputedPropertyName } = require('typescript');
 
 describe('webpack-plugin / webpack5', () => {
   afterEach(() => {

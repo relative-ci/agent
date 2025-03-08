@@ -19,7 +19,7 @@ const compat = new FlatCompat({
 export default [
   ...compat.extends('airbnb-base'),
   {
-    ignores: ['lib'],
+    ignores: ['lib', 'test/webpack/**/dist'],
   },
   {
     plugins: { jest },
