@@ -5,25 +5,13 @@ const webpack = require('webpack4');
 const MemoryFS = require('memory-fs');
 const fetch = require('node-fetch');
 
+const { INGEST_MOCK } = require('./utils');
 const webpackStats = require('./__snapshots__/webpack-4-stats.json');
 const appConfig = require('./webpack/webpack.config');
 const appFailOnErrorConfig = require('./webpack/webpack-fail-on-error.config');
 const {
   ENV_DEFAULT, clearCustomEnv, getMockRequest, setCustomEnv,
 } = require('./utils');
-
-const MOCK_RESULT = {
-  res: {
-    job: {
-      internalBuildNumber: 1,
-    },
-  },
-  info: {
-    message: {
-      txt: 'Hello world!',
-    },
-  },
-};
 
 describe('webpack-plugin / webpack4', () => {
   afterEach(() => {
@@ -36,7 +24,7 @@ describe('webpack-plugin / webpack4', () => {
 
     fetch.mockReturnValue(
       Promise.resolve({
-        json: () => Promise.resolve(MOCK_RESULT),
+        json: () => Promise.resolve(INGEST_MOCK),
       }),
     );
 

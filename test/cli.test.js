@@ -1,25 +1,7 @@
-const http = require('http');
 const { exec } = require('child_process');
-
-const MOCK_RESULT = {
-  res: {
-    job: {
-      internalBuildNumber: 1,
-    },
-  },
-  info: {
-    message: {
-      txt: 'Hello world!',
-    },
-  },
-};
+const { createServer } = require('./utils');
 
 const MOCK_SERVER_PORT = 5998;
-
-const createServer = () => http.createServer((_, res) => {
-  res.write(JSON.stringify(MOCK_RESULT));
-  res.end();
-});
 
 describe('CLI', () => {
   let server;

@@ -1,3 +1,4 @@
+const http = require('http');
 const _ = require('lodash');
 const packageInfo = require('../package.json');
 
@@ -65,3 +66,23 @@ module.exports.clearCustomEnv = () => {
     process.env[key] = undefined;
   });
 };
+
+const INGEST_MOCK = {
+  res: {
+    job: {
+      internalBuildNumber: 1,
+    },
+  },
+  info: {
+    message: {
+      txt: 'Hello world!',
+    },
+  },
+};
+
+module.exports.INGEST_MOCK = INGEST_MOCK;
+
+module.exports.createServer = () => http.createServer((__, res) => {
+  res.write(JSON.stringify(INGEST_MOCK));
+  res.end();
+});
