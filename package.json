@@ -101,7 +101,7 @@
     "rollup": "4.35.0",
     "ts-jest": "29.2.6",
     "typescript": "5.8.2",
-    "typescript-eslint": "8.26.0",
+    "typescript-eslint": "8.26.1",
     "verdaccio": "5.26.2",
     "webpack": "5.98.0"
   },
