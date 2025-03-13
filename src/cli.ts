@@ -22,6 +22,7 @@ export default async function cli(processArgs: Array<string>) {
     .option('commit', { describe: 'Commit SHA', default: '' })
     .option('commit-message', { describe: 'Commit message', default: '', alias: 'commitMessage' })
     .option('branch', { describe: 'Branch name', default: '' })
+    .option('base-branch', { describe: 'Branch name', default: '', alias: 'baseBranch' })
     .option('pr', { describe: 'Pull Request number', default: '' })
     .option('slug', { describe: 'Project slug', default: '' })
 
