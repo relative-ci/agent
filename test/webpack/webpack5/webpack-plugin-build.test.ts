@@ -1,6 +1,11 @@
-const { exec } = require('child_process');
+import { exec } from 'child_process';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import {
+  afterAll, beforeAll, describe, expect, test,
+} from 'vitest';
 
-const { MOCK_SERVER_URL, serve } = require('../../utils');
+// eslint-disable-next-line import/no-relative-packages
+import { MOCK_SERVER_URL, serve } from '../../utils';
 
 const testCases = [
   { type: 'commonjs', run: 'build' },
@@ -21,7 +26,7 @@ describe('webpack-plugin / build / webpack5', () => {
   });
 
   testCases.forEach((testCase) => {
-    test(`should build successfully with webpack ${testCase.type} config`, (done) => {
+    test(`should build successfully with webpack ${testCase.type} config`, () => new Promise((done) => {
       exec(`cd test/webpack/webpack5/${testCase.cwd || ''} &&
           CI=true \
           RELATIVE_CI_ENDPOINT=${MOCK_SERVER_URL}/save \
@@ -31,8 +36,8 @@ describe('webpack-plugin / build / webpack5', () => {
         expect(sterr).toEqual('');
         expect(stdout).toMatch(/compiled.*successfully/);
         expect(stdout).toContain('Job #1 done.');
-        done();
+        done(1);
       });
-    });
+    }));
   });
 });
