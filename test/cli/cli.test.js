@@ -1,6 +1,11 @@
-const { exec } = require('child_process');
+import { exec } from 'child_process';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import {
+  beforeAll, afterAll, describe, expect, test,
+} from 'vitest';
 
-const { MOCK_SERVER_URL, serve: createServer } = require('../utils');
+// eslint-disable-next-line import/no-relative-packages
+import { MOCK_SERVER_URL, serve as createServer } from '../utils';
 
 describe('CLI', () => {
   let server;

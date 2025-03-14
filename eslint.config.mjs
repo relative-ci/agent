@@ -1,4 +1,3 @@
-import jest from 'eslint-plugin-jest';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import js from '@eslint/js';
@@ -22,10 +21,8 @@ export default [
     ignores: ['lib', 'test/webpack/**/dist'],
   },
   {
-    plugins: { jest },
     languageOptions: {
       globals: {
-        ...jest.environments.globals.globals,
         AGENT_VERSION: true,
         describe: true,
         it: true,
@@ -41,7 +38,7 @@ export default [
       'import/no-extraneous-dependencies': [
         'error',
         {
-          devDependencies: ['**/*.test.js', '*.config.mjs'],
+          devDependencies: ['**/*.test.js', '*.config.{js,mjs}'],
         },
       ],
     },
@@ -52,6 +49,13 @@ export default [
     rules: {
       'import/extensions': ['error', 'never', { ts: 'never' }],
       '@typescript-eslint/no-explicit-any': 'warn',
+      'import/no-extraneous-dependencies': [
+        'error',
+        {
+          devDependencies: true,
+          // devDependencies: ['**/*.test.ts', '*.config.ts'],
+        },
+      ],
     },
     settings: {
       'import/resolver': {
