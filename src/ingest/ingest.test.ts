@@ -1,4 +1,8 @@
-import ingest from '../ingest';
+import {
+  afterEach, describe, expect, test, vi,
+} from 'vitest';
+
+import ingest from './ingest';
 
 const PARAMS = {
   key: 'abc-123',
@@ -15,11 +19,11 @@ const PARAMS = {
 
 describe('Ingest', () => {
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   test('should ingest data', async () => {
-    global.fetch = jest.fn(() => Promise.resolve({
+    global.fetch = vi.fn(() => Promise.resolve({
       json: () => Promise.resolve({
         res: {
           job: {
@@ -32,7 +36,7 @@ describe('Ingest', () => {
           },
         },
       }),
-    }) as any);
+    }));
 
     await ingest({}, PARAMS);
 
@@ -62,7 +66,7 @@ describe('Ingest', () => {
   });
 
   test('should throw error when fetch fails', async () => {
-    global.fetch = jest.fn(() => Promise.reject(new Error('Network error')));
+    global.fetch = vi.fn(() => Promise.reject(new Error('Network error')));
 
     try {
       await ingest({}, PARAMS);
@@ -72,7 +76,7 @@ describe('Ingest', () => {
   });
 
   test('should throw error when fetch returns invalid json', async () => {
-    global.fetch = jest.fn(() => Promise.resolve({
+    global.fetch = vi.fn(() => Promise.resolve({
       json: () => Promise.resolve(null),
     }) as any);
 
@@ -84,7 +88,7 @@ describe('Ingest', () => {
   });
 
   test('should throw error when ingest returns error', async () => {
-    global.fetch = jest.fn(() => Promise.resolve({
+    global.fetch = vi.fn(() => Promise.resolve({
       json: () => Promise.resolve({
         code: 'INGEST_FAILED',
         message: 'Ingest failed',
@@ -99,7 +103,7 @@ describe('Ingest', () => {
   });
 
   test('should throw error when ingest response is invalid', async () => {
-    global.fetch = jest.fn(() => Promise.resolve({
+    global.fetch = vi.fn(() => Promise.resolve({
       json: () => Promise.resolve({}),
     }) as any);
 

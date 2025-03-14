@@ -4,6 +4,7 @@ import { RelativeCiAgentWebpackPlugin } from '@relative-ci/agent';
 
 const config: Configuration = {
   mode: 'production',
+  context: __dirname,
   plugins: [
     new RelativeCiAgentWebpackPlugin({ includeCommitMessage: false }),
   ],
