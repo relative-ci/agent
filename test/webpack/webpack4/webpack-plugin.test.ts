@@ -1,21 +1,26 @@
-jest.mock('node-fetch');
+// eslint-disable-next-line import/no-extraneous-dependencies
+import {
+  afterEach, describe, expect, test, vi,
+} from 'vitest';
+import webpack from 'webpack';
+import MemoryFS from 'memory-fs';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import fetch from 'node-fetch';
 
-const webpack = require('webpack');
-const MemoryFS = require('memory-fs');
-// eslint-disable-next-line
-const fetch = require('node-fetch');
-
-const webpackStats = require('../../__snapshots__/webpack-4-stats.json');
-const appConfig = require('./webpack.config');
-const appFailOnErrorConfig = require('./webpack-fail-on-error.config');
-const {
+// eslint-disable-next-line import/no-relative-packages
+import webpackStats from '../../__snapshots__/webpack-4-stats.json';
+import {
   ENV_DEFAULT, INGEST_MOCK, clearCustomEnv, getMockRequest, setCustomEnv,
-} = require('../../utils');
+} from '../../utils'; // eslint-disable-line import/no-relative-packages
+import appConfig from './webpack.config';
+import appFailOnErrorConfig from './webpack-fail-on-error.config';
+
+vi.mock('node-fetch');
 
 describe('webpack-plugin / webpack4', () => {
   afterEach(() => {
     clearCustomEnv();
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   test('should ingest data successfully', (done) => {

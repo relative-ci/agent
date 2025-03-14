@@ -1,9 +1,13 @@
+import {
+  type MockedFunction, beforeEach, describe, expect, test, vi,
+} from 'vitest';
 import nodeFetch from 'node-fetch';
 
-import ingest from '../ingest';
+import ingest from './ingest';
 
-jest.mock('node-fetch', () => jest.fn());
-const fetch = nodeFetch as jest.MockedFunction<typeof nodeFetch>;
+vi.mock('node-fetch', () => ({ default: vi.fn() }));
+
+const fetch = nodeFetch as MockedFunction<typeof nodeFetch>;
 
 const PARAMS = {
   key: 'abc-123',
@@ -20,7 +24,7 @@ const PARAMS = {
 
 describe('Ingest', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   test('should ingest data', async () => {

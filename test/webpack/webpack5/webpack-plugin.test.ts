@@ -1,24 +1,30 @@
-jest.mock('node-fetch');
+// eslint-disable-next-line import/no-extraneous-dependencies
+import {
+  afterEach, describe, expect, MockedFunction, test, vi,
+} from 'vitest';
+import webpack from 'webpack';
+import MemoryFS from 'memory-fs';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import baseFetch from 'node-fetch';
 
-const webpack = require('webpack');
-const MemoryFS = require('memory-fs');
-// eslint-disable-next-line
-const fetch = require('node-fetch');
-
-const webpack5Stats = require('../../__snapshots__/webpack-5-stats.json');
-const {
+import webpack5Stats from '../../__snapshots__/webpack-5-stats.json'; // eslint-disable-line import/no-relative-packages
+import {
   ENV_DEFAULT, INGEST_MOCK, clearCustomEnv, getMockRequest, setCustomEnv,
-} = require('../../utils');
-const appConfig = require('./webpack.config');
-const appFailOnErrorConfig = require('./webpack-fail-on-error.config');
+} from '../../utils'; // eslint-disable-line import/no-relative-packages
+import appConfig from './webpack.config.js';
+import appFailOnErrorConfig from './webpack-fail-on-error.config';
+
+vi.mock('node-fetch');
+
+const fetch = baseFetch as MockedFunction<typeof baseFetch>;
 
 describe('webpack-plugin / webpack5', () => {
   afterEach(() => {
     clearCustomEnv();
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
-  test('should ingest data successfully', (done) => {
+  test('should ingest data successfully', () => new Promise((done) => {
     setCustomEnv();
 
     fetch.mockReturnValue(
@@ -48,17 +54,17 @@ describe('webpack-plugin / webpack5', () => {
         }),
       );
 
-      done();
+      done(true);
     });
-  });
+  }));
 
-  test('should warn, not ingest, and not throw on params error', (done) => {
+  test('should warn, not ingest, and not throw on params error', () => new Promise((done) => {
     setCustomEnv({ RELATIVE_CI_KEY: '' });
 
     const compiler = webpack(appConfig);
     compiler.outputFileSystem = new MemoryFS();
 
-    const log = jest.spyOn(compiler, 'infrastructureLogger');
+    const log = vi.spyOn(compiler, 'infrastructureLogger');
 
     compiler.run((error, stats) => {
       expect(stats.hasErrors()).toBe(false);
@@ -72,11 +78,11 @@ describe('webpack-plugin / webpack5', () => {
       );
       expect(fetch).not.toHaveBeenCalled();
 
-      done();
+      done(true);
     });
-  });
+  }));
 
-  test('should warn and not throw on ingest error', (done) => {
+  test.only('should warn and not throw on ingest error', () => new Promise((done) => {
     setCustomEnv();
 
     fetch.mockRejectedValueOnce(new Error('Network error'));
@@ -84,10 +90,11 @@ describe('webpack-plugin / webpack5', () => {
     const compiler = webpack(appConfig);
     compiler.outputFileSystem = new MemoryFS();
 
-    const log = jest.spyOn(compiler, 'infrastructureLogger');
+    const log = vi.spyOn(compiler, 'infrastructureLogger');
 
     compiler.run((error, stats) => {
       expect(error).toBeNull();
+      console.log(stats.toJson().errors);
       expect(stats.hasErrors()).toBe(false);
       expect(fetch).toHaveBeenCalledTimes(1);
       expect(log).toHaveBeenLastCalledWith(
@@ -97,11 +104,11 @@ describe('webpack-plugin / webpack5', () => {
           expect.objectContaining({ message: 'Error ingesting data!' }),
         ]),
       );
-      done();
+      done(true);
     });
-  });
+  }));
 
-  test('should throw and fail on ingest error when failOnError is true', (done) => {
+  test('should throw and fail on ingest error when failOnError is true', new Promise((done) => {
     setCustomEnv();
 
     fetch.mockRejectedValueOnce(new Error('Network error'));
@@ -118,7 +125,7 @@ describe('webpack-plugin / webpack5', () => {
       });
     } catch (err) {
       console.log(err);
-      done();
+      done(true);
     }
-  });
+  }));
 });

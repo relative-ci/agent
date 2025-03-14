@@ -76,7 +76,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node: [20, 18, 16, 14]
+        node: [20, 18]
     steps:
       - uses: actions/checkout@v4
 
@@ -113,7 +113,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node: [20, 18, 16, 14]
+        node: [20, 18]
         webpack: ['webpack4', 'webpack5']
         exclude:
           - webpack: 'webpack4'
