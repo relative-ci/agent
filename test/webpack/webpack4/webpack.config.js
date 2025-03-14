@@ -2,7 +2,7 @@
 const { RelativeCiAgentWebpackPlugin } = require('@relative-ci/agent');
 
 module.exports = {
-  context: __dirname,
+  mode: 'production',
   plugins: [
     new RelativeCiAgentWebpackPlugin({
       includeCommitMessage: false,
