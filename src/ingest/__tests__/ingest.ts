@@ -1,9 +1,4 @@
-import nodeFetch from 'node-fetch';
-
 import ingest from '../ingest';
-
-jest.mock('node-fetch', () => jest.fn());
-const fetch = nodeFetch as jest.MockedFunction<typeof nodeFetch>;
 
 const PARAMS = {
   key: 'abc-123',
@@ -19,12 +14,12 @@ const PARAMS = {
 };
 
 describe('Ingest', () => {
-  beforeEach(() => {
+  afterEach(() => {
     jest.clearAllMocks();
   });
 
   test('should ingest data', async () => {
-    fetch.mockResolvedValueOnce({
+    global.fetch = jest.fn(() => Promise.resolve({
       json: () => Promise.resolve({
         res: {
           job: {
@@ -37,7 +32,7 @@ describe('Ingest', () => {
           },
         },
       }),
-    } as any);
+    }) as any);
 
     await ingest({}, PARAMS);
 
@@ -67,7 +62,7 @@ describe('Ingest', () => {
   });
 
   test('should throw error when fetch fails', async () => {
-    fetch.mockRejectedValueOnce(new Error('Network error'));
+    global.fetch = jest.fn(() => Promise.reject(new Error('Network error')));
 
     try {
       await ingest({}, PARAMS);
@@ -77,9 +72,9 @@ describe('Ingest', () => {
   });
 
   test('should throw error when fetch returns invalid json', async () => {
-    fetch.mockResolvedValueOnce({
+    global.fetch = jest.fn(() => Promise.resolve({
       json: () => Promise.resolve(null),
-    } as any);
+    }) as any);
 
     try {
       await ingest({}, PARAMS);
@@ -89,12 +84,12 @@ describe('Ingest', () => {
   });
 
   test('should throw error when ingest returns error', async () => {
-    fetch.mockResolvedValueOnce({
+    global.fetch = jest.fn(() => Promise.resolve({
       json: () => Promise.resolve({
         code: 'INGEST_FAILED',
         message: 'Ingest failed',
       }),
-    } as any);
+    }) as any);
 
     try {
       await ingest({}, PARAMS);
@@ -104,9 +99,9 @@ describe('Ingest', () => {
   });
 
   test('should throw error when ingest response is invalid', async () => {
-    fetch.mockResolvedValueOnce({
-      json: () => Promise.resolve({ }),
-    } as any);
+    global.fetch = jest.fn(() => Promise.resolve({
+      json: () => Promise.resolve({}),
+    }) as any);
 
     try {
       await ingest({}, PARAMS);

@@ -1,9 +1,5 @@
-jest.mock('node-fetch');
-
 const webpack = require('webpack');
 const MemoryFS = require('memory-fs');
-// eslint-disable-next-line
-const fetch = require('node-fetch');
 
 const webpack5Stats = require('../../__snapshots__/webpack-5-stats.json');
 const {
@@ -21,11 +17,9 @@ describe('webpack-plugin / webpack5', () => {
   test('should ingest data successfully', (done) => {
     setCustomEnv();
 
-    fetch.mockReturnValue(
-      Promise.resolve({
-        json: () => Promise.resolve(INGEST_MOCK),
-      }),
-    );
+    global.fetch = jest.fn(() => Promise.resolve({
+      json: () => Promise.resolve(INGEST_MOCK),
+    }));
 
     const compiler = webpack(appConfig);
     compiler.outputFileSystem = new MemoryFS();
@@ -104,7 +98,7 @@ describe('webpack-plugin / webpack5', () => {
   test('should throw and fail on ingest error when failOnError is true', (done) => {
     setCustomEnv();
 
-    fetch.mockRejectedValueOnce(new Error('Network error'));
+    global.fetch = jest.fn(() => Promise.rejest(new Error('Network error')));
 
     const compiler = webpack(appFailOnErrorConfig);
     compiler.outputFileSystem = new MemoryFS();
