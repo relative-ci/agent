@@ -88,6 +88,7 @@
     "@types/env-ci": "3.1.4",
     "@types/fs-extra": "11.0.4",
     "@types/lodash": "4.17.16",
+    "env-ci": "11.1.0",
     "eslint": "9.22.0",
     "eslint-config-airbnb-base": "15.0.0",
     "eslint-plugin-import": "2.31.0",
@@ -108,7 +109,6 @@
     "cosmiconfig": "9.0.0",
     "debug": "4.4.0",
     "dotenv": "16.4.7",
-    "env-ci": "11.1.0",
     "fs-extra": "11.3.0",
     "lodash": "4.17.21",
     "yargs": "17.7.2"
