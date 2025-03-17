@@ -18,6 +18,25 @@ const INPUT = {
   utils: './src/utils/index.ts',
 };
 
+/**
+ * Explicit depenency externals to bundle by default esm only dependencies
+ * - env-ci
+ */
+const EXTERNAL = [
+  // Dependencies
+  '@bundle-stats/plugin-webpack-filter',
+  '@bundle-stats/plugin-webpack-validate',
+  'core-js',
+  'cosmiconfig',
+  'debug',
+  'dotenv',
+  'fs-extra',
+  'lodash',
+  'yargs',
+  // Peer dependencies
+  'webpack',
+];
+
 export default defineConfig([
   {
     context: CONTEXT,
@@ -31,7 +50,7 @@ export default defineConfig([
       preserveModulesRoot: CONTEXT,
       interop: 'auto',
     },
-    external: /node_modules/,
+    external: EXTERNAL,
     plugins: [
       replacePlugin({
         preventAssignment: true,
@@ -43,6 +62,7 @@ export default defineConfig([
       commonjsPlugin({
         defaultIsModuleExports: 'auto',
         requireReturnsDefault: 'auto',
+        transformMixedEsModules: false,
       }),
       typescriptPlugin({
         tsconfig: './tsconfig.cjs.json',
@@ -61,7 +81,7 @@ export default defineConfig([
       preserveModulesRoot: CONTEXT,
       interop: 'auto',
     },
-    external: /node_modules/,
+    external: EXTERNAL,
     plugins: [
       replacePlugin({
         preventAssignment: true,
