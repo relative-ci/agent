@@ -4,6 +4,8 @@ import commonjsPlugin from '@rollup/plugin-commonjs';
 import nodeResolvePlugin from '@rollup/plugin-node-resolve';
 import replacePlugin from '@rollup/plugin-replace';
 import typescriptPlugin from '@rollup/plugin-typescript';
+// eslint is not able to resolve the dependency
+// eslint-disable-next-line import/no-unresolved
 import nodeExternals from 'rollup-plugin-node-externals';
 
 // @ts-expect-error Incorrect ts-eslint tsconfig

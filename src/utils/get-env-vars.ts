@@ -1,3 +1,5 @@
+// env-ci and its dependencies are not flagged as external (not bundled)
+// eslint-disable-next-line import/no-extraneous-dependencies
 import envCi, { type CiEnv } from 'env-ci';
 
 import { type EnvVars } from '../constants';
