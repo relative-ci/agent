@@ -19,6 +19,30 @@ const INPUT = {
   utils: './src/utils/index.ts',
 };
 
+/**
+ * @param {string} prefix
+ */
+function getEntryFileNames(prefix) {
+  /**
+   * @type {import('rollup').PreRenderedChunk}
+   * @return {string}
+   */
+  return function entryFileNames(fileInfo) {
+    let name = '[name]';
+
+    /**
+     * Replace `node_modules` with `__`
+     * In node 18-20, type=commonjs is automatically inferred for modules
+     * under a node_modules folder without a package.json with type
+     */
+    if (fileInfo.name.match(/node_modules/)) {
+      name = fileInfo.name.replace(/node_modules/g, '__');
+    }
+
+    return `${prefix}/${name}.js`;
+  };
+}
+
 export default defineConfig([
   {
     context: CONTEXT,
@@ -26,7 +50,7 @@ export default defineConfig([
     output: {
       dir: OUTPUT_DIR,
       format: 'cjs',
-      entryFileNames: 'cjs/[name].js',
+      entryFileNames: getEntryFileNames('cjs'),
       sourcemap: true,
       preserveModules: true,
       preserveModulesRoot: CONTEXT,
@@ -44,11 +68,7 @@ export default defineConfig([
       nodeResolvePlugin({
         extensions: ['.js', '.cjs', '.json'],
       }),
-      commonjsPlugin({
-        defaultIsModuleExports: 'auto',
-        requireReturnsDefault: 'auto',
-        transformMixedEsModules: false,
-      }),
+      commonjsPlugin(),
       typescriptPlugin({
         tsconfig: './tsconfig.cjs.json',
       }),
@@ -60,7 +80,7 @@ export default defineConfig([
     output: {
       dir: OUTPUT_DIR,
       format: 'esm',
-      entryFileNames: 'esm/[name].js',
+      entryFileNames: getEntryFileNames('esm'),
       sourcemap: true,
       preserveModules: true,
       preserveModulesRoot: CONTEXT,
@@ -78,11 +98,7 @@ export default defineConfig([
       nodeResolvePlugin({
         extensions: ['.js', '.mjs', '.cjs', '.json'],
       }),
-      commonjsPlugin({
-        defaultIsModuleExports: 'auto',
-        requireReturnsDefault: 'auto',
-        transformMixedEsModules: true,
-      }),
+      commonjsPlugin(),
       typescriptPlugin({
         tsconfig: './tsconfig.esm.json',
       }),
