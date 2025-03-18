@@ -4,6 +4,7 @@ import commonjsPlugin from '@rollup/plugin-commonjs';
 import nodeResolvePlugin from '@rollup/plugin-node-resolve';
 import replacePlugin from '@rollup/plugin-replace';
 import typescriptPlugin from '@rollup/plugin-typescript';
+import nodeExternals from 'rollup-plugin-node-externals';
 
 // @ts-expect-error Incorrect ts-eslint tsconfig
 import packageInfo from './package.json' with { type: 'json' };
@@ -18,25 +19,6 @@ const INPUT = {
   utils: './src/utils/index.ts',
 };
 
-/**
- * Explicit depenency externals to bundle by default esm only dependencies
- * - env-ci
- */
-const EXTERNAL = [
-  // Dependencies
-  '@bundle-stats/plugin-webpack-filter',
-  '@bundle-stats/plugin-webpack-validate',
-  'core-js',
-  'cosmiconfig',
-  'debug',
-  'dotenv',
-  'fs-extra',
-  'lodash',
-  'yargs',
-  // Peer dependencies
-  'webpack',
-];
-
 export default defineConfig([
   {
     context: CONTEXT,
@@ -50,11 +32,14 @@ export default defineConfig([
       preserveModulesRoot: CONTEXT,
       interop: 'auto',
     },
-    external: EXTERNAL,
     plugins: [
       replacePlugin({
         preventAssignment: true,
         AGENT_VERSION: JSON.stringify(packageInfo.version),
+      }),
+      nodeExternals({
+        deps: true,
+        peerDeps: true,
       }),
       nodeResolvePlugin({
         extensions: ['.js', '.cjs', '.json'],
@@ -81,11 +66,14 @@ export default defineConfig([
       preserveModulesRoot: CONTEXT,
       interop: 'auto',
     },
-    external: EXTERNAL,
     plugins: [
       replacePlugin({
         preventAssignment: true,
         AGENT_VERSION: JSON.stringify(packageInfo.version),
+      }),
+      nodeExternals({
+        deps: true,
+        peerDeps: true,
       }),
       nodeResolvePlugin({
         extensions: ['.js', '.mjs', '.cjs', '.json'],
