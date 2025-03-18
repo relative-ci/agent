@@ -52,8 +52,7 @@ export default [
       'import/no-extraneous-dependencies': [
         'error',
         {
-          devDependencies: true,
-          // devDependencies: ['**/*.test.ts', '*.config.ts'],
+          devDependencies: ['**/*.test.ts', '*.config.ts'],
         },
       ],
     },
