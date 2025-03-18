@@ -1,5 +1,5 @@
 import path from 'path';
-import get from 'lodash/get';
+import _ from 'lodash';
 import { readJSONSync, pathExistsSync } from 'fs-extra';
 import { cosmiconfigSync } from 'cosmiconfig';
 import yargs from 'yargs/yargs';
@@ -40,14 +40,14 @@ export default async function cli(processArgs: Array<string>) {
 
   const { config } = searchConfig;
 
-  if (!get(config, 'webpack.stats')) {
+  if (!_.get(config, 'webpack.stats')) {
     throw new Error(LOCALES.CLI_INVALID_CONFIGURATION_ERROR);
   }
 
   // Load webpack stats file relative to the config file
   const webpackArtifactFilepath = path.join(
     path.dirname(searchConfig.filepath),
-    get(config, 'webpack.stats'),
+    _.get(config, 'webpack.stats'),
   );
 
   if (!pathExistsSync(webpackArtifactFilepath)) {

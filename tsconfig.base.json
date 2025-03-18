@@ -1,10 +1,10 @@
 {
-  "extends": "@tsconfig/node14/tsconfig.json",
+  "extends": "@tsconfig/node18/tsconfig.json",
   "compilerOptions": {
     /* dirs */
     "rootDir": "./src",
     "declarationDir": "./lib/types",
-    "types": ["node", "jest", "./typings.d.ts"],
+    "types": ["node", "./typings.d.ts"],
     /* module config */
     "target": "es2020",
     "lib": ["es2020", "es2022.error"],

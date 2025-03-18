@@ -5,8 +5,7 @@
     "build": "webpack --mode=production --config webpack.config.js",
     "build-esm": "cd config-module && npm run build",
     "build-mjs": "webpack --mode=production --config webpack.config.mjs",
-    "build-ts": "cross-env NODE_OPTIONS='--loader ts-node/esm' NODE_NO_WARNINGS=1 webpack --mode=production --config webpack.config.ts",
-    "build-fail-on-error": "webpack --mode=production --config webpack-fail-on-error.config.js"
+    "build-ts": "cross-env NODE_OPTIONS='--loader ts-node/esm' NODE_NO_WARNINGS=1 webpack --mode=production --config webpack.config.ts"
   },
   "devDependencies": {
     "@relative-ci/agent": "*",

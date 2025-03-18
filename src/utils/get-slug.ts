@@ -41,11 +41,5 @@ export function getSlug(envVars: CiEnv): string {
     return getSlugFromGitURL(process.env.GIT_URL || '') || '';
   }
 
-  // env-ci does not read repository slug, but buildkite org/project
-  // https://buildkite.com/docs/pipelines/environment-variables#BUILDKITE_REPO
-  if ('service' in envVars && envVars.service === 'buildkite') {
-    return getSlugFromGitURL(process.env.BUILDKITE_REPO || '') || '';
-  }
-
   return 'slug' in envVars ? envVars.slug : '';
 }
