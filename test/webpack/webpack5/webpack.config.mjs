@@ -1,5 +1,5 @@
 // eslint-disable-next-line
-import { RelativeCiAgentWebpackPlugin } from '@relative-ci/agent';
+import { RelativeCiAgentWebpackPlugin } from '@relative-ci/webpack-plugin';
 
 export default {
   entry: {
