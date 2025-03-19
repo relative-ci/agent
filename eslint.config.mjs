@@ -34,6 +34,12 @@ export default [
           devDependencies: ['**/*.test.js', '*.config.{js,mjs}'],
         },
       ],
+      'import/no-unresolved': [
+        'error',
+        {
+          ignore: ['@relative-ci/'],
+        }
+      ],
     },
     settings: {
       'import/resolver': {
