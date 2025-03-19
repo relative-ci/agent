@@ -1,55 +1,7 @@
 {
-  "name": "@relative-ci/agent",
-  "version": "4.3.0",
+  "name": "relative-ci-agent-workspace",
+  "version": "5.0.0-alpha.0",
   "description": "Send bundle stats and CI build information to RelativeCI",
-  "repository": "relative-ci/agent",
-  "main": "./lib/cjs/index.js",
-  "module": "./lib/esm/index.js",
-  "types": "./lib/types/index.d.ts",
-  "bin": {
-    "relative-ci": "bin/index.js",
-    "relative-ci-agent": "bin/index.js"
-  },
-  "exports": {
-    ".": {
-      "types": "./lib/types/index.d.ts",
-      "require": "./lib/cjs/index.js",
-      "import": "./lib/esm/index.js"
-    },
-    "./artifacts": {
-      "types": "./lib/types/artifacts/index.d.ts",
-      "require": "./lib/cjs/artifacts.js",
-      "import": "./lib/esm/artifacts.js"
-    },
-    "./ingest": {
-      "types": "./lib/types/ingest/index.d.ts",
-      "require": "./lib/cjs/ingest.js",
-      "import": "./lib/esm/ingest.js"
-    },
-    "./utils": {
-      "types": "./lib/types/utils/index.d.ts",
-      "require": "./lib/cjs/utils.js",
-      "import": "./lib/esm/utils.js"
-    }
-  },
-  "scripts": {
-    "build": "npm run clean && rollup -c && npm run build-type",
-    "build-type": "echo '{\"type\":\"commonjs\"}' > lib/cjs/package.json && echo '{\"type\":\"module\"}' > lib/esm/package.json",
-    "clean": "rimraf ./lib",
-    "clean-deps": "rimraf ./test/cli/node_modules ./test/webpack/*/node_modules ./node_modules",
-    "lint": "eslint .",
-    "bump": "./scripts/bump.sh",
-    "release": "./scripts/release.sh",
-    "pretest:package-cli": "cd test/cli && npm install",
-    "pretest:package-webpack-plugin": "cd test/webpack/webpack4 && npm install && cd ../webpack5 && npm install",
-    "test": "vitest src",
-    "test:package-cli": "vitest test/cli",
-    "test:package-webpack-plugin": "vitest test/webpack",
-    "prepublishOnly": "npm run build"
-  },
-  "engines": {
-    "node": ">= 18.0.0"
-  },
   "keywords": [
     "webpack",
     "vitejs",
@@ -65,62 +17,51 @@
     "chunks",
     "modules"
   ],
-  "author": {
-    "name": "Viorel Cojocaru",
-    "email": "vio@beanon.com",
-    "url": "http://beanon.com"
-  },
-  "license": "MIT",
+  "repository": "https://github.com/relative-ci/agent",
   "bugs": {
     "url": "https://github.com/relative-ci/agent/issues"
   },
   "homepage": "https://relative-ci.com/documentation/setup",
+  "license": "MIT",
+  "author": {
+    "name": "Viorel Cojocaru",
+    "email": "vio@relative-ci.com",
+    "url": "https://relative-ci.com"
+  },
+  "workspaces": [
+    "packages/core",
+    "packages/cli",
+    "packages/webpack-plugin"
+  ],
+  "engines": {
+    "node": ">= 18.0.0"
+  },
+  "scripts": {
+    "build": "npm run build --workspaces",
+    "clean": "npm run clean --workspaces",
+    "clean-deps": "rimraf ./test/cli/node_modules ./test/webpack/*/node_modules ./node_modules",
+    "lint": "npm run lint --workspaces",
+    "bump": "./scripts/bump.sh",
+    "release": "./scripts/release.sh",
+    "pretest:package-cli": "cd test/cli && npm install",
+    "pretest:package-webpack-plugin": "cd test/webpack/webpack4 && npm install && cd ../webpack5 && npm install",
+    "test": "npm run test --workspaces",
+    "test:package-cli": "vitest test/cli",
+    "test:package-webpack-plugin": "vitest test/webpack"
+  },
   "devDependencies": {
     "@eslint/eslintrc": "3.3.0",
     "@eslint/js": "9.22.0",
     "@release-it/conventional-changelog": "10.0.0",
-    "@rollup/plugin-commonjs": "28.0.3",
-    "@rollup/plugin-node-resolve": "16.0.0",
-    "@rollup/plugin-replace": "6.0.2",
-    "@rollup/plugin-typescript": "12.1.2",
-    "@tsconfig/node18": "^18.2.4",
-    "@types/debug": "4.1.12",
-    "@types/env-ci": "3.1.4",
-    "@types/fs-extra": "11.0.4",
-    "@types/lodash": "4.17.16",
-    "env-ci": "11.1.0",
+    "dotenv": "^16.4.7",
     "eslint": "9.22.0",
     "eslint-config-airbnb-base": "15.0.0",
     "eslint-plugin-import": "2.31.0",
-    "memory-fs": "0.5.0",
     "release-it": "18.1.2",
     "rimraf": "6.0.1",
-    "rollup": "4.35.0",
-    "rollup-plugin-node-externals": "8.0.0",
-    "typescript": "5.8.2",
     "typescript-eslint": "8.26.0",
     "verdaccio": "6.0.5",
-    "vitest": "3.0.8",
-    "webpack": "5.98.0"
-  },
-  "dependencies": {
-    "@bundle-stats/plugin-webpack-filter": "4.19.0",
-    "@bundle-stats/plugin-webpack-validate": "4.19.0",
-    "core-js": "3.41.0",
-    "cosmiconfig": "9.0.0",
-    "debug": "4.4.0",
-    "dotenv": "16.4.7",
-    "fs-extra": "11.3.0",
-    "lodash": "4.17.21",
-    "yargs": "17.7.2"
-  },
-  "peerDependencies": {
-    "webpack": "^4.0.0 || ^5.0.0-rc.1"
-  },
-  "peerDependenciesMeta": {
-    "webpack": {
-      "optional": true
-    }
+    "vitest": "3.0.8"
   },
   "overrides": {
     "eslint-config-airbnb-base": {

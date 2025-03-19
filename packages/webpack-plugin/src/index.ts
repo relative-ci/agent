@@ -2,12 +2,18 @@ import webpack, {
   Compilation, type Compiler, type Configuration,
 } from 'webpack';
 import _ from 'lodash';
-
-import { debug, getEnvVars, logResponse } from './utils';
-import { normalizeParams } from './utils/normalize-params';
-import { PluginConfig, SOURCE_WEBPACK_STATS } from './constants';
-import ingest from './ingest';
-import { filterArtifacts, validateWebpackStats } from './artifacts';
+import {
+  SOURCE_WEBPACK_STATS,
+  debug,
+  getEnvVars,
+  filterArtifacts,
+  validateWebpackStats,
+  logResponse,
+  normalizeParams,
+  type PluginConfig,
+} from '@relative-ci/core';
+// eslint-disable-next-line import/no-unresolved
+import ingest from '@relative-ci/core/ingest';
 
 type RelativeCiAgentWebpackPluginOptions = {
   /**

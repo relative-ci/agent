@@ -8,7 +8,7 @@
     "build-ts": "cross-env NODE_OPTIONS='--loader ts-node/esm' NODE_NO_WARNINGS=1 webpack --mode=production --config webpack.config.ts"
   },
   "devDependencies": {
-    "@relative-ci/agent": "*",
+    "@relative-ci/webpack-plugin": "*",
     "cross-env": "^7.0.3",
     "memory-fs": "^0.5.0",
     "ts-node": "^10.9.2",

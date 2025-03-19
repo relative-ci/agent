@@ -5,13 +5,18 @@ import { cosmiconfigSync } from 'cosmiconfig';
 import yargs from 'yargs/yargs';
 import { hideBin } from 'yargs/helpers';
 
-import * as LOCALES from './locales/en';
-import { SOURCE_WEBPACK_STATS } from './constants';
-import { filterArtifacts, validateWebpackStats } from './artifacts';
-import { debug } from './utils/debug';
-import { logResponse } from './utils/log-response';
-import { normalizeParams } from './utils/normalize-params';
-import ingest from './ingest';
+import {
+  SOURCE_WEBPACK_STATS,
+  debug,
+  logResponse,
+  normalizeParams,
+  filterArtifacts,
+  validateWebpackStats,
+} from '@relative-ci/core';
+// eslint-disable-next-line import/no-unresolved
+import ingest from '@relative-ci/core/ingest';
+// eslint-disable-next-line import/no-unresolved
+import * as LOCALES from '@relative-ci/core/locales/en';
 
 export default async function cli(processArgs: Array<string>) {
   const args = await yargs(hideBin(processArgs))

@@ -1,10 +1,11 @@
 {
   "compilerOptions": {
-    "module": "esnext",
+    "module": "ESNext",
     "moduleResolution": "node",
     "allowJs": true,
     "esModuleInterop": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "lib": ["es2020", "es2022.error"]
   },
   "ts-node": {
     "compilerOptions": {

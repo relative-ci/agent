@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const cli = require('../lib/cjs/cli'); // eslint-disable-line
+const cli = require('../lib/cjs/index'); // eslint-disable-line
 
 (async () => {
   try {

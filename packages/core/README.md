@@ -2,11 +2,11 @@
   <img alt="RelativeCI" src="https://raw.githubusercontent.com/relative-ci/agent/master/assets/relative-ci--logo.png" width="96" />
 </a>
 
-# RelativeCI agent
+# RelativeCI agent core
 
 > Send bundle stats and CI build information to [RelativeCI](https://relative-ci.com?utm_source=github&utm_medium=agent).
 
-To get started, follow [RelativeCI Setup guide](https://relative-ci.com/documentation/setup?utm_source=github&utm_medium=agent).
+To get started, follow [RelativeCI Setup guide](https://relative-ci.com/documentation/setup?utm_source=github-agent).
 
 ### Packages
 
