@@ -57,7 +57,7 @@ jobs:
         run: ./scripts/local-registry.sh &
 
       - name: Publish package locally
-        run: npm publish
+        run: npm publish --workspaces
 
       - name: Upload local registry files
         uses: actions/upload-artifact@v4.6.1
