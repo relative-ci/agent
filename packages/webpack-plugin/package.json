@@ -1,0 +1,67 @@
+{
+  "name": "@relative-ci/webpack-plugin",
+  "version": "5.0.0-alpha.0",
+  "description": "Webpack plugin that sends bundle stats and CI build information to RelativeCI",
+  "keywords": [
+    "webpack",
+    "vitejs",
+    "rspack",
+    "rollup",
+    "bundle-size",
+    "bundle-analyzer",
+    "bundle-stats",
+    "stats",
+    "bundle",
+    "size",
+    "assets",
+    "chunks",
+    "modules"
+  ],
+  "repository": "https://github.com/relative-ci/agent",
+  "bugs": {
+    "url": "https://github.com/relative-ci/agent/issues"
+  },
+  "homepage": "https://relative-ci.com/documentation/setup",
+  "license": "MIT",
+  "author": {
+    "name": "Viorel Cojocaru",
+    "email": "vio@relative-ci.com",
+    "url": "https://relative-ci.com"
+  },
+  "engines": {
+    "node": ">= 18.0.0"
+  },
+  "main": "./lib/cjs/index.js",
+  "module": "./lib/esm/index.js",
+  "types": "./lib/types/index.d.ts",
+  "scripts": {
+    "build": "npm run clean && rollup -c && npm run build-type",
+    "build-type": "echo '{\"type\":\"commonjs\"}' > lib/cjs/package.json && echo '{\"type\":\"module\"}' > lib/esm/package.json",
+    "clean": "rimraf ./lib",
+    "clean-deps": "rimraf ./test/webpack/*/node_modules ./node_modules",
+    "lint": "eslint .",
+    "test": "vitest src"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "28.0.3",
+    "@rollup/plugin-node-resolve": "16.0.0",
+    "@rollup/plugin-replace": "6.0.2",
+    "@rollup/plugin-typescript": "12.1.2",
+    "@tsconfig/node18": "^18.2.4",
+    "@types/lodash": "4.17.16",
+    "memory-fs": "0.5.0",
+    "rimraf": "6.0.1",
+    "rollup": "4.35.0",
+    "rollup-plugin-node-externals": "8.0.0",
+    "typescript": "5.8.2",
+    "vitest": "3.0.8",
+    "webpack": "5.98.0"
+  },
+  "dependencies": {
+    "@relative-ci/core": "*",
+    "lodash": "4.17.21"
+  },
+  "peerDependencies": {
+    "webpack": "^4.0.0 || ^5.0.0-rc.1"
+  }
+}

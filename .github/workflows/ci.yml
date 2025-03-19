@@ -68,7 +68,6 @@ jobs:
           path: |
             .verdaccio-storage*/**/*
 
-
   test-package-cli:
     runs-on: ubuntu-latest
     needs:

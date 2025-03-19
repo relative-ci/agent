@@ -6,7 +6,6 @@ import { FlatCompat } from '@eslint/eslintrc';
 // eslint-disable-next-line
 import tseslint from 'typescript-eslint';
 
-// @ts-expect-error ts-eslint doesn't pick up correctly the tscoonfig options
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
 const compat = new FlatCompat({
@@ -18,21 +17,15 @@ const compat = new FlatCompat({
 export default [
   ...compat.extends('airbnb-base'),
   {
-    ignores: ['lib', 'test/webpack/**/dist'],
+    ignores: ['test/webpack/**/dist'],
   },
   {
     languageOptions: {
-      globals: {
-        AGENT_VERSION: true,
-        describe: true,
-        it: true,
-      },
       parserOptions: {
         ecmaVersion: 'latest',
       },
     },
     rules: {
-      'no-console': 'off',
       'no-unused-vars': ['error', { varsIgnorePattern: '^_', argsIgnorePattern: '^_' }],
       'import/prefer-default-export': 'off',
       'import/no-extraneous-dependencies': [
@@ -41,6 +34,13 @@ export default [
           devDependencies: ['**/*.test.js', '*.config.{js,mjs}'],
         },
       ],
+    },
+    settings: {
+      'import/resolver': {
+        node: {
+          extensions: ['.js'],
+        },
+      },
     },
   },
   ...tseslint.configs.recommended,
@@ -59,7 +59,7 @@ export default [
     settings: {
       'import/resolver': {
         node: {
-          extensions: ['.js', '.mjs', '.ts'],
+          extensions: ['.js', '.ts'],
         },
       },
     },
