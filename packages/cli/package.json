@@ -1,0 +1,69 @@
+{
+  "name": "@relative-ci/cli",
+  "version": "5.0.0-alpha.0",
+  "description": "Send bundle stats and CI build information to RelativeCI CLI",
+  "keywords": [
+    "webpack",
+    "vitejs",
+    "rspack",
+    "rollup",
+    "bundle-size",
+    "bundle-analyzer",
+    "bundle-stats",
+    "stats",
+    "bundle",
+    "size",
+    "assets",
+    "chunks",
+    "modules"
+  ],
+  "repository": "https://github.com/relative-ci/agent",
+  "bugs": {
+    "url": "https://github.com/relative-ci/agent/issues"
+  },
+  "homepage": "https://relative-ci.com/documentation/setup/agent/cli",
+  "license": "MIT",
+  "author": {
+    "name": "Viorel Cojocaru",
+    "email": "vio@relative-ci.com",
+    "url": "https://relative-ci.com"
+  },
+  "engines": {
+    "node": ">= 18.0.0"
+  },
+  "main": "./lib/cjs/index.js",
+  "module": "./lib/esm/index.js",
+  "types": "./lib/types/index.d.ts",
+  "bin": {
+    "relative-ci": "bin/index.js",
+    "relative-ci-agent": "bin/index.js"
+  },
+  "scripts": {
+    "build": "npm run clean && rollup -c && npm run build-type",
+    "build-type": "echo '{\"type\":\"commonjs\"}' > lib/cjs/package.json && echo '{\"type\":\"module\"}' > lib/esm/package.json",
+    "clean": "rimraf ./lib",
+    "lint": "eslint .",
+    "test": "vitest src --passWithNoTests --run"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "11.0.4",
+    "@rollup/plugin-commonjs": "28.0.3",
+    "@rollup/plugin-node-resolve": "16.0.0",
+    "@rollup/plugin-replace": "6.0.2",
+    "@rollup/plugin-typescript": "12.1.2",
+    "@tsconfig/node18": "^18.2.4",
+    "@types/lodash": "4.17.16",
+    "rimraf": "6.0.1",
+    "rollup": "4.35.0",
+    "rollup-plugin-node-externals": "8.0.0",
+    "typescript": "5.8.2",
+    "vitest": "3.0.8"
+  },
+  "dependencies": {
+    "@relative-ci/core": "*",
+    "cosmiconfig": "9.0.0",
+    "lodash": "4.17.21",
+    "fs-extra": "11.3.0",
+    "yargs": "17.7.2"
+  }
+}

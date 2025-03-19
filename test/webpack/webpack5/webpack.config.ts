@@ -1,6 +1,6 @@
 import { type Configuration } from 'webpack';
 // eslint-disable-next-line
-import { RelativeCiAgentWebpackPlugin } from '@relative-ci/agent';
+import { RelativeCiAgentWebpackPlugin } from '@relative-ci/webpack-plugin';
 
 const config: Configuration = {
   mode: 'production',

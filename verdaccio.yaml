@@ -1,6 +1,6 @@
 storage: .verdaccio-storage
 packages:
-  '@relative-ci/agent':
+  '@relative-ci/*':
     access: $all
     publish: $anonymous
   '@*/*':
