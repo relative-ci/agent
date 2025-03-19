@@ -44,20 +44,20 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Upload dist files
+      - name: Upload build files
         uses: actions/upload-artifact@v4.6.2
         with:
-          name: dist-files
+          name: build-files
           retention-days: 1
           path: |
-            lib*/**/*
+            packages/*/lib
 
       # Publish new version to local registry
       - name: Run local npm registry
         run: ./scripts/local-registry.sh &
 
       - name: Publish package locally
-        run: npm publish
+        run: npm publish --workspaces
 
       - name: Upload local registry files
         uses: actions/upload-artifact@v4.6.2
@@ -67,7 +67,6 @@ jobs:
           include-hidden-files: true
           path: |
             .verdaccio-storage*/**/*
-
 
   test-package-cli:
     runs-on: ubuntu-latest
@@ -90,10 +89,10 @@ jobs:
       - name: Install dependencies
         run: npm install --package-lock false
 
-      - name: Download dist files
+      - name: Download build files
         uses: actions/download-artifact@v4.3.0
         with:
-          name: dist-files
+          name: build-files
 
       - name: Download local registry files
         uses: actions/download-artifact@v4.3.0
@@ -128,10 +127,10 @@ jobs:
       - name: Install dependencies
         run: npm install --package-lock false
 
-      - name: Download dist files
+      - name: Download build files
         uses: actions/download-artifact@v4.3.0
         with:
-          name: dist-files
+          name: build-files
 
       - name: Download local registry files
         uses: actions/download-artifact@v4.3.0
@@ -166,10 +165,10 @@ jobs:
       - name: Setup node & npm
         uses: relative-ci/.github/actions/setup-node-npm@v1.1.0
 
-      - name: Download dist files
+      - name: Download build files
         uses: actions/download-artifact@v4.3.0
         with:
-          name: dist-files
+          name: build-files
 
       - name: Publish
         run: npm run release

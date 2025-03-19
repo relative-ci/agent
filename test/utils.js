@@ -1,6 +1,6 @@
 const http = require('http');
 const _ = require('lodash');
-const packageInfo = require('../package.json');
+const packageInfo = require('../packages/webpack-plugin/package.json');
 
 const ENV_DEFAULT = {
   CI: 'true',
