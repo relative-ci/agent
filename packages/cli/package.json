@@ -43,7 +43,7 @@
     "build-type": "echo '{\"type\":\"commonjs\"}' > lib/cjs/package.json && echo '{\"type\":\"module\"}' > lib/esm/package.json",
     "clean": "rimraf ./lib",
     "lint": "eslint .",
-    "test": "vitest src"
+    "test": "vitest src --passWithNoTests --run"
   },
   "devDependencies": {
     "@types/fs-extra": "11.0.4",

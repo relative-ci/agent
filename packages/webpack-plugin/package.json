@@ -40,7 +40,7 @@
     "clean": "rimraf ./lib",
     "clean-deps": "rimraf ./test/webpack/*/node_modules ./node_modules",
     "lint": "eslint .",
-    "test": "vitest src"
+    "test": "vitest src --passWithNoTests --run"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "28.0.3",
