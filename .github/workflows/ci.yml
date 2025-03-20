@@ -91,12 +91,12 @@ jobs:
         run: npm install --package-lock false
 
       - name: Download dist files
-        uses: actions/download-artifact@v4.2.0
+        uses: actions/download-artifact@v4.2.1
         with:
           name: dist-files
 
       - name: Download local registry files
-        uses: actions/download-artifact@v4.2.0
+        uses: actions/download-artifact@v4.2.1
         with:
           name: local-registry
 
@@ -134,12 +134,12 @@ jobs:
         run: npm install --package-lock false
 
       - name: Download dist files
-        uses: actions/download-artifact@v4.2.0
+        uses: actions/download-artifact@v4.2.1
         with:
           name: dist-files
 
       - name: Download local registry files
-        uses: actions/download-artifact@v4.2.0
+        uses: actions/download-artifact@v4.2.1
         with:
           name: local-registry
 
@@ -172,7 +172,7 @@ jobs:
         uses: relative-ci/.github/actions/setup-node-npm@v1.1.0
 
       - name: Download dist files
-        uses: actions/download-artifact@v4.2.0
+        uses: actions/download-artifact@v4.2.1
         with:
           name: dist-files
 
