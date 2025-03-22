@@ -1,5 +1,5 @@
-import { normalizeParams } from './normalize-params';
+import { loadEnv } from './load';
 
-export * from './get-env-vars';
+export * from './ci-env';
 
-export default normalizeParams;
+export default loadEnv;
