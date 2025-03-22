@@ -4,9 +4,9 @@ import { getSlugFromGitURL } from './slug';
 
 describe('getSlugFromGitURL', () => {
   test('should fallback when the data is missing or invalid', () => {
-    expect(getSlugFromGitURL(undefined)).toEqual(undefined);
-    expect(getSlugFromGitURL('')).toEqual(undefined);
-    expect(getSlugFromGitURL('invalid-url')).toEqual(undefined);
+    expect(getSlugFromGitURL(undefined)).toEqual('');
+    expect(getSlugFromGitURL('')).toEqual('');
+    expect(getSlugFromGitURL('invalid-url')).toEqual('');
   });
 
   test('should extract slug from ssh URLs', () => {

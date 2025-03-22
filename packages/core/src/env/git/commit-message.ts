@@ -1,6 +1,6 @@
 import childProcess from 'child_process';
 
-export function getCommitMessage(): string {
+export function getGitCommitMessage(): string {
   let message = '';
 
   try {
