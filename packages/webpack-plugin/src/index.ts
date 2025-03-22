@@ -5,13 +5,13 @@ import _ from 'lodash';
 import {
   SOURCE_WEBPACK_STATS,
   debug,
-  getEnvVars,
   filterArtifacts,
   validateWebpackStats,
   logResponse,
-  normalizeParams,
   type PluginConfig,
 } from '@relative-ci/core';
+// eslint-disable-next-line import/no-unresolved
+import loadEnv, { getEnvVars } from '@relative-ci/core/env';
 // eslint-disable-next-line import/no-unresolved
 import ingest from '@relative-ci/core/ingest';
 
@@ -70,7 +70,7 @@ async function sendStats(
   try {
     validateWebpackStats(data);
 
-    const params = normalizeParams({}, config);
+    const params = loadEnv({}, config);
     const artifactsData = filterArtifacts([{ key: SOURCE_WEBPACK_STATS, data }]);
     const response = await ingest(artifactsData, params, config, logger);
 

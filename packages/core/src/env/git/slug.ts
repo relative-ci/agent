@@ -1,5 +1,3 @@
-import { type CiEnv } from 'env-ci';
-
 // Match slug on SSH URLs (ex: `USER@HOST:PORT/ORG/REPO.git`)
 const GIT_SSH_URL_SLUG_PATTERN = /^(?:.*)@(?:.*):(?:\d+\/)?(.*)\.git$/;
 
@@ -27,19 +25,4 @@ export function getSlugFromGitURL(repositoryURL?: string): string | undefined {
     }
     return undefined;
   }
-}
-
-/**
- * Resolve repository slug
- */
-export function getSlug(envVars: CiEnv): string {
-  // env-ci does not provide a slug for jenkins
-  // https://github.com/semantic-release/env-ci/blob/master/services/jenkins.js#LL18
-  // https://www.jenkins.io/doc/book/pipeline/jenkinsfile/#using-environment-variables
-  // https://plugins.jenkins.io/git/#plugin-content-environment-variables
-  if ('service' in envVars && envVars.service === 'jenkins') {
-    return getSlugFromGitURL(process.env.GIT_URL || '') || '';
-  }
-
-  return 'slug' in envVars ? envVars.slug : '';
 }
