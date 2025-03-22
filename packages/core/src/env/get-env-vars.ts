@@ -8,7 +8,7 @@ import { maskObjectProperties } from '../utils/mask-object-property';
 import { getSlugFromGitURL } from './git/slug';
 
 /**
- * Resolve repository slug
+ * Resolve repository slug for services missing data
  */
 export function getSlug(envVars: CiEnv): string {
   // env-ci does not provide a slug for jenkins
