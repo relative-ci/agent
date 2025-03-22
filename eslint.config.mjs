@@ -31,14 +31,14 @@ export default [
       'import/no-extraneous-dependencies': [
         'error',
         {
-          devDependencies: ['**/*.test.js', '*.config.{js,mjs}'],
+          devDependencies: ['**/*.test.js', '**/*.config.{js,mjs}'],
         },
       ],
       'import/no-unresolved': [
         'error',
         {
           ignore: ['@relative-ci/'],
-        }
+        },
       ],
     },
     settings: {
@@ -58,7 +58,7 @@ export default [
       'import/no-extraneous-dependencies': [
         'error',
         {
-          devDependencies: ['**/*.test.ts', '*.config.ts'],
+          devDependencies: ['**/*.test.ts', '**/*.config.ts'],
         },
       ],
     },
