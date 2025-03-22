@@ -15,7 +15,7 @@ import {
 // eslint-disable-next-line import/no-unresolved
 import ingest from '@relative-ci/core/ingest';
 
-type RelativeCiAgentWebpackPluginOptions = {
+type RelativeCIAgentWebpackPluginOptions = {
   /**
    * Plugin is enabled - sends data to RelativeCI
    * @default env-ci isCi value
@@ -58,7 +58,7 @@ const isWebpack5 = parseInt(webpack.version, 10) === 5;
 
 async function sendStats(
   compilation: Compilation,
-  options: RelativeCiAgentWebpackPluginOptions,
+  options: RelativeCIAgentWebpackPluginOptions,
 ): Promise<void> {
   const { stats: statsOptions, failOnError, ...config } = options;
   const data = compilation.getStats().toJson(statsOptions);
@@ -84,17 +84,17 @@ async function sendStats(
   }
 }
 
-export class RelativeCiAgentWebpackPlugin {
-  options: RelativeCiAgentWebpackPluginOptions;
+class RelativeCIAgentWebpackPlugin {
+  options: RelativeCIAgentWebpackPluginOptions;
 
-  constructor(options: RelativeCiAgentWebpackPluginOptions) {
+  constructor(options: RelativeCIAgentWebpackPluginOptions) {
     this.options = options;
   }
 
   apply(compiler: Compiler): void {
     const { isCi } = getEnvVars();
 
-    const options: RelativeCiAgentWebpackPluginOptions = _.merge(
+    const options: RelativeCIAgentWebpackPluginOptions = _.merge(
       {},
       DEFAULT_OPTIONS,
       {
@@ -131,3 +131,5 @@ export class RelativeCiAgentWebpackPlugin {
     );
   }
 }
+
+export default RelativeCIAgentWebpackPlugin;
