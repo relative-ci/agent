@@ -1,6 +1,6 @@
 {
   "name": "@relative-ci/cli",
-  "version": "5.0.0-alpha.4",
+  "version": "5.0.0-alpha.5",
   "description": "Send bundle stats and CI build information to RelativeCI CLI",
   "keywords": [
     "webpack",
