@@ -15,6 +15,7 @@ const CONTEXT = path.join(process.cwd(), './src');
 const OUTPUT_DIR = 'lib';
 const INPUT = {
   index: './src/index.ts',
+  env: './src/env/index.ts',
   artifacts: './src/artifacts/index.ts',
   ingest: './src/ingest/index.ts',
   utils: './src/utils/index.ts',

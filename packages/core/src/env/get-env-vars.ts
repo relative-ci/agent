@@ -3,8 +3,8 @@
 import envCi, { type CiEnv } from 'env-ci';
 
 import { type EnvVars } from '../constants';
-import { debug } from './debug';
-import { maskObjectProperties } from './mask-object-property';
+import { debug } from '../utils/debug';
+import { maskObjectProperties } from '../utils/mask-object-property';
 import { getSlug } from './get-slug';
 
 function getEnvVarValue(envVars: CiEnv, envVarName: string): string | undefined {
