@@ -1,6 +1,6 @@
 {
   "name": "@relative-ci/webpack-plugin",
-  "version": "5.0.0-alpha.0",
+  "version": "5.0.0-alpha.4",
   "description": "Webpack plugin that sends bundle stats and CI build information to RelativeCI",
   "keywords": [
     "webpack",
