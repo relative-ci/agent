@@ -9,10 +9,11 @@ import {
   SOURCE_WEBPACK_STATS,
   debug,
   logResponse,
-  normalizeParams,
   filterArtifacts,
   validateWebpackStats,
 } from '@relative-ci/core';
+// eslint-disable-next-line import/no-unresolved
+import loadEnv from '@relative-ci/core/env';
 // eslint-disable-next-line import/no-unresolved
 import ingest from '@relative-ci/core/ingest';
 // eslint-disable-next-line import/no-unresolved
@@ -65,7 +66,7 @@ export default async function cli(processArgs: Array<string>) {
 
   debug('CLI arguments', args);
 
-  const params = normalizeParams(args, config);
+  const params = loadEnv(args, config);
   const artifactsData = filterArtifacts([{ key: SOURCE_WEBPACK_STATS, data }]);
 
   const response = await ingest(artifactsData, params, config);

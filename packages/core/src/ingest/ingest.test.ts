@@ -36,7 +36,7 @@ describe('Ingest', () => {
           },
         },
       }),
-    }));
+    }) as any);
 
     await ingest({}, PARAMS);
 
