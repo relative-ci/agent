@@ -11,7 +11,7 @@ import {
   type PluginConfig,
 } from '@relative-ci/core';
 // eslint-disable-next-line import/no-unresolved
-import loadEnv, { getEnvVars } from '@relative-ci/core/env';
+import loadEnv, { getCiEnv } from '@relative-ci/core/env';
 // eslint-disable-next-line import/no-unresolved
 import ingest from '@relative-ci/core/ingest';
 
@@ -92,7 +92,7 @@ class RelativeCIAgentWebpackPlugin {
   }
 
   apply(compiler: Compiler): void {
-    const { isCi } = getEnvVars();
+    const { isCi } = getCiEnv();
 
     const options: RelativeCIAgentWebpackPluginOptions = _.merge(
       {},
