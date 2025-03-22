@@ -49,8 +49,9 @@ jobs:
         with:
           name: build-files
           retention-days: 1
+          # add glob on the first directory to force paths relative to current directory
           path: |
-            packages/*/lib
+            packages*/*/lib
 
       # Publish new version to local registry
       - name: Run local npm registry
