@@ -5,14 +5,14 @@ import {
   type PluginArgs,
   type PluginConfig,
 } from '../constants';
+import { debug } from '../utils/debug';
+import { maskObjectProperties } from '../utils/mask-object-property';
+import { getCommitMessage } from './git/commit-message';
 import { getEnvVars } from './get-env-vars';
-import { debug } from './debug';
-import { maskObjectProperties } from './mask-object-property';
-import { getCommitMessage } from './get-commit-message';
 
 /**
  * Normalize ingest params based on:
- * 1. pluign arguments
+ * 1. plugin arguments
  * 2. computed values
  * 3. env-ci fallback
  */

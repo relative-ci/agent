@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest';
 
-import { getSlugFromGitURL } from './get-slug';
+import { getSlugFromGitURL } from './slug';
 
 describe('getSlugFromGitURL', () => {
   test('should fallback when the data is missing or invalid', () => {
