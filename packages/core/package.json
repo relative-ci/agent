@@ -59,7 +59,7 @@
     }
   },
   "scripts": {
-    "build": "npm run clean && rollup -c && npm run build-type",
+    "build": "npm run clean && tsc && rollup -c && npm run build-type",
     "build-type": "echo '{\"type\":\"commonjs\"}' > lib/cjs/package.json && echo '{\"type\":\"module\"}' > lib/esm/package.json",
     "clean": "rimraf ./lib",
     "lint": "eslint .",
