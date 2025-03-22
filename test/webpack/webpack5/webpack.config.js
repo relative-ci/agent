@@ -1,10 +1,10 @@
 // eslint-disable-next-line
-const { RelativeCiAgentWebpackPlugin } = require('@relative-ci/webpack-plugin');
+const RelativeCIAgentPlugin = require('@relative-ci/webpack-plugin');
 
 module.exports = {
   mode: 'production',
   plugins: [
-    new RelativeCiAgentWebpackPlugin({
+    new RelativeCIAgentPlugin({
       includeCommitMessage: false,
     }),
   ],
