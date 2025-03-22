@@ -1,6 +1,7 @@
 {
   "name": "relative-ci-agent-workspace",
-  "version": "5.0.0-alpha.0",
+  "version": "0.0.0",
+  "private": true,
   "description": "Send bundle stats and CI build information to RelativeCI",
   "keywords": [
     "webpack",
@@ -37,27 +38,27 @@
     "node": ">= 18.0.0"
   },
   "scripts": {
-    "build": "npm run build --workspaces",
-    "clean": "npm run clean --workspaces",
+    "build": "lerna run build",
+    "clean": "lerna run clean",
     "clean-deps": "rimraf ./test/cli/node_modules ./test/webpack/*/node_modules ./node_modules",
-    "lint": "npm run lint --workspaces",
+    "lint": "lerna run lint",
     "bump": "./scripts/bump.sh",
+    "lerna": "lerna",
     "release": "./scripts/release.sh",
     "pretest:package-cli": "cd test/cli && npm install",
     "pretest:package-webpack-plugin": "cd test/webpack/webpack4 && npm install && cd ../webpack5 && npm install",
-    "test": "npm run test --workspaces",
+    "test": "lerna run test",
     "test:package-cli": "vitest test/cli",
     "test:package-webpack-plugin": "vitest test/webpack"
   },
   "devDependencies": {
     "@eslint/eslintrc": "3.3.0",
     "@eslint/js": "9.22.0",
-    "@release-it/conventional-changelog": "10.0.0",
     "dotenv": "^16.4.7",
     "eslint": "9.22.0",
     "eslint-config-airbnb-base": "15.0.0",
     "eslint-plugin-import": "2.31.0",
-    "release-it": "18.1.2",
+    "lerna": "^8.2.1",
     "rimraf": "6.0.1",
     "typescript-eslint": "8.26.0",
     "verdaccio": "6.0.5",
