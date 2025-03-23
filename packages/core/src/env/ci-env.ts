@@ -21,7 +21,7 @@ export type CiEnv = {
  * Load environment variables - fallback to env-ci environment variables
  */
 export function getCiEnv(): CiEnv {
-  // CI environment variables
+  // env-ci environment variables
   const baseCiEnv: BaseCiEnv = envCi();
 
   let ciEnv = {
@@ -29,7 +29,8 @@ export function getCiEnv(): CiEnv {
     slug: 'slug' in baseCiEnv ? baseCiEnv.slug : undefined,
     service: 'service' in baseCiEnv ? baseCiEnv.service : undefined,
     /**
-     * When running during pull_request, env-ci exposes the current branch as prBranch
+     * When running during a pull request, env-ci exposes the current branch as `prBranch`
+     * and `branch` as base branch
      */
     // eslint-disable-next-line no-nested-ternary
     branch: 'prBranch' in baseCiEnv ? baseCiEnv.prBranch : ('branch' in baseCiEnv ? baseCiEnv.branch : undefined),
