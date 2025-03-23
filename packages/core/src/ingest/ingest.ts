@@ -10,7 +10,11 @@ import {
   type IngestResponse,
 } from '../constants';
 import {
-  debug, logger as basicLogger, maskObjectProperties, type Logger,
+  debug,
+  formatFileSize,
+  logger as basicLogger,
+  maskObjectProperties,
+  type Logger,
 } from '../utils';
 
 export default async function ingest(
@@ -54,7 +58,7 @@ export default async function ingest(
 
   const formattedPayload = maskObjectProperties(payload, ['key']);
 
-  debug('Payload size', Buffer.byteLength(JSON.stringify(payload)));
+  debug('Payload size', formatFileSize(Buffer.byteLength(JSON.stringify(payload))));
 
   const { payloadFilepath } = config;
 
