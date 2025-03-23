@@ -66,7 +66,7 @@ export default async function cli(processArgs: Array<string>) {
 
   debug('CLI arguments', args);
 
-  const params = loadEnv(args, config);
+  const params = loadEnv(args, { includeCommitMessage: config.includeCommitMessage });
   const artifactsData = filterArtifacts([{ key: SOURCE_WEBPACK_STATS, data }]);
 
   const response = await ingest(artifactsData, params, config);

@@ -1,37 +1,64 @@
 // env-ci and its dependencies are not flagged as external (not bundled)
 // eslint-disable-next-line import/no-extraneous-dependencies
-import envCi, { JenkinsEnv, type CiEnv as BaseCiEnv } from 'env-ci';
+import envCi, { type CiEnv as BaseCiEnv } from 'env-ci';
 
 import { getSlugFromGitURL } from './git/slug';
+import { getGitHubEnv } from './service/github';
+
+type GetCiEnvConfig = {
+  includeCommitMessage?: boolean;
+}
 
 export type CiEnv = {
   isCi: boolean;
   slug?: string;
   service?: string;
   branch?: string;
-  prBranch?: string;
   commit?: string;
+  commitMessage?: string;
   pr?: string;
   build?: string;
   buildUrl?: string;
 };
 
-type JenkinsEnvWithSlug = JenkinsEnv & { slug: string };
-
 /**
  * Load environment variables - fallback to env-ci environment variables
  */
-export function getCiEnv(): CiEnv {
-  // CI environment variables
-  const ciEnvVars: BaseCiEnv | JenkinsEnvWithSlug = envCi();
+export function getCiEnv(config: GetCiEnvConfig): CiEnv {
+  const { includeCommitMessage = true } = config;
+
+  // env-ci environment variables
+  const baseCiEnv: BaseCiEnv = envCi();
+
+  let ciEnv = {
+    isCi: baseCiEnv.isCi,
+    slug: 'slug' in baseCiEnv ? baseCiEnv.slug : undefined,
+    service: 'service' in baseCiEnv ? baseCiEnv.service : undefined,
+    /**
+     * When running during a pull request, env-ci exposes the current branch as `prBranch`
+     * and `branch` as base branch
+     */
+    // eslint-disable-next-line no-nested-ternary
+    branch: 'prBranch' in baseCiEnv && baseCiEnv.prBranch ? baseCiEnv.prBranch : ('branch' in baseCiEnv ? baseCiEnv.branch : undefined),
+    commit: 'commit' in baseCiEnv ? baseCiEnv.commit : undefined,
+    pr: 'pr' in baseCiEnv ? baseCiEnv.pr : undefined,
+    build: 'build' in baseCiEnv ? baseCiEnv.build : undefined,
+    buildUrl: 'buildUrl' in baseCiEnv ? baseCiEnv.buildUrl : undefined,
+  };
 
   // env-ci does not provide a slug for jenkins
   // https://github.com/semantic-release/env-ci/blob/master/services/jenkins.js#LL18
   // https://www.jenkins.io/doc/book/pipeline/jenkinsfile/#using-environment-variables
   // https://plugins.jenkins.io/git/#plugin-content-environment-variables
-  if ('service' in ciEnvVars && ciEnvVars.service === 'jenkins') {
-    (ciEnvVars as JenkinsEnvWithSlug).slug = getSlugFromGitURL(process.env.GIT_URL);
+  if (ciEnv.service === 'jenkins' && !ciEnv.slug) {
+    ciEnv.slug = getSlugFromGitURL(process.env.GIT_URL);
   }
 
-  return ciEnvVars;
+  // GitHub extra data
+  if (process.env.GITHUB_EVENT_PATH) {
+    const gitHubEnv = getGitHubEnv(process.env.GITHUB_EVENT_PATH, { includeCommitMessage });
+    ciEnv = { ...ciEnv, ...gitHubEnv };
+  }
+
+  return ciEnv;
 }
