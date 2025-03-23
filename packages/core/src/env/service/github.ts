@@ -10,18 +10,17 @@ export function getGitHubEnv(eventFilepath: string): GitHubEnv {
 
   const payload = fs.readJSONSync(eventFilepath);
 
-  // push
-  const { head_commit: headCommit } = payload;
+  console.log(eventFilepath, payload);
 
-  if (headCommit) {
-    env.commit = headCommit.id;
-    env.commitMessage = headCommit.messsage;
+  // push
+  if (payload.head_commit) {
+    env.commit = payload.head_commit.id;
+    env.commitMessage = payload.head_commit.messsage;
   }
 
   // pull request
-  const { pull_request: pullRequest } = payload;
-  if (pullRequest) {
-    env.commit = pullRequest.head?.sha;
+  if (payload.pull_request) {
+    env.commit = payload.pull_request.head?.sha;
   }
 
   // workflow_run
