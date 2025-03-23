@@ -10,6 +10,7 @@ import { maskObjectProperties } from '../utils/mask-object-property';
 import { getGitCommitMessage } from './git/commit-message';
 import { getAgentEnv } from './agent-env';
 import { getCiEnv } from './ci-env';
+import { getServiceEnv } from './service-env';
 
 /**
  * Load and normalize ingest params based on:
@@ -19,29 +20,31 @@ import { getCiEnv } from './ci-env';
  * 4. computed values
  */
 export function loadEnv(args: PluginArgs, config: PluginConfig): IngestParams {
-  const ciEnvVars = getCiEnv();
-  debug('CI environment variables', ciEnvVars);
+  const ciEnv = getCiEnv();
+  debug('CI env', ciEnv);
 
-  const agentEnvVars = getAgentEnv();
-  debug('RELATIVE_CI environment variables', maskObjectProperties(agentEnvVars, ['key']));
+  const agentEnv = getAgentEnv();
+  debug('RELATIVE_CI env', maskObjectProperties(agentEnv, ['key']));
+
+  const serviceEnv = getServiceEnv();
+  debug('Service env', serviceEnv);
 
   const params = {
-    isCi: ciEnvVars.isCi,
+    isCi: ciEnv.isCi,
     agentVersion: AGENT_VERSION,
 
-    key: agentEnvVars.key,
-    endpoint: agentEnvVars.endpoint || DEFAULT_ENDPOINT,
+    key: agentEnv.key,
+    endpoint: agentEnv.endpoint || DEFAULT_ENDPOINT,
 
-    service: agentEnvVars.service || ciEnvVars.service,
-    slug: args.slug || agentEnvVars.slug || ciEnvVars.slug,
+    service: agentEnv.service || ciEnv.service,
+    slug: args.slug || agentEnv.slug || ciEnv.slug,
 
-    branch: args.branch || agentEnvVars.branch || ciEnvVars.prBranch || ciEnvVars.branch,
-    pr: args.pr || agentEnvVars.pr || ciEnvVars.pr,
-    commit: args.commit || agentEnvVars.commit || ciEnvVars.commit,
-    build: agentEnvVars.build || ciEnvVars.build,
-    buildUrl: agentEnvVars.buildUrl || ciEnvVars.buildUrl,
-
-    commitMessage: args.commitMessage || agentEnvVars.commitMessage,
+    branch: args.branch || agentEnv.branch || ciEnv.prBranch || ciEnv.branch,
+    pr: args.pr || agentEnv.pr || ciEnv.pr,
+    commit: args.commit || agentEnv.commit || serviceEnv.commit || ciEnv.commit,
+    commitMessage: args.commitMessage || agentEnv.commitMessage || serviceEnv.commitMessage,
+    build: agentEnv.build || ciEnv.build,
+    buildUrl: agentEnv.buildUrl || ciEnv.buildUrl,
   };
 
   /**
