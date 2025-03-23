@@ -4,7 +4,7 @@ import type { PushEvent, PullRequestEvent, WorkflowRunEvent } from '@octokit/web
 type GitHubEventData = PushEvent | PullRequestEvent | WorkflowRunEvent;
 
 type GetGitHubEnvConfig = {
-  includeCommitMessage?: boolean;
+  includeCommitMessage: boolean;
 }
 
 export type GitHubEnv = {
@@ -13,8 +13,8 @@ export type GitHubEnv = {
   commitMessage?: string;
 };
 
-export function getGitHubEnv(eventFilepath: string, config: GetGitHubEnvConfig = {}): GitHubEnv {
-  const { includeCommitMessage = true } = config;
+export function getGitHubEnv(eventFilepath: string, config: GetGitHubEnvConfig): GitHubEnv {
+  const { includeCommitMessage } = config;
 
   const env: GitHubEnv = {};
 
