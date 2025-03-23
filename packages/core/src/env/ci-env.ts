@@ -22,35 +22,35 @@ export type CiEnv = {
  */
 export function getCiEnv(): CiEnv {
   // CI environment variables
-  const ciEnv: BaseCiEnv = envCi();
+  const baseCiEnv: BaseCiEnv = envCi();
 
-  let env = {
-    isCi: ciEnv.isCi,
-    slug: 'slug' in ciEnv ? ciEnv.slug : undefined,
-    service: 'service' in ciEnv ? ciEnv.service : undefined,
+  let ciEnv = {
+    isCi: baseCiEnv.isCi,
+    slug: 'slug' in baseCiEnv ? baseCiEnv.slug : undefined,
+    service: 'service' in baseCiEnv ? baseCiEnv.service : undefined,
     /**
      * When running during pull_request, env-ci exposes the current branch as prBranch
      */
     // eslint-disable-next-line no-nested-ternary
-    branch: 'prBranch' in ciEnv ? ciEnv.prBranch : ('branch' in ciEnv ? ciEnv.branch : undefined),
-    commit: 'commit' in ciEnv ? ciEnv.commit : undefined,
-    pr: 'pr' in ciEnv ? ciEnv.pr : undefined,
-    build: 'build' in ciEnv ? ciEnv.build : undefined,
-    buildUrl: 'buildUrl' in ciEnv ? ciEnv.buildUrl : undefined,
+    branch: 'prBranch' in baseCiEnv ? baseCiEnv.prBranch : ('branch' in baseCiEnv ? baseCiEnv.branch : undefined),
+    commit: 'commit' in baseCiEnv ? baseCiEnv.commit : undefined,
+    pr: 'pr' in baseCiEnv ? baseCiEnv.pr : undefined,
+    build: 'build' in baseCiEnv ? baseCiEnv.build : undefined,
+    buildUrl: 'buildUrl' in baseCiEnv ? baseCiEnv.buildUrl : undefined,
   };
 
   // env-ci does not provide a slug for jenkins
   // https://github.com/semantic-release/env-ci/blob/master/services/jenkins.js#LL18
   // https://www.jenkins.io/doc/book/pipeline/jenkinsfile/#using-environment-variables
   // https://plugins.jenkins.io/git/#plugin-content-environment-variables
-  if (env.service === 'jenkins' && !env.slug) {
-    env.slug = getSlugFromGitURL(process.env.GIT_URL);
+  if (ciEnv.service === 'jenkins' && !ciEnv.slug) {
+    ciEnv.slug = getSlugFromGitURL(process.env.GIT_URL);
   }
 
   // Service data
   if (process.env.GITHUB_EVENT_PATH) {
     const gitHubEnv = getGitHubEnv(process.env.GITHUB_EVENT_PATH);
-    env = { ...env, ...gitHubEnv };
+    ciEnv = { ...ciEnv, ...gitHubEnv };
   }
 
   return ciEnv;
