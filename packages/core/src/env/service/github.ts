@@ -1,31 +1,7 @@
 import fs from 'fs-extra';
+import type { PushEvent, PullRequestEvent, WorkflowRunEvent } from '@octokit/webhooks-types';
 
-type GitHubEventPush = {
-  head_commit?: {
-    id?: string;
-    message?: string;
-  }
-}
-
-type GitHubEventPullRequest = {
-  pull_request?: {
-    head? :{
-      ref?: string;
-      sha?: string;
-    }
-  }
-}
-
-type GitHubEventWorkflowRun = {
-  workflow_run?: {
-    head_commit?: {
-      id?: string;
-      message?: string;
-    }
-  }
-}
-
-type GitHubEvent = GitHubEventPush | GitHubEventPullRequest | GitHubEventWorkflowRun;
+type GitHubEventData = PushEvent | PullRequestEvent | WorkflowRunEvent;
 
 export type GitHubEnv = {
   commit?: string;
@@ -35,14 +11,7 @@ export type GitHubEnv = {
 export function getGitHubEnv(eventFilepath: string): GitHubEnv {
   const env: GitHubEnv = {};
 
-  let payload: GitHubEvent;
-
-  try {
-    payload = fs.readJSONSync(eventFilepath);
-  } catch (error) {
-    console.warn('Error reading event JSON data!', error.messsage);
-    return env;
-  }
+  const payload = fs.readJSONSync(eventFilepath) as GitHubEventData;
 
   // push
   if ('head_commit' in payload) {
