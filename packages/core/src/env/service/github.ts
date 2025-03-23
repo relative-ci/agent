@@ -3,13 +3,19 @@ import type { PushEvent, PullRequestEvent, WorkflowRunEvent } from '@octokit/web
 
 type GitHubEventData = PushEvent | PullRequestEvent | WorkflowRunEvent;
 
+type GetGitHubEnvConfig = {
+  includeCommitMessage?: boolean;
+}
+
 export type GitHubEnv = {
   branch?: string;
   commit?: string;
   commitMessage?: string;
 };
 
-export function getGitHubEnv(eventFilepath: string): GitHubEnv {
+export function getGitHubEnv(eventFilepath: string, config: GetGitHubEnvConfig = {}): GitHubEnv {
+  const { includeCommitMessage = true } = config;
+
   const env: GitHubEnv = {};
 
   let payload: GitHubEventData;
@@ -24,7 +30,10 @@ export function getGitHubEnv(eventFilepath: string): GitHubEnv {
   // push
   if ('head_commit' in payload) {
     env.commit = payload.head_commit.id;
-    env.commitMessage = payload.head_commit.message;
+
+    if (includeCommitMessage) {
+      env.commitMessage = payload.head_commit.message;
+    }
   }
 
   // pull request
@@ -36,8 +45,11 @@ export function getGitHubEnv(eventFilepath: string): GitHubEnv {
   // workflow_run
   if ('workflow_run' in payload) {
     env.commit = payload.workflow_run.head_commit?.id;
-    env.commitMessage = payload.workflow_run.head_commit?.message;
     env.branch = payload.workflow_run.head_branch;
+
+    if (includeCommitMessage) {
+      env.commitMessage = payload.workflow_run.head_commit?.message;
+    }
   }
 
   return env;

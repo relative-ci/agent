@@ -3,13 +3,16 @@ import {
   DEFAULT_ENDPOINT,
   type IngestParams,
   type PluginArgs,
-  type PluginConfig,
 } from '../constants';
 import { debug } from '../utils/debug';
 import { maskObjectProperties } from '../utils/mask-object-property';
 import { getGitCommitMessage } from './git/commit-message';
 import { getAgentEnv } from './agent-env';
 import { getCiEnv } from './ci-env';
+
+export type LoadEnvConfig = {
+  includeCommitMessage?: boolean;
+}
 
 /**
  * Load and normalize ingest params based on:
@@ -18,8 +21,10 @@ import { getCiEnv } from './ci-env';
  * 3. env-ci fallback
  * 4. computed values
  */
-export function loadEnv(args: PluginArgs, config: PluginConfig): IngestParams {
-  const ciEnv = getCiEnv();
+export function loadEnv(args: PluginArgs, config: LoadEnvConfig = {}): IngestParams {
+  const { includeCommitMessage = true } = config;
+
+  const ciEnv = getCiEnv({ includeCommitMessage });
   debug('CI env', ciEnv);
 
   const agentEnv = getAgentEnv();
@@ -47,7 +52,7 @@ export function loadEnv(args: PluginArgs, config: PluginConfig): IngestParams {
    * Get commit message using git if includeCommitMessage is set and
    * the commitMessage plugin argument is missing
    */
-  if (!params.commitMessage && config.includeCommitMessage) {
+  if (!params.commitMessage && includeCommitMessage) {
     params.commitMessage = getGitCommitMessage();
   }
 

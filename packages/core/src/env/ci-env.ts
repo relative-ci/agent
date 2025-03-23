@@ -5,6 +5,10 @@ import envCi, { type CiEnv as BaseCiEnv } from 'env-ci';
 import { getSlugFromGitURL } from './git/slug';
 import { getGitHubEnv } from './service/github';
 
+type GetCiEnvConfig = {
+  includeCommitMessage?: boolean;
+}
+
 export type CiEnv = {
   isCi: boolean;
   slug?: string;
@@ -20,7 +24,9 @@ export type CiEnv = {
 /**
  * Load environment variables - fallback to env-ci environment variables
  */
-export function getCiEnv(): CiEnv {
+export function getCiEnv(config: GetCiEnvConfig): CiEnv {
+  const { includeCommitMessage = true } = config;
+
   // env-ci environment variables
   const baseCiEnv: BaseCiEnv = envCi();
 
@@ -50,7 +56,7 @@ export function getCiEnv(): CiEnv {
 
   // GitHub extra data
   if (process.env.GITHUB_EVENT_PATH) {
-    const gitHubEnv = getGitHubEnv(process.env.GITHUB_EVENT_PATH);
+    const gitHubEnv = getGitHubEnv(process.env.GITHUB_EVENT_PATH, { includeCommitMessage });
     ciEnv = { ...ciEnv, ...gitHubEnv };
   }
 
