@@ -47,7 +47,7 @@ export function getCiEnv(): CiEnv {
     ciEnv.slug = getSlugFromGitURL(process.env.GIT_URL);
   }
 
-  // Service data
+  // GitHub extra data
   if (process.env.GITHUB_EVENT_PATH) {
     const gitHubEnv = getGitHubEnv(process.env.GITHUB_EVENT_PATH);
     ciEnv = { ...ciEnv, ...gitHubEnv };

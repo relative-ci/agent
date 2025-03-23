@@ -37,6 +37,7 @@ export function getGitHubEnv(eventFilepath: string): GitHubEnv {
   if ('workflow_run' in payload) {
     env.commit = payload.workflow_run.head_commit?.id;
     env.commitMessage = payload.workflow_run.head_commit?.message;
+    env.branch = payload.workflow_run.head_branch;
   }
 
   return env;
