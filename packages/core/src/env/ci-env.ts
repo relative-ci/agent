@@ -2,6 +2,7 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import envCi, { type CiEnv as BaseCiEnv } from 'env-ci';
 
+import * as env from '../process.env';
 import { getSlugFromGitURL } from './git/slug';
 import { getGitHubEnv } from './service/github';
 
@@ -51,12 +52,12 @@ export function getCiEnv(config: GetCiEnvConfig): CiEnv {
   // https://www.jenkins.io/doc/book/pipeline/jenkinsfile/#using-environment-variables
   // https://plugins.jenkins.io/git/#plugin-content-environment-variables
   if (ciEnv.service === 'jenkins' && !ciEnv.slug) {
-    ciEnv.slug = getSlugFromGitURL(process.env.GIT_URL);
+    ciEnv.slug = getSlugFromGitURL(env.JENKINS_GIT_URL);
   }
 
   // GitHub extra data
-  if (process.env.GITHUB_EVENT_PATH) {
-    const gitHubEnv = getGitHubEnv(process.env.GITHUB_EVENT_PATH, { includeCommitMessage });
+  if (env.GITHUB_EVENT_PATH) {
+    const gitHubEnv = getGitHubEnv(env.GITHUB_EVENT_PATH, { includeCommitMessage });
     ciEnv = { ...ciEnv, ...gitHubEnv };
   }
 
