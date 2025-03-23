@@ -66,15 +66,15 @@ export type PluginArgs = {
 
 export type PluginConfig = {
   /**
-   * Read commit message from the repo
-   * Default: `true`.
-   */
-  includeCommitMessage?: boolean;
-  /**
    * Absolute path for debug payload filepath
    * Default: `undefined`.
    */
   payloadFilepath?: string;
+  /**
+   * Read commit message from the git logs or GitHub Action event data
+   * Default: `true`.
+   */
+  includeCommitMessage?: boolean;
 };
 
 export type IngestParams = {
