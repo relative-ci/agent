@@ -1,6 +1,6 @@
 {
   "name": "@relative-ci/cli",
-  "version": "5.0.0-alpha.8",
+  "version": "5.0.0-alpha.9",
   "description": "Send bundle stats and CI build information to RelativeCI CLI",
   "keywords": [
     "webpack",
@@ -61,7 +61,7 @@
     "vitest": "3.0.8"
   },
   "dependencies": {
-    "@relative-ci/core": "^5.0.0-alpha.8",
+    "@relative-ci/core": "5.0.0-alpha.9",
     "cosmiconfig": "9.0.0",
     "fs-extra": "11.3.0",
     "lodash": "4.17.21",
