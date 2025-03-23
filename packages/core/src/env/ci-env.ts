@@ -39,7 +39,7 @@ export function getCiEnv(config: GetCiEnvConfig): CiEnv {
      * and `branch` as base branch
      */
     // eslint-disable-next-line no-nested-ternary
-    branch: 'prBranch' in baseCiEnv ? baseCiEnv.prBranch : ('branch' in baseCiEnv ? baseCiEnv.branch : undefined),
+    branch: 'prBranch' in baseCiEnv && baseCiEnv.prBranch ? baseCiEnv.prBranch : ('branch' in baseCiEnv ? baseCiEnv.branch : undefined),
     commit: 'commit' in baseCiEnv ? baseCiEnv.commit : undefined,
     pr: 'pr' in baseCiEnv ? baseCiEnv.pr : undefined,
     build: 'build' in baseCiEnv ? baseCiEnv.build : undefined,
