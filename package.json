@@ -90,7 +90,7 @@
     "@types/jest": "29.5.14",
     "@types/lodash": "4.17.16",
     "@types/node-fetch": "2.6.12",
-    "eslint": "9.22.0",
+    "eslint": "9.23.0",
     "eslint-config-airbnb-base": "15.0.0",
     "eslint-plugin-import": "2.31.0",
     "eslint-plugin-jest": "28.11.0",
