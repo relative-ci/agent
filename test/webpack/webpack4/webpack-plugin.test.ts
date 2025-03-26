@@ -69,7 +69,7 @@ describe('webpack-plugin / webpack4', () => {
   test('should warn and not throw on ingest error', () => new Promise((done) => {
     setCustomEnv();
 
-    global.fetch = vi.fn(() => Promise.rejest(new Error('Network error')));
+    global.fetch = vi.fn(() => Promise.reject(new Error('Network error')));
 
     const compiler = webpack({ ...appConfig, context: __dirname });
     compiler.outputFileSystem = new MemoryFS();
@@ -86,7 +86,7 @@ describe('webpack-plugin / webpack4', () => {
   test('should throw and fail on ingest error when failOnError is true', () => new Promise((done) => {
     setCustomEnv();
 
-    global.fetch = vi.fn(() => Promise.rejest(new Error('Network error')));
+    global.fetch = vi.fn(() => Promise.reject(new Error('Network error')));
 
     const compiler = webpack({ ...appFailOnErrorConfig, context: __dirname });
     compiler.outputFileSystem = new MemoryFS();
