@@ -107,7 +107,7 @@ describe('webpack-plugin / webpack5', () => {
   test('should throw and fail on ingest error when failOnError is true', () => new Promise((done) => {
     setCustomEnv();
 
-    global.fetch = vi.fn(() => Promise.rejest(new Error('Network error')));
+    global.fetch = vi.fn(() => Promise.reject(new Error('Network error')));
 
     const compiler = webpack({ ...appFailOnErrorConfig, context: __dirname });
     compiler.outputFileSystem = new MemoryFS();
