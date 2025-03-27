@@ -2,7 +2,7 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import envCi, { type CiEnv as BaseCiEnv } from 'env-ci';
 
-import * as env from '../process.env';
+import getEnv from '../process.env';
 import { getSlugFromGitURL } from './git/slug';
 import { getGitHubEnv } from './service/github';
 
@@ -27,6 +27,8 @@ export type CiEnv = {
  */
 export function getCiEnv(config: GetCiEnvConfig): CiEnv {
   const { includeCommitMessage = true } = config;
+
+  const env = getEnv();
 
   // env-ci environment variables
   const baseCiEnv: BaseCiEnv = envCi();
