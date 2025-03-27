@@ -1,4 +1,4 @@
-import * as env from '../process.env';
+import getEnv from '../process.env';
 
 export type AgentEnv = {
   key?: string;
@@ -19,6 +19,8 @@ export type AgentEnv = {
  * Load agent environment variables
  */
 export function getAgentEnv(): AgentEnv {
+  const env = getEnv();
+
   // RelativeCI environment variables
   return {
     key: env.RELATIVE_CI_KEY,
