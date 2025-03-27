@@ -1,0 +1,4 @@
+*.config.mjs
+tsconfig.*
+/src/
+!/lib/**/src/

@@ -6,13 +6,21 @@ PRERELEASE_ARG=""
 # IF diff than master, release beta
 if [ "$BRANCH" != "master" ]
 then
-	PRERELEASE_ARG="--config ./config/release-it-version-beta.js --preRelease=beta"
+  if [ $1 ]
+  then
+    VERSION="$1"
+  else
+    VERSION="prerelease"
+  fi
+  PRERELEASE_ARG="$VERSION --force-publish"
+  MESSAGE=$"DROP: %s"
 else
-  PRERELEASE_ARG="--config ./config/release-it-version-stable.js"
+	PRERELEASE_ARG=""
+  MESSAGE=$":package: release %s"
 fi
 
-RELEASE_ARGS="${PRERELEASE_ARG} ${@}"
+RELEASE_ARGS="--exact ${PRERELEASE_ARG}"
 
-echo "Running release-it with '${RELEASE_ARGS}'."
+echo "Running lerna version with '${RELEASE_ARGS}'."
 
-npx release-it $RELEASE_ARGS
+./node_modules/.bin/lerna version $RELEASE_ARGS --message "$MESSAGE"
