@@ -78,6 +78,7 @@ async function sendStats(
   } catch (error: any) {
     if (failOnError) {
       logger.error(error);
+      console.error(error);
       compilation.errors.push(error);
     } else {
       logger.warn(error); // catch error to prevent failure on error
