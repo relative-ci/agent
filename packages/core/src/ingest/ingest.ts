@@ -93,6 +93,7 @@ export default async function ingest(
     responseData = await response.json() as IngestResponse;
     debug('Response', responseData);
   } catch (error) {
+    console.error(error);
     throw new Error(LOCALES.INGEST_ERROR, { cause: error });
   }
 
