@@ -32,6 +32,16 @@ async function parseArguments(args: Array<string>) {
     .option('slug', { describe: 'Project slug', default: '' })
 
     .help()
+    .version()
+
+    .alias({
+      'config-dir': 'c',
+      help: 'h',
+      version: 'v',
+    })
+
+    .epilog('Learn more about how to setup @relative-ci/cli: https://relative-ci.com/documentation/setup/agent/cli')
+
     .argv;
 }
 
