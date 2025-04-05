@@ -1,5 +1,6 @@
 import fs from 'fs-extra';
 import type { PushEvent, PullRequestEvent, WorkflowRunEvent } from '@octokit/webhooks-types';
+import { getGitCommitMessage } from '../git/commit-message';
 
 function formatBranch(branchName?: string, baseOrg?: string, headOrg?: string): string | undefined {
   if (!branchName) {
@@ -29,6 +30,7 @@ export type GitHubEnvPush = {
 
 export type GitHubEnvPullRequest = {
   commit?: string;
+  commitMessage?: string;
   branch?: string;
   pr?: string;
 }
@@ -63,11 +65,31 @@ export function getGitHubEnv(
   if ('pull_request' in payload) {
     const headOrg = payload.pull_request.head?.repo?.owner?.login;
 
-    return {
+    /**
+     * When running durring the pull_request event, the current commit is the GitHub merge commit
+     * By default, we set an empty commit message to override the default merge commit message
+     * (ex: "Merge SHA to SHA")
+     */
+    const env: GitHubEnvPullRequest = {
       commit: payload.pull_request.head?.sha,
+      commitMessage: '',
       branch: formatBranch(payload.pull_request.head?.ref, baseOrg, headOrg),
       pr: payload.pull_request.number?.toString(),
-    } satisfies GitHubEnvPullRequest;
+    };
+
+    if (includeCommitMessage) {
+      // Fallback to git if SHA is available and part of the local git history
+      if (env.commit) {
+        env.commitMessage = getGitCommitMessage(env.commit);
+      }
+
+      // Fallback to current git commit message
+      if (!env.commitMessage) {
+        env.commitMessage = getGitCommitMessage();
+      }
+    }
+
+    return env;
   }
 
   // workflow_run
@@ -79,12 +101,12 @@ export function getGitHubEnv(
       branch: formatBranch(payload.workflow_run.head_branch, baseOrg, headOrg),
     };
 
-    if ('event' in payload && payload.event === 'pull_request') {
-      env.pr = payload.workflow_run?.pull_requests?.[0]?.number?.toString();
-    }
-
     if (includeCommitMessage) {
       env.commitMessage = payload.workflow_run.head_commit?.message;
+    }
+
+    if ('event' in payload && payload.event === 'pull_request') {
+      env.pr = payload.workflow_run?.pull_requests?.[0]?.number?.toString();
     }
 
     return env;
