@@ -25,7 +25,7 @@ export type CiEnv = {
 /**
  * Load environment variables - fallback to env-ci environment variables
  */
-export function getCiEnv(config: GetCiEnvConfig): CiEnv {
+export async function getCiEnv(config: GetCiEnvConfig): Promise<CiEnv> {
   const { includeCommitMessage = true } = config;
 
   const env = getEnv();
@@ -59,7 +59,10 @@ export function getCiEnv(config: GetCiEnvConfig): CiEnv {
 
   // GitHub extra data
   if (env.GITHUB_EVENT_PATH) {
-    const gitHubEnv = getGitHubEnv(env.GITHUB_EVENT_PATH, { includeCommitMessage });
+    const gitHubEnv = await getGitHubEnv(env.GITHUB_EVENT_PATH, {
+      includeCommitMessage,
+      githubToken: env.GITHUB_TOKEN,
+    });
     ciEnv = { ...ciEnv, ...gitHubEnv };
   }
 

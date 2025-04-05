@@ -21,10 +21,10 @@ export type LoadEnvConfig = {
  * 3. env-ci fallback
  * 4. computed values
  */
-export function loadEnv(args: PluginArgs, config: LoadEnvConfig = {}): IngestParams {
+export async function loadEnv(args: PluginArgs, config: LoadEnvConfig = {}): Promise<IngestParams> {
   const { includeCommitMessage = true } = config;
 
-  const ciEnv = getCiEnv({ includeCommitMessage });
+  const ciEnv = await getCiEnv({ includeCommitMessage });
   debug('CI env', ciEnv);
 
   const agentEnv = getAgentEnv();
