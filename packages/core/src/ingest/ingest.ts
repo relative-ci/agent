@@ -38,6 +38,7 @@ export default async function ingest(
     commitMessage,
 
     agentVersion,
+    agentType,
   } = params;
 
   const payload = {
@@ -45,6 +46,7 @@ export default async function ingest(
     project: slug,
     service,
     agentVersion,
+    agentType,
     job: {
       commit,
       branch,

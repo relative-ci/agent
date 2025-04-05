@@ -30,6 +30,7 @@ module.exports.getMockRequest = (customPayload) => ({
       project: 'organization/project',
       service: 'circleci',
       agentVersion: packageInfo.version,
+      agentType: 'webpack-plugin',
       job: {
         commit: 'abcd1234',
         branch: 'master',
