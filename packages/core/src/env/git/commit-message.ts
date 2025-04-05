@@ -6,7 +6,7 @@ export function getGitCommitMessage(commit: string = ''): string {
   try {
     message = childProcess.execSync(`git show -s --format=%B ${commit}`).toString().trim();
   } catch (error) {
-    console.error('Error reading commit message from git', error);
+    console.error(`Faild to read the commit message from git: ${error.message}`);
   }
 
   return message;
