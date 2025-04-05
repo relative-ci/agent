@@ -33,6 +33,7 @@ export function loadEnv(args: PluginArgs, config: LoadEnvConfig = {}): IngestPar
   const params = {
     isCi: ciEnv.isCi,
     agentVersion: AGENT_VERSION,
+    agentType: args.agentType,
 
     key: agentEnv.key,
     endpoint: agentEnv.endpoint || DEFAULT_ENDPOINT,
