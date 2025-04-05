@@ -1,7 +1,7 @@
 import path from 'path';
 import _ from 'lodash';
 import { readJSONSync, pathExistsSync } from 'fs-extra';
-import { cosmiconfigSync } from 'cosmiconfig';
+import { cosmiconfig } from 'cosmiconfig';
 import yargs from 'yargs/yargs';
 import { hideBin } from 'yargs/helpers';
 
@@ -19,6 +19,26 @@ import ingest from '@relative-ci/core/ingest';
 // eslint-disable-next-line import/no-unresolved
 import * as LOCALES from '@relative-ci/core/locales/en';
 
+async function searchConfig(configDir?: string) {
+  const names = ['relative-ci', 'relativeci'];
+
+  // Allow relative-ci.config.* and relativeci.config
+  const configs = names.map((name) => [
+    `${name}.config.js`,
+    `${name}.config.ts`,
+    `${name}.config.mjs`,
+    `${name}.config.cjs`,
+  ]).flat();
+
+  return cosmiconfig(names[0], {
+    searchStrategy: 'global',
+    searchPlaces: [
+      'package.json',
+      ...configs,
+    ],
+  }).search(configDir);
+}
+
 export default async function cli(processArgs: Array<string>) {
   const args = await yargs(hideBin(processArgs))
     .usage('Usage: $0 OPTIONS')
@@ -34,17 +54,15 @@ export default async function cli(processArgs: Array<string>) {
     .help()
     .argv;
 
-  const searchConfig = cosmiconfigSync('relativeci', {
-    searchStrategy: 'global',
-  }).search('config-dir' in args ? args['config-dir'] : undefined);
+  const localConfig = await searchConfig(args.configDir);
 
-  debug('Config', searchConfig);
+  debug('Config', localConfig);
 
-  if (!searchConfig) {
+  if (!localConfig) {
     throw new Error(LOCALES.CLI_MISSING_CONFIGURATION_ERROR);
   }
 
-  const { config } = searchConfig;
+  const { config } = localConfig;
 
   if (!_.get(config, 'webpack.stats')) {
     throw new Error(LOCALES.CLI_INVALID_CONFIGURATION_ERROR);
@@ -52,7 +70,7 @@ export default async function cli(processArgs: Array<string>) {
 
   // Load webpack stats file relative to the config file
   const webpackArtifactFilepath = path.join(
-    path.dirname(searchConfig.filepath),
+    path.dirname(localConfig.filepath),
     _.get(config, 'webpack.stats'),
   );
 
