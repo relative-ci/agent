@@ -68,3 +68,8 @@ export async function getCiEnv(config: GetCiEnvConfig): Promise<CiEnv> {
 
   return ciEnv;
 }
+
+export function isCi() {
+  const baseCiEnv = envCi();
+  return baseCiEnv.isCi;
+}
