@@ -8,6 +8,7 @@ const PARAMS = {
   key: 'abc-123',
   endpoint: 'http://localhost',
   agentVersion: '0.0.0',
+  agentType: 'test',
   slug: 'organization/project',
   commit: 'abcd1234',
   branch: 'master',
@@ -38,7 +39,7 @@ describe('Ingest', () => {
       }),
     }) as any);
 
-    await ingest({}, PARAMS);
+    await ingest({ }, PARAMS);
 
     expect(fetch).toHaveBeenCalledWith(
       'http://localhost',
@@ -47,6 +48,7 @@ describe('Ingest', () => {
           key: 'abc-123',
           project: 'organization/project',
           agentVersion: '0.0.0',
+          agentType: 'test',
           job: {
             commit: 'abcd1234',
             branch: 'master',

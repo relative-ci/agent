@@ -62,6 +62,7 @@ export type PluginArgs = {
   build?: EnvVars['build'];
   buildUrl?: EnvVars['buildUrl'];
   commitMessage?: EnvVars['commitMessage'];
+  agentType: string;
 };
 
 export type PluginConfig = {
@@ -89,9 +90,10 @@ export type IngestParams = {
   buildUrl?: EnvVars['buildUrl'];
   commitMessage?: EnvVars['commitMessage'];
   /**
-   * RelativeCI agent version
+   * RelativeCI agent metadata
    */
   agentVersion: string;
+  agentType: string;
 };
 
 export type IngestConfig = {
