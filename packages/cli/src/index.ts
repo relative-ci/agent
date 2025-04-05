@@ -19,6 +19,22 @@ import ingest from '@relative-ci/core/ingest';
 // eslint-disable-next-line import/no-unresolved
 import * as LOCALES from '@relative-ci/core/locales/en';
 
+async function parseArguments(args: Array<string>) {
+  return yargs(hideBin(args))
+    .usage('Usage: $0 OPTIONS')
+
+    .option('config-dir', { describe: 'Config directory', default: '', alias: 'c' })
+
+    .option('commit', { describe: 'Commit SHA', default: '' })
+    .option('commit-message', { describe: 'Commit message', default: '', alias: 'commitMessage' })
+    .option('branch', { describe: 'Branch name', default: '' })
+    .option('pr', { describe: 'Pull Request number', default: '' })
+    .option('slug', { describe: 'Project slug', default: '' })
+
+    .help()
+    .argv;
+}
+
 async function searchConfig(configDir?: string) {
   const names = ['relative-ci', 'relativeci'];
 
@@ -40,20 +56,7 @@ async function searchConfig(configDir?: string) {
 }
 
 export default async function cli(processArgs: Array<string>) {
-  const args = await yargs(hideBin(processArgs))
-    .usage('Usage: $0 OPTIONS')
-
-    .option('config-dir', { describe: 'Config directory', default: '', alias: 'c' })
-
-    .option('commit', { describe: 'Commit SHA', default: '' })
-    .option('commit-message', { describe: 'Commit message', default: '', alias: 'commitMessage' })
-    .option('branch', { describe: 'Branch name', default: '' })
-    .option('pr', { describe: 'Pull Request number', default: '' })
-    .option('slug', { describe: 'Project slug', default: '' })
-
-    .help()
-    .argv;
-
+  const args = await parseArguments(processArgs);
   const localConfig = await searchConfig(args.configDir);
 
   debug('Config', localConfig);
