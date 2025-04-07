@@ -1,6 +1,21 @@
-#!/bin/bash
+#!/usr/bin/env node
 
-TAG=$(git describe --tags --abbrev=0)
-VERSION=${TAG:1}
+const { execSync } = require('child_process');
 
-NPM_CONFIG_PROVENANCE=true npx release-it $VERSION --config ./config/release-it-publish.js --ci
+const tag = execSync('git tag -l --points-at HEAD').toString().trim();
+const matchTag = tag.match(/^v\d*\.\d*\.\d*-(\w*)\..*$/);
+const distTag = (matchTag && matchTag[1]) || 'latest';
+
+const options = [
+   'publish',
+   'from-git',
+   `--dist-tag ${distTag}`,
+   '--no-changelog',
+   '--no-git-tag-version',
+   '--no-push',
+   '--yes'
+ ];
+
+console.log(`Running lerna with "${options.join(' ')}"`);
+
+execSync(`npm run lerna -- ${options.join(' ')}`);

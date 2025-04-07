@@ -1,6 +1,6 @@
 const http = require('http');
 const _ = require('lodash');
-const packageInfo = require('../package.json');
+const packageInfo = require('../packages/webpack-plugin/package.json');
 
 const ENV_DEFAULT = {
   CI: 'true',
@@ -14,6 +14,7 @@ const ENV_DEFAULT = {
   CIRCLE_BUILD_URL: '#',
   CIRCLE_BUILD_NUM: '123',
   CIRCLE_PR_NUMBER: '10',
+  GITHUB_EVENT_PATH: '',
 };
 
 module.exports.ENV_DEFAULT = ENV_DEFAULT;
@@ -29,6 +30,7 @@ module.exports.getMockRequest = (customPayload) => ({
       project: 'organization/project',
       service: 'circleci',
       agentVersion: packageInfo.version,
+      agentType: 'webpack-plugin',
       job: {
         commit: 'abcd1234',
         branch: 'master',

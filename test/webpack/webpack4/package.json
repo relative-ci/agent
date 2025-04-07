@@ -2,7 +2,7 @@
   "name": "@relative-ci/agent-test-webpack-4",
   "version": "1.0.0",
   "devDependencies": {
-    "@relative-ci/agent": "*",
+    "@relative-ci/webpack-plugin": "*",
     "memory-fs": "^0.5.0",
     "webpack": "^4"
   }
