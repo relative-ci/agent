@@ -103,7 +103,7 @@
     "typescript": "5.8.3",
     "typescript-eslint": "8.29.1",
     "verdaccio": "5.26.2",
-    "webpack": "5.98.0"
+    "webpack": "5.99.2"
   },
   "dependencies": {
     "@bundle-stats/plugin-webpack-filter": "4.19.1",
