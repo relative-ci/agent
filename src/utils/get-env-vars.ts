@@ -1,4 +1,5 @@
 import envCi, { type CiEnv } from 'env-ci';
+import dotenv from 'dotenv';
 
 import { type EnvVars } from '../constants';
 import { debug } from './debug';
@@ -19,6 +20,9 @@ function getEnvVarValue(envVars: CiEnv, envVarName: string): string | undefined 
  * Load environment variables - fallback to env-ci environment variables
  */
 export function getEnvVars(): Partial<EnvVars> {
+  // Load env vars from .env
+  dotenv.config();
+
   // CI environment variables
   const ciEnvVars = envCi();
   debug('CI environment variables', ciEnvVars);
