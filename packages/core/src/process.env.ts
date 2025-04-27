@@ -1,4 +1,8 @@
+import dotenv from 'dotenv';
+
 export default function getProcessEnv() {
+  dotenv.config();
+
   const {
     // Agent env vars
     RELATIVE_CI_KEY,
