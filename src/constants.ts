@@ -33,6 +33,10 @@ export type EnvVars = {
    */
   branch?: string;
   /**
+   * Base branch name
+   */
+  baseBranch?: string;
+  /**
    * Commit SHA
    */
   commit?: string;
@@ -83,6 +87,7 @@ export type IngestParams = {
   slug: EnvVars['slug'];
   service?: EnvVars['service'];
   branch: EnvVars['branch'];
+  baseBranch?: EnvVars['baseBranch'];
   commit: EnvVars['commit'];
   pr?: EnvVars['pr'];
   build?: EnvVars['build'];
