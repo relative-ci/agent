@@ -70,9 +70,11 @@ async function sendStats(
   try {
     validateWebpackStats(data);
 
-    const params = loadEnv({ agentType: 'webpack-plugin' }, {
-      includeCommitMessage: config?.includeCommitMessage,
-    });
+    const params = await loadEnv(
+      { agentType: 'webpack-plugin' },
+      { includeCommitMessage: config?.includeCommitMessage },
+      logger,
+    );
     const artifactsData = filterArtifacts([{ key: SOURCE_WEBPACK_STATS, data }]);
     const response = await ingest(artifactsData, params, config, logger);
 

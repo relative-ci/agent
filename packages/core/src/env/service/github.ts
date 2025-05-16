@@ -1,6 +1,50 @@
 import fs from 'fs-extra';
+import * as github from '@actions/github';
 import type { PushEvent, PullRequestEvent, WorkflowRunEvent } from '@octokit/webhooks-types';
+
+import getEnv from '../../process.env';
 import { getGitCommitMessage } from '../git/commit-message';
+import { debug } from '../../utils/debug';
+import { type Logger } from '../../utils/logger';
+
+type GitHubCommitMessageOptions = {
+  owner: string;
+  repo: string;
+  commit: string;
+  token: string;
+};
+
+async function getGitHubCommitMessage(
+  options: GitHubCommitMessageOptions,
+  logger: Logger,
+): Promise<string | undefined> {
+  const {
+    owner,
+    repo,
+    commit,
+    token,
+  } = options;
+
+  let message;
+
+  const octokit = github.getOctokit(token);
+  debug(`Fetching commit message from ${commit}`);
+
+  try {
+    const res = await octokit.rest.repos.getCommit({
+      owner,
+      repo,
+      ref: commit,
+    });
+
+    message = res?.data?.commit?.message;
+  } catch (err) {
+    debug(`Error fetching commit message: ${err.message}`);
+    logger.warn(err);
+  }
+
+  return message;
+}
 
 function formatBranch(branchName?: string, baseOrg?: string, headOrg?: string): string | undefined {
   if (!branchName) {
@@ -44,10 +88,11 @@ export type GitHubEnvWorflowRun = {
 
 export type GitHubEnv = GitHubEnvPush | GitHubEnvPullRequest | GitHubEnvWorflowRun;
 
-export function getGitHubEnv(
+export async function getGitHubEnv(
   eventFilepath: string,
   config: GetGitHubEnvConfig,
-): GitHubEnv | undefined {
+  logger: Logger,
+): Promise<GitHubEnv | undefined> {
   const { includeCommitMessage } = config;
 
   let payload: GitHubEventData;
@@ -78,9 +123,22 @@ export function getGitHubEnv(
     };
 
     if (includeCommitMessage) {
-      // Fallback to git if SHA is available and part of the local git history
+      // Extract from git if SHA is available and part of the local git history
       if (env.commit) {
         env.commitMessage = getGitCommitMessage(env.commit);
+      }
+
+      // Extract from GitHub API if GITHUB_TOKEN is available
+      const processEnv = getEnv();
+      if (processEnv.GITHUB_TOKEN) {
+        const { name: repo, owner } = payload.pull_request.head.repo;
+
+        env.commitMessage = await getGitHubCommitMessage({
+          owner: owner.login,
+          repo,
+          commit: env.commit,
+          token: processEnv.GITHUB_TOKEN,
+        }, logger);
       }
 
       // Fallback to current git commit message
