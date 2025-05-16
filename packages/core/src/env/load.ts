@@ -5,6 +5,7 @@ import {
   type PluginArgs,
 } from '../constants';
 import { debug } from '../utils/debug';
+import { logger as defaultLogger } from '../utils/logger';
 import { maskObjectProperties } from '../utils/mask-object-property';
 import { getGitCommitMessage } from './git/commit-message';
 import { getAgentEnv } from './agent-env';
@@ -21,10 +22,14 @@ export type LoadEnvConfig = {
  * 3. env-ci fallback
  * 4. computed values
  */
-export async function loadEnv(args: PluginArgs, config: LoadEnvConfig = {}): Promise<IngestParams> {
+export async function loadEnv(
+  args: PluginArgs,
+  config: LoadEnvConfig = {},
+  logger = defaultLogger,
+): Promise<IngestParams> {
   const { includeCommitMessage = true } = config;
 
-  const ciEnv = await getCiEnv({ includeCommitMessage });
+  const ciEnv = await getCiEnv({ includeCommitMessage }, logger);
   debug('CI env', ciEnv);
 
   const agentEnv = getAgentEnv();

@@ -3,6 +3,7 @@
 import envCi, { type CiEnv as BaseCiEnv } from 'env-ci';
 
 import getEnv from '../process.env';
+import { type Logger } from '../utils';
 import { getSlugFromGitURL } from './git/slug';
 import { getGitHubEnv } from './service/github';
 
@@ -25,7 +26,7 @@ export type CiEnv = {
 /**
  * Load environment variables - fallback to env-ci environment variables
  */
-export async function getCiEnv(config: GetCiEnvConfig): Promise<CiEnv> {
+export async function getCiEnv(config: GetCiEnvConfig, logger: Logger): Promise<CiEnv> {
   const { includeCommitMessage = true } = config;
 
   const env = getEnv();
@@ -59,7 +60,7 @@ export async function getCiEnv(config: GetCiEnvConfig): Promise<CiEnv> {
 
   // GitHub extra data
   if (env.GITHUB_EVENT_PATH) {
-    const gitHubEnv = await getGitHubEnv(env.GITHUB_EVENT_PATH, { includeCommitMessage });
+    const gitHubEnv = await getGitHubEnv(env.GITHUB_EVENT_PATH, { includeCommitMessage }, logger);
     ciEnv = { ...ciEnv, ...gitHubEnv };
   }
 
