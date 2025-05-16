@@ -4,6 +4,8 @@ import type { PushEvent, PullRequestEvent, WorkflowRunEvent } from '@octokit/web
 
 import getEnv from '../../process.env';
 import { getGitCommitMessage } from '../git/commit-message';
+import { debug } from '../../utils/debug';
+import { type Logger } from '../../utils/logger';
 
 type GitHubCommitMessageOptions = {
   owner: string;
@@ -14,6 +16,7 @@ type GitHubCommitMessageOptions = {
 
 async function getGitHubCommitMessage(
   options: GitHubCommitMessageOptions,
+  logger: Logger,
 ): Promise<string | undefined> {
   const {
     owner,
@@ -25,7 +28,7 @@ async function getGitHubCommitMessage(
   let message;
 
   const octokit = github.getOctokit(token);
-  console.debug(`Fetching commit message from ${commit}`);
+  debug(`Fetching commit message from ${commit}`);
 
   try {
     const res = await octokit.rest.repos.getCommit({
@@ -36,8 +39,8 @@ async function getGitHubCommitMessage(
 
     message = res?.data?.commit?.message;
   } catch (err) {
-    console.debug(`Error fetching commit message: ${err.message}`);
-    console.warn(err);
+    debug(`Error fetching commit message: ${err.message}`);
+    logger.warn(err);
   }
 
   return message;
@@ -88,6 +91,7 @@ export type GitHubEnv = GitHubEnvPush | GitHubEnvPullRequest | GitHubEnvWorflowR
 export async function getGitHubEnv(
   eventFilepath: string,
   config: GetGitHubEnvConfig,
+  logger: Logger,
 ): Promise<GitHubEnv | undefined> {
   const { includeCommitMessage } = config;
 
@@ -134,7 +138,7 @@ export async function getGitHubEnv(
           repo,
           commit: env.commit,
           token: processEnv.GITHUB_TOKEN,
-        });
+        }, logger);
       }
 
       // Fallback to current git commit message
