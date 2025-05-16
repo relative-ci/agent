@@ -24,6 +24,7 @@ export default function getProcessEnv() {
 
     // GitHub Action
     GITHUB_EVENT_PATH,
+    GITHUB_TOKEN,
   } = process.env;
 
   return {
@@ -42,5 +43,6 @@ export default function getProcessEnv() {
 
     JENKINS_GIT_URL,
     GITHUB_EVENT_PATH,
+    GITHUB_TOKEN,
   };
 }
