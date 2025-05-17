@@ -35,8 +35,7 @@
   "module": "./lib/esm/index.js",
   "types": "./lib/types/index.d.ts",
   "bin": {
-    "relative-ci": "bin/index.js",
-    "relative-ci-agent": "bin/index.js"
+    "relative-ci": "bin/index.js"
   },
   "scripts": {
     "build": "npm run clean && tsc && rollup -c && npm run build-type",
