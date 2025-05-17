@@ -28,7 +28,7 @@ async function getGitHubCommitMessage(
   let message;
 
   const octokit = github.getOctokit(token);
-  debug(`Fetching commit message from ${commit}`);
+  debug(`Fetching commit message for ${commit}`);
 
   try {
     const res = await octokit.rest.repos.getCommit({
@@ -125,14 +125,14 @@ export async function getGitHubEnv(
     if (includeCommitMessage) {
       // Extract from git if SHA is available and part of the local git history
       if (env.commit) {
-        logger.debug(`Extract commit message from git for commit ${env.commit}`);
+        debug(`Extract commit message from git for commit ${env.commit}.`);
         env.commitMessage = getGitCommitMessage(env.commit);
       }
 
       // Extract from GitHub API if GITHUB_TOKEN is available
       const processEnv = getEnv();
       if (processEnv.GITHUB_TOKEN) {
-        logger.debug(`Extract commit message from GitHub API for commit ${env.commit}`);
+        debug(`Extract commit message from GitHub API for commit ${env.commit}.`);
         const { name: repo, owner } = payload.pull_request.head.repo;
 
         env.commitMessage = await getGitHubCommitMessage({
@@ -142,7 +142,7 @@ export async function getGitHubEnv(
           token: processEnv.GITHUB_TOKEN,
         }, logger);
       } else {
-        logger.debug(`Skip extracting commit message from GitHub API for commit ${env.commit}`);
+        debug(`GITHUB_TOKEN is missing! Skip extracting commit message from GitHub API for commit ${env.commit}.`);
       }
 
       // Fallback to current git commit message
