@@ -1,12 +1,12 @@
 import getDebug from 'debug';
 
-const DEBUG_NAME = 'relative-ci:agent';
+export const AGENT_DEBUG_NAME = 'relative-ci:agent';
 
 let debugLoggler;
 
 export function debug(...args: Array<unknown>) {
   if (!debugLoggler) {
-    debugLoggler = getDebug(DEBUG_NAME);
+    debugLoggler = getDebug(AGENT_DEBUG_NAME);
   }
 
   debugLoggler(...args);
