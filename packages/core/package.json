@@ -1,6 +1,6 @@
 {
   "name": "@relative-ci/core",
-  "version": "5.0.0-rc.4",
+  "version": "5.0.0-rc.5",
   "description": "RelativeCI agent core",
   "keywords": [
     "webpack",
