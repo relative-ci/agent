@@ -11,6 +11,7 @@ import {
   logResponse,
   filterArtifacts,
   validateWebpackStats,
+  type PluginConfig,
 } from '@relative-ci/core';
 // eslint-disable-next-line import/no-unresolved
 import loadEnv from '@relative-ci/core/env';
@@ -18,6 +19,19 @@ import loadEnv from '@relative-ci/core/env';
 import ingest from '@relative-ci/core/ingest';
 // eslint-disable-next-line import/no-unresolved
 import * as LOCALES from '@relative-ci/core/locales/en';
+
+export type Config = {
+  /**
+   * Webpack artifacts
+   */
+  webpack?: {
+    /**
+     * Webpack stats relative filepath
+     * @example './artifacts/webpack-stats.json'
+     */
+    stats?: string;
+  },
+} & PluginConfig;
 
 async function parseArguments(args: Array<string>) {
   return yargs(hideBin(args))
@@ -75,7 +89,7 @@ export default async function cli(processArgs: Array<string>) {
     throw new Error(LOCALES.CLI_MISSING_CONFIGURATION_ERROR);
   }
 
-  const { config } = localConfig;
+  const { config } = localConfig as { config: Config };
 
   if (!_.get(config, 'webpack.stats')) {
     throw new Error(LOCALES.CLI_INVALID_CONFIGURATION_ERROR);
