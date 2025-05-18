@@ -45,7 +45,6 @@
     "test": "vitest src --passWithNoTests --run"
   },
   "devDependencies": {
-    "@types/fs-extra": "11.0.4",
     "@rollup/plugin-commonjs": "28.0.3",
     "@rollup/plugin-node-resolve": "16.0.0",
     "@rollup/plugin-replace": "6.0.2",
