@@ -1,5 +1,4 @@
 import path from 'path';
-import _ from 'lodash';
 import { readJSONSync, pathExistsSync } from 'fs-extra';
 import { cosmiconfig } from 'cosmiconfig';
 import yargs from 'yargs/yargs';
@@ -91,14 +90,14 @@ export default async function cli(processArgs: Array<string>) {
 
   const { config } = localConfig as { config: Config };
 
-  if (!_.get(config, 'webpack.stats')) {
+  if (config?.webpack?.stats) {
     throw new Error(LOCALES.CLI_INVALID_CONFIGURATION_ERROR);
   }
 
   // Load webpack stats file relative to the config file
   const webpackArtifactFilepath = path.join(
     path.dirname(localConfig.filepath),
-    _.get(config, 'webpack.stats'),
+    config.webpack.stats,
   );
 
   if (!pathExistsSync(webpackArtifactFilepath)) {
@@ -111,7 +110,10 @@ export default async function cli(processArgs: Array<string>) {
 
   debug('CLI arguments', args);
 
-  const params = await loadEnv({ ...args, agentType: 'cli' }, { includeCommitMessage: config.includeCommitMessage });
+  const params = await loadEnv(
+    { ...args, agentType: 'cli' },
+    { includeCommitMessage: config.includeCommitMessage },
+  );
   const artifactsData = filterArtifacts([{ key: SOURCE_WEBPACK_STATS, data }]);
 
   const response = await ingest(artifactsData, params, config);
