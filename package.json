@@ -99,7 +99,7 @@
     "release-it": "19.0.2",
     "rimraf": "6.0.1",
     "rollup": "4.40.2",
-    "ts-jest": "29.3.3",
+    "ts-jest": "29.3.4",
     "typescript": "5.8.3",
     "typescript-eslint": "8.31.1",
     "verdaccio": "5.26.2",
