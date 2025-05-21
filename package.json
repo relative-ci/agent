@@ -52,17 +52,17 @@
     "test:package-webpack-plugin": "vitest test/webpack"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "3.3.0",
-    "@eslint/js": "9.22.0",
-    "dotenv": "16.4.7",
-    "eslint": "9.22.0",
+    "@eslint/eslintrc": "3.3.1",
+    "@eslint/js": "9.27.0",
+    "dotenv": "16.5.0",
+    "eslint": "9.27.0",
     "eslint-config-airbnb-base": "15.0.0",
     "eslint-plugin-import": "2.31.0",
     "lerna": "^8.2.1",
     "rimraf": "6.0.1",
-    "typescript-eslint": "8.26.0",
-    "verdaccio": "6.0.5",
-    "vitest": "3.0.8"
+    "typescript-eslint": "8.32.1",
+    "verdaccio": "6.1.2",
+    "vitest": "3.1.4"
   },
   "overrides": {
     "eslint-config-airbnb-base": {
