@@ -88,7 +88,7 @@
     "@types/env-ci": "3.1.4",
     "@types/fs-extra": "11.0.4",
     "@types/jest": "29.5.14",
-    "@types/lodash": "4.17.16",
+    "@types/lodash": "4.17.17",
     "@types/node-fetch": "2.6.12",
     "eslint": "9.25.1",
     "eslint-config-airbnb-base": "15.0.0",
