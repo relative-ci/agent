@@ -53,7 +53,7 @@
     "rollup-plugin-node-externals": "8.0.0",
     "typescript": "5.8.2",
     "vitest": "3.0.8",
-    "webpack": "5.98.0"
+    "webpack": "5.99.9"
   },
   "dependencies": {
     "@relative-ci/core": "^5.0.0-alpha.0",
