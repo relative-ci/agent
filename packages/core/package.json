@@ -1,0 +1,101 @@
+{
+  "name": "@relative-ci/core",
+  "version": "5.0.0-alpha.0",
+  "description": "RelativeCI agent core",
+  "keywords": [
+    "webpack",
+    "vitejs",
+    "rspack",
+    "rollup",
+    "bundle-size",
+    "bundle-analyzer",
+    "bundle-stats",
+    "stats",
+    "bundle",
+    "size",
+    "assets",
+    "chunks",
+    "modules"
+  ],
+  "repository": "https://github.com/relative-ci/agent",
+  "bugs": {
+    "url": "https://github.com/relative-ci/agent/issues"
+  },
+  "homepage": "https://relative-ci.com/documentation/setup",
+  "license": "MIT",
+  "author": {
+    "name": "Viorel Cojocaru",
+    "email": "vio@relative-ci.com",
+    "url": "https://relative-ci.com"
+  },
+  "main": "./lib/cjs/index.js",
+  "module": "./lib/esm/index.js",
+  "types": "./lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "require": "./lib/cjs/index.js",
+      "import": "./lib/esm/index.js"
+    },
+    "./env": {
+      "types": "./lib/types/env/index.d.ts",
+      "require": "./lib/cjs/env.js",
+      "import": "./lib/esm/env.js"
+    },
+    "./artifacts": {
+      "types": "./lib/types/artifacts/index.d.ts",
+      "require": "./lib/cjs/artifacts.js",
+      "import": "./lib/esm/artifacts.js"
+    },
+    "./ingest": {
+      "types": "./lib/types/ingest/index.d.ts",
+      "require": "./lib/cjs/ingest.js",
+      "import": "./lib/esm/ingest.js"
+    },
+    "./utils": {
+      "types": "./lib/types/utils/index.d.ts",
+      "require": "./lib/cjs/utils.js",
+      "import": "./lib/esm/utils.js"
+    },
+    "./locales/en": {
+      "types": "./lib/types/locales/en.d.ts",
+      "require": "./lib/cjs/locales/en.js",
+      "import": "./lib/esm/locales/en.js"
+    }
+  },
+  "scripts": {
+    "build": "npm run clean && tsc && rollup -c && npm run build-type",
+    "build-type": "echo '{\"type\":\"commonjs\"}' > lib/cjs/package.json && echo '{\"type\":\"module\"}' > lib/esm/package.json",
+    "clean": "rimraf ./lib",
+    "lint": "eslint .",
+    "test": "vitest src --passWithNoTests --no-watch"
+  },
+  "devDependencies": {
+    "@octokit/webhooks-types": "7.6.1",
+    "@rollup/plugin-commonjs": "28.0.3",
+    "@rollup/plugin-node-resolve": "16.0.0",
+    "@rollup/plugin-replace": "6.0.2",
+    "@rollup/plugin-typescript": "12.1.2",
+    "@tsconfig/node18": "^18.2.4",
+    "@types/debug": "4.1.12",
+    "@types/env-ci": "3.1.4",
+    "@types/fs-extra": "11.0.4",
+    "@types/lodash": "4.17.16",
+    "env-ci": "11.1.0",
+    "rimraf": "6.0.1",
+    "rollup": "4.35.0",
+    "rollup-plugin-node-externals": "8.0.0",
+    "typescript": "5.8.2",
+    "typescript-eslint": "8.26.0",
+    "vitest": "3.0.8"
+  },
+  "dependencies": {
+    "@actions/github": "6.0.0",
+    "@bundle-stats/plugin-webpack-filter": "4.19.0",
+    "@bundle-stats/plugin-webpack-validate": "4.19.0",
+    "debug": "4.4.0",
+    "dotenv": "16.4.7",
+    "fs-extra": "11.3.0",
+    "lodash": "4.17.21"
+  }
+}

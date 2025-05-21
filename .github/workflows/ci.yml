@@ -44,20 +44,21 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Upload dist files
+      - name: Upload build files
         uses: actions/upload-artifact@v4.6.2
         with:
-          name: dist-files
+          name: build-files
           retention-days: 1
+          # add glob on the first directory to force paths relative to current directory
           path: |
-            lib*/**/*
+            packages*/*/lib
 
       # Publish new version to local registry
       - name: Run local npm registry
         run: ./scripts/local-registry.sh &
 
       - name: Publish package locally
-        run: npm publish
+        run: ./scripts/local-registry-publish.sh
 
       - name: Upload local registry files
         uses: actions/upload-artifact@v4.6.2
@@ -68,7 +69,6 @@ jobs:
           path: |
             .verdaccio-storage*/**/*
 
-
   test-package-cli:
     runs-on: ubuntu-latest
     needs:
@@ -76,7 +76,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node: [20, 18, 16, 14]
+        node: [22, 20, 18]
     steps:
       - uses: actions/checkout@v4
 
@@ -90,10 +90,10 @@ jobs:
       - name: Install dependencies
         run: npm install --package-lock false
 
-      - name: Download dist files
+      - name: Download build files
         uses: actions/download-artifact@v4.3.0
         with:
-          name: dist-files
+          name: build-files
 
       - name: Download local registry files
         uses: actions/download-artifact@v4.3.0
@@ -113,13 +113,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node: [20, 18, 16, 14]
+        node: [22, 20, 18]
         webpack: ['webpack4', 'webpack5']
-        exclude:
-          - webpack: 'webpack4'
-            node: 18
-          - webpack: 'webpack4'
-            node: 20
     steps:
       - uses: actions/checkout@v4
 
@@ -133,10 +128,10 @@ jobs:
       - name: Install dependencies
         run: npm install --package-lock false
 
-      - name: Download dist files
+      - name: Download build files
         uses: actions/download-artifact@v4.3.0
         with:
-          name: dist-files
+          name: build-files
 
       - name: Download local registry files
         uses: actions/download-artifact@v4.3.0
@@ -171,10 +166,10 @@ jobs:
       - name: Setup node & npm
         uses: relative-ci/.github/actions/setup-node-npm@v1.1.0
 
-      - name: Download dist files
+      - name: Download build files
         uses: actions/download-artifact@v4.3.0
         with:
-          name: dist-files
+          name: build-files
 
       - name: Publish
         run: npm run release
