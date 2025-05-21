@@ -90,7 +90,7 @@ export default async function cli(processArgs: Array<string>) {
 
   const { config } = localConfig as { config: Config };
 
-  if (config?.webpack?.stats) {
+  if (!config?.webpack?.stats) {
     throw new Error(LOCALES.CLI_INVALID_CONFIGURATION_ERROR);
   }
 
