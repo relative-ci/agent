@@ -80,7 +80,7 @@
     "@types/debug": "4.1.12",
     "@types/env-ci": "3.1.4",
     "@types/fs-extra": "11.0.4",
-    "@types/lodash": "4.17.19",
+    "@types/lodash": "4.17.20",
     "env-ci": "11.1.1",
     "rimraf": "6.0.1",
     "rollup": "4.44.1",
