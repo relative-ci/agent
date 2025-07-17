@@ -16,6 +16,7 @@ export type CiEnv = {
   slug?: string;
   service?: string;
   branch?: string;
+  baseBranch?: string;
   commit?: string;
   commitMessage?: string;
   pr?: string;
@@ -44,6 +45,7 @@ export async function getCiEnv(config: GetCiEnvConfig, logger: Logger): Promise<
      */
     // eslint-disable-next-line no-nested-ternary
     branch: 'prBranch' in baseCiEnv && baseCiEnv.prBranch ? baseCiEnv.prBranch : ('branch' in baseCiEnv ? baseCiEnv.branch : undefined),
+    baseBranch: 'prBranch' in baseCiEnv && baseCiEnv.prBranch ? baseCiEnv.branch : undefined,
     commit: 'commit' in baseCiEnv ? baseCiEnv.commit : undefined,
     pr: 'pr' in baseCiEnv ? baseCiEnv.pr : undefined,
     build: 'build' in baseCiEnv ? baseCiEnv.build : undefined,
