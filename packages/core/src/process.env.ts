@@ -12,6 +12,7 @@ export default function getProcessEnv() {
     RELATIVE_CI_SLUG,
 
     RELATIVE_CI_BRANCH,
+    RELATIVE_CI_BASE_BRANCH,
     RELATIVE_CI_PR,
     RELATIVE_CI_BUILD,
     RELATIVE_CI_BUILD_URL,
@@ -35,6 +36,7 @@ export default function getProcessEnv() {
     RELATIVE_CI_SLUG,
 
     RELATIVE_CI_BRANCH,
+    RELATIVE_CI_BASE_BRANCH,
     RELATIVE_CI_PR,
     RELATIVE_CI_BUILD,
     RELATIVE_CI_BUILD_URL,
