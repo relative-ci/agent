@@ -56,7 +56,7 @@ export type EnvVars = {
 
 export type PluginArgs = {
   slug?: EnvVars['slug'];
-  branch?: EnvVars['slug'];
+  branch?: EnvVars['branch'];
   pr?: EnvVars['pr'];
   commit?: EnvVars['commit'];
   build?: EnvVars['build'];
