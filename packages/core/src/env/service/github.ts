@@ -170,9 +170,9 @@ export async function getGitHubEnv(
       env.commitMessage = payload.workflow_run.head_commit?.message;
     }
 
-    if ('event' in payload && payload.event === 'pull_request') {
-      env.pr = payload.workflow_run?.pull_requests?.[0]?.number?.toString();
-      env.baseBranch = payload.workflow_run?.pull_requests?.[0]?.base?.ref;
+    if (payload.workflow_run?.pull_requests?.[0]) {
+      env.pr = payload.workflow_run.pull_requests[0].number?.toString();
+      env.baseBranch = payload.workflow_run.pull_requests[0].base?.ref;
     }
 
     return env;
