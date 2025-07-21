@@ -131,7 +131,7 @@ export async function getGitHubEnv(
 
       // Extract from GitHub API if GITHUB_TOKEN is available
       const processEnv = getEnv();
-      if (processEnv.GITHUB_TOKEN) {
+      if (processEnv.GITHUB_TOKEN && !env.commitMessage) {
         debug(`Extract commit message from GitHub API for commit ${env.commit}.`);
         const { name: repo, owner } = payload.pull_request.head.repo;
 
