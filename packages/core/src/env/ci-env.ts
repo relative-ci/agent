@@ -63,6 +63,7 @@ export async function getCiEnv(config: GetCiEnvConfig, logger: Logger): Promise<
   // GitHub extra data
   if (env.GITHUB_EVENT_PATH) {
     const gitHubEnv = await getGitHubEnv(env.GITHUB_EVENT_PATH, { includeCommitMessage }, logger);
+    logger.debug('GitHub vars', gitHubEnv);
     ciEnv = { ...ciEnv, ...gitHubEnv };
   }
 
