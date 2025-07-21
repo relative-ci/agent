@@ -76,12 +76,14 @@ export type GitHubEnvPullRequest = {
   commit?: string;
   commitMessage?: string;
   branch?: string;
+  baseBranch?: string;
   pr?: string;
 }
 
 export type GitHubEnvWorflowRun = {
   commit?: string;
   branch?: string;
+  baseBranch?: string;
   pr?: string;
   commitMessage?: string;
 }
@@ -119,6 +121,7 @@ export async function getGitHubEnv(
       commit: payload.pull_request.head?.sha,
       commitMessage: '',
       branch: formatBranch(payload.pull_request.head?.ref, baseOrg, headOrg),
+      baseBranch: payload.pull_request.base?.ref,
       pr: payload.pull_request.number?.toString(),
     };
 
@@ -169,6 +172,7 @@ export async function getGitHubEnv(
 
     if ('event' in payload && payload.event === 'pull_request') {
       env.pr = payload.workflow_run?.pull_requests?.[0]?.number?.toString();
+      env.baseBranch = payload.workflow_run?.pull_requests?.[0]?.base?.ref;
     }
 
     return env;
