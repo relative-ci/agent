@@ -57,7 +57,9 @@ export async function getCiEnv(config: GetCiEnvConfig, logger: Logger): Promise<
   // https://www.jenkins.io/doc/book/pipeline/jenkinsfile/#using-environment-variables
   // https://plugins.jenkins.io/git/#plugin-content-environment-variables
   if (ciEnv.service === 'jenkins' && !ciEnv.slug) {
-    ciEnv.slug = getSlugFromGitURL(env.JENKINS_GIT_URL);
+    const jenkinsSlug = getSlugFromGitURL(env.JENKINS_GIT_URL);
+    logger.debug('Jenkins vars', { slug: jenkinsSlug });
+    ciEnv.slug = jenkinsSlug;
   }
 
   // GitHub extra data
