@@ -76,12 +76,14 @@ export type GitHubEnvPullRequest = {
   commit?: string;
   commitMessage?: string;
   branch?: string;
+  baseBranch?: string;
   pr?: string;
 }
 
 export type GitHubEnvWorflowRun = {
   commit?: string;
   branch?: string;
+  baseBranch?: string;
   pr?: string;
   commitMessage?: string;
 }
@@ -119,6 +121,7 @@ export async function getGitHubEnv(
       commit: payload.pull_request.head?.sha,
       commitMessage: '',
       branch: formatBranch(payload.pull_request.head?.ref, baseOrg, headOrg),
+      baseBranch: payload.pull_request.base?.ref,
       pr: payload.pull_request.number?.toString(),
     };
 
@@ -131,7 +134,7 @@ export async function getGitHubEnv(
 
       // Extract from GitHub API if GITHUB_TOKEN is available
       const processEnv = getEnv();
-      if (processEnv.GITHUB_TOKEN) {
+      if (processEnv.GITHUB_TOKEN && !env.commitMessage) {
         debug(`Extract commit message from GitHub API for commit ${env.commit}.`);
         const { name: repo, owner } = payload.pull_request.head.repo;
 
@@ -167,8 +170,9 @@ export async function getGitHubEnv(
       env.commitMessage = payload.workflow_run.head_commit?.message;
     }
 
-    if ('event' in payload && payload.event === 'pull_request') {
-      env.pr = payload.workflow_run?.pull_requests?.[0]?.number?.toString();
+    if (payload.workflow_run?.pull_requests?.[0]) {
+      env.pr = payload.workflow_run.pull_requests[0].number?.toString();
+      env.baseBranch = payload.workflow_run.pull_requests[0].base?.ref;
     }
 
     return env;
