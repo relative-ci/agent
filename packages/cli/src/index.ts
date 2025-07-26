@@ -1,7 +1,9 @@
 import path from 'path';
 import { readJSONSync, pathExistsSync } from 'fs-extra';
 import { cosmiconfig } from 'cosmiconfig';
-import yargs from 'yargs/yargs';
+import yargs from 'yargs';
+// Eslint is not able to resolve yargs export
+// eslint-disable-next-line import/no-unresolved
 import { hideBin } from 'yargs/helpers';
 
 import {
