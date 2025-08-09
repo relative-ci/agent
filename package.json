@@ -53,14 +53,14 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "3.3.1",
-    "@eslint/js": "9.32.0",
+    "@eslint/js": "9.33.0",
     "dotenv": "17.2.1",
-    "eslint": "9.32.0",
+    "eslint": "9.33.0",
     "eslint-config-airbnb-base": "15.0.0",
     "eslint-plugin-import": "2.32.0",
     "lerna": "^8.2.1",
     "rimraf": "6.0.1",
-    "typescript-eslint": "8.38.0",
+    "typescript-eslint": "8.39.0",
     "verdaccio": "6.1.6",
     "vitest": "3.2.4"
   },
