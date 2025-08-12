@@ -86,7 +86,7 @@
     "rollup": "4.46.2",
     "rollup-plugin-node-externals": "8.0.1",
     "typescript": "5.9.2",
-    "typescript-eslint": "8.39.0",
+    "typescript-eslint": "8.39.1",
     "vitest": "3.2.4"
   },
   "dependencies": {
