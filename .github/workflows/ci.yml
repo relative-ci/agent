@@ -11,7 +11,7 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Setup node & npm
         uses: relative-ci/.github/actions/setup-node-npm@v1.1.1
@@ -22,7 +22,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Setup node & npm
         uses: relative-ci/.github/actions/setup-node-npm@v1.1.1
@@ -36,7 +36,7 @@ jobs:
       - lint
       - test
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Setup node & npm
         uses: relative-ci/.github/actions/setup-node-npm@v1.1.1
@@ -78,7 +78,7 @@ jobs:
       matrix:
         node: [22, 20, 18]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Setup node & npm
         uses: relative-ci/.github/actions/setup-node-npm@main
@@ -116,7 +116,7 @@ jobs:
         node: [22, 20, 18]
         webpack: ['webpack4', 'webpack5']
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Setup node & npm
         uses: relative-ci/.github/actions/setup-node-npm@main
@@ -161,7 +161,7 @@ jobs:
     permissions:
       id-token: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Setup node & npm
         uses: relative-ci/.github/actions/setup-node-npm@v1.1.1
