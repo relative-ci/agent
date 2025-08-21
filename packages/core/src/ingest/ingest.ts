@@ -28,6 +28,7 @@ export default async function ingest(
     endpoint,
 
     branch,
+    baseBranch,
     build,
     buildUrl,
     commit,
@@ -50,6 +51,7 @@ export default async function ingest(
     job: {
       commit,
       branch,
+      baseBranch,
       prNumber: pr,
       buildNumber: build,
       buildUrl,
