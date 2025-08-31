@@ -54,7 +54,7 @@
     "@types/yargs": "17.0.33",
     "rimraf": "6.0.1",
     "rollup": "4.49.0",
-    "rollup-plugin-node-externals": "8.0.1",
+    "rollup-plugin-node-externals": "8.1.0",
     "typescript": "5.9.2",
     "vitest": "3.2.4"
   },
