@@ -60,7 +60,7 @@
     "eslint-plugin-import": "2.32.0",
     "lerna": "^8.2.1",
     "rimraf": "6.0.1",
-    "typescript-eslint": "8.41.0",
+    "typescript-eslint": "8.42.0",
     "verdaccio": "6.1.6",
     "vitest": "3.2.4"
   },
