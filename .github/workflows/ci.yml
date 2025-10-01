@@ -76,7 +76,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node: [22, 20, 18]
+        node: [24, 22, 20, 18]
     steps:
       - uses: actions/checkout@v5
 
@@ -113,7 +113,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node: [22, 20, 18]
+        node: [24, 22, 20, 18]
         webpack: ['webpack4', 'webpack5']
     steps:
       - uses: actions/checkout@v5
@@ -124,6 +124,9 @@ jobs:
           version: ${{ matrix.node }}
           cache: never
           install: false
+
+      - name: Delete obsolete always-auth
+        run: npm config delete always-auth
 
       - name: Install dependencies
         run: npm install --package-lock false
