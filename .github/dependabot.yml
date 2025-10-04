@@ -12,6 +12,10 @@ updates:
       bundle-stats:
         patterns:
           - "@bundle-stats/*"
+      eslint:
+        patterns:
+          - "eslint"
+          - "@eslint/*"
 
   - package-ecosystem: "github-actions"
     directory: "/"
