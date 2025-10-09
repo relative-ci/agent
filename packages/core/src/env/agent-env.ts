@@ -8,6 +8,7 @@ export type AgentEnv = {
   service?: string;
 
   branch?: string;
+  baseBranch?: string;
   commit?: string;
   pr?: string;
   build?: string;
@@ -30,6 +31,7 @@ export function getAgentEnv(): AgentEnv {
     slug: env.RELATIVE_CI_SLUG,
 
     branch: env.RELATIVE_CI_BRANCH,
+    baseBranch: env.RELATIVE_CI_BASE_BRANCH,
     pr: env.RELATIVE_CI_PR,
     build: env.RELATIVE_CI_BUILD,
     buildUrl: env.RELATIVE_CI_BUILD_URL,
