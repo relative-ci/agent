@@ -47,7 +47,7 @@ export async function loadEnv(
     slug: args.slug || agentEnv.slug || ciEnv.slug,
 
     branch: args.branch || agentEnv.branch || ciEnv.branch,
-    baseBranch: ciEnv.baseBranch,
+    baseBranch: args.baseBranch || agentEnv.baseBranch || ciEnv.baseBranch,
     pr: args.pr || agentEnv.pr || ciEnv.pr,
     commit: args.commit || agentEnv.commit || ciEnv.commit,
     commitMessage: args.commitMessage || agentEnv.commitMessage || ciEnv.commitMessage,
