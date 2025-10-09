@@ -73,7 +73,7 @@
   "devDependencies": {
     "@octokit/webhooks-types": "7.6.1",
     "@rollup/plugin-commonjs": "28.0.6",
-    "@rollup/plugin-node-resolve": "16.0.1",
+    "@rollup/plugin-node-resolve": "16.0.2",
     "@rollup/plugin-replace": "6.0.2",
     "@rollup/plugin-typescript": "12.1.4",
     "@tsconfig/node18": "^18.2.4",
@@ -86,7 +86,7 @@
     "rollup": "4.52.4",
     "rollup-plugin-node-externals": "8.1.1",
     "typescript": "5.9.3",
-    "typescript-eslint": "8.45.0",
+    "typescript-eslint": "8.46.0",
     "vitest": "3.2.4"
   },
   "dependencies": {
