@@ -16,6 +16,7 @@ export type CiEnv = {
   slug?: string;
   service?: string;
   branch?: string;
+  baseBranch?: string;
   commit?: string;
   commitMessage?: string;
   pr?: string;
@@ -44,6 +45,7 @@ export async function getCiEnv(config: GetCiEnvConfig, logger: Logger): Promise<
      */
     // eslint-disable-next-line no-nested-ternary
     branch: 'prBranch' in baseCiEnv && baseCiEnv.prBranch ? baseCiEnv.prBranch : ('branch' in baseCiEnv ? baseCiEnv.branch : undefined),
+    baseBranch: 'prBranch' in baseCiEnv && baseCiEnv.prBranch ? baseCiEnv.branch : undefined,
     commit: 'commit' in baseCiEnv ? baseCiEnv.commit : undefined,
     pr: 'pr' in baseCiEnv ? baseCiEnv.pr : undefined,
     build: 'build' in baseCiEnv ? baseCiEnv.build : undefined,
@@ -55,12 +57,15 @@ export async function getCiEnv(config: GetCiEnvConfig, logger: Logger): Promise<
   // https://www.jenkins.io/doc/book/pipeline/jenkinsfile/#using-environment-variables
   // https://plugins.jenkins.io/git/#plugin-content-environment-variables
   if (ciEnv.service === 'jenkins' && !ciEnv.slug) {
-    ciEnv.slug = getSlugFromGitURL(env.JENKINS_GIT_URL);
+    const jenkinsSlug = getSlugFromGitURL(env.JENKINS_GIT_URL);
+    logger.debug('Jenkins vars', { slug: jenkinsSlug });
+    ciEnv.slug = jenkinsSlug;
   }
 
   // GitHub extra data
   if (env.GITHUB_EVENT_PATH) {
     const gitHubEnv = await getGitHubEnv(env.GITHUB_EVENT_PATH, { includeCommitMessage }, logger);
+    logger.debug('GitHub vars', gitHubEnv);
     ciEnv = { ...ciEnv, ...gitHubEnv };
   }
 

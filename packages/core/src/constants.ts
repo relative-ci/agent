@@ -33,6 +33,11 @@ export type EnvVars = {
    */
   branch?: string;
   /**
+   * Base branch name
+   * when undefined, project base branch setting is used
+   */
+  baseBranch?: string;
+  /**
    * Commit SHA
    */
   commit?: string;
@@ -57,6 +62,7 @@ export type EnvVars = {
 export type PluginArgs = {
   slug?: EnvVars['slug'];
   branch?: EnvVars['branch'];
+  baseBranch?: EnvVars['baseBranch'];
   pr?: EnvVars['pr'];
   commit?: EnvVars['commit'];
   build?: EnvVars['build'];
@@ -84,6 +90,7 @@ export type IngestParams = {
   slug: EnvVars['slug'];
   service?: EnvVars['service'];
   branch: EnvVars['branch'];
+  baseBranch?: EnvVars['baseBranch'];
   commit: EnvVars['commit'];
   pr?: EnvVars['pr'];
   build?: EnvVars['build'];
