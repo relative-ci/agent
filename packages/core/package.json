@@ -72,7 +72,7 @@
   },
   "devDependencies": {
     "@octokit/webhooks-types": "7.6.1",
-    "@rollup/plugin-commonjs": "28.0.7",
+    "@rollup/plugin-commonjs": "28.0.8",
     "@rollup/plugin-node-resolve": "16.0.3",
     "@rollup/plugin-replace": "6.0.2",
     "@rollup/plugin-typescript": "12.1.4",
