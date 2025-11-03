@@ -82,7 +82,7 @@
     "@types/fs-extra": "11.0.4",
     "@types/lodash": "4.17.20",
     "env-ci": "11.2.0",
-    "rimraf": "6.0.1",
+    "rimraf": "6.1.0",
     "rollup": "4.52.5",
     "rollup-plugin-node-externals": "8.1.1",
     "typescript": "5.9.3",
