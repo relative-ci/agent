@@ -91,8 +91,8 @@
   },
   "dependencies": {
     "@actions/github": "6.0.1",
-    "@bundle-stats/plugin-webpack-filter": "4.21.5",
-    "@bundle-stats/plugin-webpack-validate": "4.21.5",
+    "@bundle-stats/plugin-webpack-filter": "4.21.6",
+    "@bundle-stats/plugin-webpack-validate": "4.21.6",
     "debug": "4.4.3",
     "dotenv": "17.2.3",
     "fs-extra": "11.3.2",
