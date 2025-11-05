@@ -67,6 +67,37 @@ describe('Ingest', () => {
     );
   });
 
+  test('should ingest compressed data', async () => {
+    global.fetch = vi.fn(() => Promise.resolve({
+      json: () => Promise.resolve({
+        res: {
+          job: {
+            internalBuildNumber: '10',
+          },
+        },
+        info: {
+          message: {
+            txt: 'Done',
+          },
+        },
+      }),
+    }) as any);
+
+    await ingest({ }, PARAMS, { compress: true });
+
+    expect(fetch).toHaveBeenCalledWith(
+      'http://localhost',
+      expect.objectContaining({
+        body: expect.any(Buffer),
+        headers: {
+          'Content-Type': 'application/json; charset=utf-8',
+          'Content-Encoding': 'gzip',
+        },
+        method: 'POST',
+      }),
+    );
+  });
+
   test('should throw error when fetch fails', async () => {
     global.fetch = vi.fn(() => Promise.reject(new Error('Network error')));
 

@@ -1,5 +1,7 @@
 import fs from 'fs/promises';
 import path from 'path';
+import { gzip as gzipCallback } from 'zlib';
+import { promisify } from 'util';
 
 import * as LOCALES from '../locales/en';
 import {
@@ -16,6 +18,8 @@ import {
   maskObjectProperties,
   type Logger,
 } from '../utils';
+
+const gzip = promisify(gzipCallback);
 
 export default async function ingest(
   data: IngestData,
@@ -60,11 +64,19 @@ export default async function ingest(
     rawData: data,
   };
 
-  const formattedPayload = maskObjectProperties(payload, ['key']);
+  const { compress, payloadFilepath } = config;
 
-  debug('Payload size', formatFileSize(Buffer.byteLength(JSON.stringify(payload))));
+  let requestBody: Buffer | string = JSON.stringify(payload);
+  let payloadSize = 0;
 
-  const { payloadFilepath } = config;
+  if (compress) {
+    requestBody = await gzip(requestBody);
+    payloadSize = requestBody.byteLength;
+  } else {
+    payloadSize = Buffer.byteLength(requestBody);
+  }
+
+  debug(`Payload size ${compress ? '(compressed)' : ''}`, formatFileSize(payloadSize));
 
   /**
    * Save payload on disk for debugging
@@ -73,6 +85,7 @@ export default async function ingest(
     logger.info('Save payload to', payloadFilepath);
 
     try {
+      const formattedPayload = maskObjectProperties(payload, ['key']);
       const payloadBaseDirectory = path.dirname(payloadFilepath);
       await fs.mkdir(payloadBaseDirectory, { recursive: true });
       await fs.writeFile(payloadFilepath, JSON.stringify(formattedPayload, null, 2));
@@ -91,8 +104,11 @@ export default async function ingest(
       method: 'POST',
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
+        ...(compress && {
+          'Content-Encoding': 'gzip',
+        }),
       },
-      body: JSON.stringify(payload),
+      body: requestBody,
     });
     responseData = await response.json() as IngestResponse;
     debug('Response', responseData);
