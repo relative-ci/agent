@@ -36,6 +36,10 @@ type RelativeCIAgentWebpackPluginOptions = {
    */
   payloadFilepath?: PluginConfig['payloadFilepath'];
   /**
+   * Compress ingest data
+   */
+  compress?: PluginConfig['compress'];
+  /**
    * Webpack stats options
    * @default assets, chunks, modules
    */

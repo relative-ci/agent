@@ -82,6 +82,11 @@ export type PluginConfig = {
      * Default: `true`.
      */
     includeCommitMessage?: boolean;
+    /**
+     * Compress ingest data
+     * Default: `false`.
+     */
+    compress?: boolean;
 };
 
 export type IngestParams = {
@@ -105,6 +110,7 @@ export type IngestParams = {
 
 export type IngestConfig = {
   payloadFilepath?: PluginConfig['payloadFilepath'];
+  compress?: PluginConfig['compress'];
 };
 
 export type IngestData = Record<string, unknown>;
