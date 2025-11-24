@@ -49,14 +49,14 @@
     "@rollup/plugin-node-resolve": "16.0.3",
     "@rollup/plugin-replace": "6.0.3",
     "@rollup/plugin-typescript": "12.3.0",
-    "@tsconfig/node18": "18.2.4",
+    "@tsconfig/node18": "18.2.6",
     "@types/fs-extra": "11.0.4",
     "@types/yargs": "17.0.33",
-    "rimraf": "6.1.0",
-    "rollup": "4.52.5",
+    "rimraf": "6.1.2",
+    "rollup": "4.53.3",
     "rollup-plugin-node-externals": "8.1.2",
     "typescript": "5.9.3",
-    "vitest": "4.0.7"
+    "vitest": "4.0.13"
   },
   "dependencies": {
     "@relative-ci/core": "5.2.0",
