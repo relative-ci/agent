@@ -56,7 +56,7 @@
     "rollup": "4.52.5",
     "rollup-plugin-node-externals": "8.1.2",
     "typescript": "5.9.3",
-    "vitest": "4.0.12"
+    "vitest": "4.0.13"
   },
   "dependencies": {
     "@relative-ci/core": "5.2.0",
