@@ -52,7 +52,7 @@
     "test:package-webpack-plugin": "vitest test/webpack"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "3.3.1",
+    "@eslint/eslintrc": "3.3.3",
     "@eslint/js": "9.39.1",
     "dotenv": "17.2.3",
     "eslint": "9.39.1",
