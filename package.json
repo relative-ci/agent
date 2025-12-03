@@ -62,7 +62,7 @@
     "rimraf": "6.1.2",
     "typescript-eslint": "8.48.0",
     "verdaccio": "6.2.3",
-    "vitest": "4.0.14"
+    "vitest": "4.0.15"
   },
   "overrides": {
     "eslint-config-airbnb-base": {
