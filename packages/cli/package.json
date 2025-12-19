@@ -61,7 +61,7 @@
   "dependencies": {
     "@relative-ci/core": "5.2.1",
     "cosmiconfig": "9.0.0",
-    "fs-extra": "11.3.2",
+    "fs-extra": "11.3.3",
     "yargs": "17.7.2"
   }
 }

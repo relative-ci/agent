@@ -95,7 +95,7 @@
     "@bundle-stats/plugin-webpack-validate": "4.21.7",
     "debug": "4.4.3",
     "dotenv": "17.2.3",
-    "fs-extra": "11.3.2",
+    "fs-extra": "11.3.3",
     "lodash": "4.17.21"
   }
 }
