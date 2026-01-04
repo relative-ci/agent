@@ -83,19 +83,19 @@
     "@types/lodash": "4.17.21",
     "env-ci": "11.2.0",
     "rimraf": "6.1.2",
-    "rollup": "4.53.3",
+    "rollup": "4.54.0",
     "rollup-plugin-node-externals": "8.1.2",
     "typescript": "5.9.3",
-    "typescript-eslint": "8.48.0",
-    "vitest": "4.0.13"
+    "typescript-eslint": "8.51.0",
+    "vitest": "4.0.16"
   },
   "dependencies": {
     "@actions/github": "6.0.1",
-    "@bundle-stats/plugin-webpack-filter": "4.21.7",
-    "@bundle-stats/plugin-webpack-validate": "4.21.7",
+    "@bundle-stats/plugin-webpack-filter": "4.21.8",
+    "@bundle-stats/plugin-webpack-validate": "4.21.8",
     "debug": "4.4.3",
     "dotenv": "17.2.3",
-    "fs-extra": "11.3.2",
+    "fs-extra": "11.3.3",
     "lodash": "4.17.21"
   }
 }
