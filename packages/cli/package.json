@@ -1,6 +1,6 @@
 {
   "name": "@relative-ci/cli",
-  "version": "5.2.1",
+  "version": "5.2.2",
   "description": "Send bundle stats and CI build information to RelativeCI CLI",
   "keywords": [
     "webpack",
@@ -59,7 +59,7 @@
     "vitest": "4.0.16"
   },
   "dependencies": {
-    "@relative-ci/core": "5.2.1",
+    "@relative-ci/core": "5.2.2",
     "cosmiconfig": "9.0.0",
     "fs-extra": "11.3.3",
     "yargs": "17.7.2"
