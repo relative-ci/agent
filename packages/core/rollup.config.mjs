@@ -67,6 +67,7 @@ export default defineConfig([
       nodeExternals({
         deps: true,
         peerDeps: true,
+        exclude: [/@actions\/github/],
       }),
       nodeResolvePlugin({
         extensions: ['.js', '.cjs', '.json'],
@@ -97,6 +98,7 @@ export default defineConfig([
       nodeExternals({
         deps: true,
         peerDeps: true,
+        exclude: [/@actions\/github/],
       }),
       nodeResolvePlugin({
         extensions: ['.js', '.mjs', '.cjs', '.json'],
