@@ -90,7 +90,7 @@
     "vitest": "4.0.18"
   },
   "dependencies": {
-    "@actions/github": "6.0.1",
+    "@actions/github": "8.0.0",
     "@bundle-stats/plugin-webpack-filter": "4.21.8",
     "@bundle-stats/plugin-webpack-validate": "4.21.8",
     "debug": "4.4.3",
