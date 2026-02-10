@@ -1,0 +1,84 @@
+{
+  "name": "@relative-ci/rollup-plugin",
+  "version": "5.2.2",
+  "description": "Rollup/Vite/Rolldown plugin that sends bundle stats and CI build information to RelativeCI",
+  "keywords": [
+    "rollup",
+    "rollup-plugin",
+    "vite",
+    "vite-plugin",
+    "rolldown",
+    "rolldown-plugin",
+    "bundle-size",
+    "bundle-analyzer",
+    "bundle-stats",
+    "stats",
+    "bundle",
+    "size",
+    "assets",
+    "chunks",
+    "modules"
+  ],
+  "repository": "https://github.com/relative-ci/agent",
+  "bugs": {
+    "url": "https://github.com/relative-ci/agent/issues"
+  },
+  "homepage": "https://relative-ci.com/documentation/setup/agent/webpack-plugin",
+  "license": "MIT",
+  "author": {
+    "name": "Viorel Cojocaru",
+    "email": "vio@relative-ci.com",
+    "url": "https://relative-ci.com"
+  },
+  "engines": {
+    "node": ">= 18.0.0"
+  },
+  "main": "./lib/cjs/index.js",
+  "module": "./lib/esm/index.js",
+  "types": "./lib/types/index.d.ts",
+  "scripts": {
+    "build": "npm run clean && tsc && rollup -c && npm run build-type",
+    "build-type": "echo '{\"type\":\"commonjs\"}' > lib/cjs/package.json && echo '{\"type\":\"module\"}' > lib/esm/package.json",
+    "clean": "rimraf ./lib",
+    "clean-deps": "rimraf ./test/webpack/*/node_modules ./node_modules",
+    "lint": "eslint .",
+    "test": "vitest src --passWithNoTests --run"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "29.0.0",
+    "@rollup/plugin-node-resolve": "16.0.3",
+    "@rollup/plugin-replace": "6.0.3",
+    "@rollup/plugin-typescript": "12.3.0",
+    "@tsconfig/node18": "^18.2.4",
+    "@types/lodash": "4.17.21",
+    "memory-fs": "0.5.0",
+    "rimraf": "6.1.2",
+    "rollup": "4.54.0",
+    "rollup-plugin-node-externals": "8.1.2",
+    "typescript": "5.9.3",
+    "vite": "7.3.0",
+    "vitest": "4.0.16"
+  },
+  "dependencies": {
+    "@relative-ci/core": "5.2.2",
+    "lodash": "4.17.23",
+    "rollup-plugin-stats": "1.5.6",
+    "rollup-plugin-webpack-stats": "2.1.11"
+  },
+  "peerDependencies": {
+    "rolldown": "^1.0.0-beta.0",
+    "rollup": "^3.0.0 || ^4.0.0",
+    "vite": "^5.0.0 || ^6.0.0 || ^7.0.0"
+  },
+  "peerDependenciesMeta": {
+    "rolldown": {
+      "optional": true
+    },
+    "rollup": {
+      "optional": true
+    },
+    "vite": {
+      "optional": true
+    }
+  }
+}
