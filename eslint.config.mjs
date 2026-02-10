@@ -5,6 +5,7 @@ import { FlatCompat } from '@eslint/eslintrc';
 // Eslint fails to resolve the package
 // eslint-disable-next-line
 import tseslint from 'typescript-eslint';
+import configPrettier from 'eslint-config-prettier';
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -16,6 +17,7 @@ const compat = new FlatCompat({
 
 export default [
   ...compat.extends('airbnb-base'),
+  configPrettier,
   {
     ignores: ['test/webpack/**/dist'],
   },
@@ -71,11 +73,7 @@ export default [
     },
   },
   {
-    files: [
-      'config/*.js',
-      '**/*.test.js',
-      'test/utils.js',
-    ],
+    files: ['config/*.js', '**/*.test.js', 'test/utils.js'],
     rules: {
       '@typescript-eslint/no-require-imports': 'off',
     },
