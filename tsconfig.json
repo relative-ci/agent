@@ -12,8 +12,8 @@
     "types": ["node"],
     "lib": ["es2020", "es2022.error"],
     "paths": {
-      "@relative-ci/core/*": ["./packages/core/lib/esm/*"],
-      "@relative-ci/core": ["./packages/core/lib/esm"]
+      "@relative-ci/core/*": ["./packages/core/src/*"],
+      "@relative-ci/core": ["./packages/core/src"]
     }
   },
   "ts-node": {
