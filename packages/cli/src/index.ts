@@ -29,7 +29,7 @@ export type Config = {
      * @example './artifacts/webpack-stats.json'
      */
     stats?: string;
-  },
+  };
 } & PluginConfig;
 
 async function parseArguments(args: Array<string>) {
@@ -54,28 +54,27 @@ async function parseArguments(args: Array<string>) {
       version: 'v',
     })
 
-    .epilog('Learn more about how to setup @relative-ci/cli: https://relative-ci.com/documentation/setup/agent/cli')
-
-    .argv;
+    .epilog(
+      'Learn more about how to setup @relative-ci/cli: https://relative-ci.com/documentation/setup/agent/cli',
+    ).argv;
 }
 
 async function searchConfig(configDir?: string) {
   const names = ['relative-ci', 'relativeci'];
 
   // Allow relative-ci.config.* and relativeci.config
-  const configs = names.map((name) => [
-    `${name}.config.js`,
-    `${name}.config.ts`,
-    `${name}.config.mjs`,
-    `${name}.config.cjs`,
-  ]).flat();
+  const configs = names
+    .map((name) => [
+      `${name}.config.js`,
+      `${name}.config.ts`,
+      `${name}.config.mjs`,
+      `${name}.config.cjs`,
+    ])
+    .flat();
 
   return cosmiconfig(names[0], {
     searchStrategy: 'global',
-    searchPlaces: [
-      'package.json',
-      ...configs,
-    ],
+    searchPlaces: ['package.json', ...configs],
   }).search(configDir);
 }
 

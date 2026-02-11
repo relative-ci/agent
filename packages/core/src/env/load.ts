@@ -1,9 +1,5 @@
 import * as LOCALES from '../locales/en';
-import {
-  DEFAULT_ENDPOINT,
-  type IngestParams,
-  type PluginArgs,
-} from '../constants';
+import { DEFAULT_ENDPOINT, type IngestParams, type PluginArgs } from '../constants';
 import { debug } from '../utils/debug';
 import { logger as defaultLogger } from '../utils/logger';
 import { maskObjectProperties } from '../utils/mask-object-property';
@@ -13,7 +9,7 @@ import { getCiEnv } from './ci-env';
 
 export type LoadEnvConfig = {
   includeCommitMessage?: boolean;
-}
+};
 
 /**
  * Load and normalize ingest params based on:

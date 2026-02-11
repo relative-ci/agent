@@ -1,4 +1,5 @@
-const SETUP_INFO = 'Read more about RelativeCI agent setup at https://relative-ci.com/documentation/setup.';
+const SETUP_INFO =
+  'Read more about RelativeCI agent setup at https://relative-ci.com/documentation/setup.';
 
 export const VALIDATE_ERROR = 'Invalid stats structure.';
 

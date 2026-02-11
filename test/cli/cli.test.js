@@ -1,8 +1,6 @@
 import { exec } from 'child_process';
 // eslint-disable-next-line import/no-extraneous-dependencies
-import {
-  beforeAll, afterAll, describe, expect, test,
-} from 'vitest';
+import { beforeAll, afterAll, describe, expect, test } from 'vitest';
 
 // eslint-disable-next-line import/no-relative-packages
 import { MOCK_SERVER_URL, serve as createServer } from '../utils';
@@ -40,13 +38,16 @@ describe('CLI', () => {
   });
 
   test('should return error if params are failing', (done) => {
-    exec(`cd test/cli/valid-data &&
+    exec(
+      `cd test/cli/valid-data &&
       RELATIVE_CI_ENDPOINT=${MOCK_SERVER_URL}/save \
       RELATIVE_CI_SLUG=org/project \
-      npx relative-ci`, (_, __, sterr) => {
-      expect(sterr).toContain('parameter is missing');
-      done();
-    });
+      npx relative-ci`,
+      (_, __, sterr) => {
+        expect(sterr).toContain('parameter is missing');
+        done();
+      },
+    );
   });
 
   test('should run agent successfully', (done) => {

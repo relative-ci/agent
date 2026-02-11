@@ -18,12 +18,7 @@ async function getGitHubCommitMessage(
   options: GitHubCommitMessageOptions,
   logger: Logger,
 ): Promise<string | undefined> {
-  const {
-    owner,
-    repo,
-    commit,
-    token,
-  } = options;
+  const { owner, repo, commit, token } = options;
 
   let message;
 
@@ -66,11 +61,11 @@ type GitHubEventData = PushEvent | PullRequestEvent | WorkflowRunEvent;
 
 type GetGitHubEnvConfig = {
   includeCommitMessage: boolean;
-}
+};
 
 export type GitHubEnvPush = {
   commitMessage?: string;
-}
+};
 
 export type GitHubEnvPullRequest = {
   commit?: string;
@@ -78,7 +73,7 @@ export type GitHubEnvPullRequest = {
   branch?: string;
   baseBranch?: string;
   pr?: string;
-}
+};
 
 export type GitHubEnvWorflowRun = {
   commit?: string;
@@ -86,7 +81,7 @@ export type GitHubEnvWorflowRun = {
   baseBranch?: string;
   pr?: string;
   commitMessage?: string;
-}
+};
 
 export type GitHubEnv = GitHubEnvPush | GitHubEnvPullRequest | GitHubEnvWorflowRun;
 
@@ -138,14 +133,19 @@ export async function getGitHubEnv(
         debug(`Extract commit message from GitHub API for commit ${env.commit}.`);
         const { name: repo, owner } = payload.pull_request.head.repo;
 
-        env.commitMessage = await getGitHubCommitMessage({
-          owner: owner.login,
-          repo,
-          commit: env.commit,
-          token: processEnv.GITHUB_TOKEN,
-        }, logger);
+        env.commitMessage = await getGitHubCommitMessage(
+          {
+            owner: owner.login,
+            repo,
+            commit: env.commit,
+            token: processEnv.GITHUB_TOKEN,
+          },
+          logger,
+        );
       } else {
-        debug(`GITHUB_TOKEN is missing! Skip extracting commit message from GitHub API for commit ${env.commit}.`);
+        debug(
+          `GITHUB_TOKEN is missing! Skip extracting commit message from GitHub API for commit ${env.commit}.`,
+        );
       }
 
       // Fallback to current git commit message
