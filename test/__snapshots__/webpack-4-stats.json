@@ -10,21 +10,15 @@
       "id": 0,
       "entry": true,
       "initial": true,
-      "files": [
-        "main.js"
-      ],
-      "names": [
-        "main"
-      ]
+      "files": ["main.js"],
+      "names": ["main"]
     }
   ],
   "modules": [
     {
       "name": "./src/index.js",
       "size": 29,
-      "chunks": [
-        0
-      ]
+      "chunks": [0]
     }
   ]
 }

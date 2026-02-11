@@ -91,7 +91,10 @@ export default async function ingest(
       await fs.writeFile(payloadFilepath, JSON.stringify(formattedPayload, null, 2));
     } catch (err) {
       // On error, catch and log
-      logger.warn(`Error saving payload to "${payloadFilepath}"`, err instanceof Error ? err.message : undefined);
+      logger.warn(
+        `Error saving payload to "${payloadFilepath}"`,
+        err instanceof Error ? err.message : undefined,
+      );
     }
   }
 
@@ -110,7 +113,7 @@ export default async function ingest(
       },
       body: requestBody,
     });
-    responseData = await response.json() as IngestResponse;
+    responseData = (await response.json()) as IngestResponse;
     debug('Response', responseData);
   } catch (error) {
     throw new Error(LOCALES.INGEST_ERROR, { cause: error });

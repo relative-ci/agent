@@ -15,7 +15,7 @@ const SOURCE_FILTERS: Record<Source, SourceFilterFn> = {
 type Artifact = {
   key: string;
   data: unknown;
-}
+};
 
 /**
  * Filter artifact data based on the source type and map them by key
@@ -24,11 +24,7 @@ export function filterArtifacts(artifactsData: Array<Artifact>): IngestData {
   const dataByKey = {};
 
   artifactsData.forEach(({ key, data }) => {
-    _.set(
-      dataByKey,
-      key,
-      SOURCE_FILTERS[key as Source](data),
-    );
+    _.set(dataByKey, key, SOURCE_FILTERS[key as Source](data));
   });
 
   return dataByKey;

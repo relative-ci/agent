@@ -1,6 +1,4 @@
-import webpack, {
-  Compilation, type Compiler, type Configuration,
-} from 'webpack';
+import webpack, { Compilation, type Compiler, type Configuration } from 'webpack';
 import _ from 'lodash';
 import {
   SOURCE_WEBPACK_STATS,
@@ -44,7 +42,7 @@ type RelativeCIAgentWebpackPluginOptions = {
    * @default assets, chunks, modules
    */
   stats?: Configuration['stats'];
-}
+};
 
 const PLUGIN_NAME = 'RelativeCiAgent';
 
@@ -131,13 +129,10 @@ class RelativeCIAgentWebpackPlugin {
       return;
     }
 
-    compiler.hooks.emit.tapAsync(
-      PLUGIN_NAME,
-      async (compilation, callback) => {
-        await sendStats(compilation, options);
-        callback();
-      },
-    );
+    compiler.hooks.emit.tapAsync(PLUGIN_NAME, async (compilation, callback) => {
+      await sendStats(compilation, options);
+      callback();
+    });
   }
 }
 

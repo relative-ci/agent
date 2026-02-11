@@ -72,21 +72,21 @@ export type PluginArgs = {
 };
 
 export type PluginConfig = {
-    /**
-     * Relative path for debug payload filepath
-     * Default: `undefined`.
-     */
-    payloadFilepath?: string;
-    /**
-     * Read commit message from the git logs, GitHub Action event data or GitHub API
-     * Default: `true`.
-     */
-    includeCommitMessage?: boolean;
-    /**
-     * Compress ingest data
-     * Default: `false`.
-     */
-    compress?: boolean;
+  /**
+   * Relative path for debug payload filepath
+   * Default: `undefined`.
+   */
+  payloadFilepath?: string;
+  /**
+   * Read commit message from the git logs, GitHub Action event data or GitHub API
+   * Default: `true`.
+   */
+  includeCommitMessage?: boolean;
+  /**
+   * Compress ingest data
+   * Default: `false`.
+   */
+  compress?: boolean;
 };
 
 export type IngestParams = {
@@ -130,8 +130,8 @@ export type IngestResponseSuccess = {
   info?: {
     message?: {
       txt?: string;
-    }
+    };
   };
-}
+};
 
 export type IngestResponse = IngestResponseError & IngestResponseSuccess;

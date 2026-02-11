@@ -9,7 +9,7 @@ import { getGitHubEnv } from './service/github';
 
 type GetCiEnvConfig = {
   includeCommitMessage?: boolean;
-}
+};
 
 export type CiEnv = {
   isCi: boolean;
@@ -43,8 +43,13 @@ export async function getCiEnv(config: GetCiEnvConfig, logger: Logger): Promise<
      * When running during a pull request, env-ci exposes the current branch as `prBranch`
      * and `branch` as base branch
      */
-    // eslint-disable-next-line no-nested-ternary
-    branch: 'prBranch' in baseCiEnv && baseCiEnv.prBranch ? baseCiEnv.prBranch : ('branch' in baseCiEnv ? baseCiEnv.branch : undefined),
+    branch:
+      // eslint-disable-next-line no-nested-ternary
+      'prBranch' in baseCiEnv && baseCiEnv.prBranch
+        ? baseCiEnv.prBranch
+        : 'branch' in baseCiEnv
+          ? baseCiEnv.branch
+          : undefined,
     baseBranch: 'prBranch' in baseCiEnv && baseCiEnv.prBranch ? baseCiEnv.branch : undefined,
     commit: 'commit' in baseCiEnv ? baseCiEnv.commit : undefined,
     pr: 'pr' in baseCiEnv ? baseCiEnv.pr : undefined,

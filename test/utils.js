@@ -24,28 +24,30 @@ module.exports.getMockRequest = (customPayload) => ({
   headers: {
     'Content-Type': 'application/json; charset=utf-8',
   },
-  body: JSON.stringify(_.merge(
-    {
-      key: '123',
-      project: 'organization/project',
-      service: 'circleci',
-      agentVersion: packageInfo.version,
-      agentType: 'webpack-plugin',
-      job: {
-        commit: 'abcd1234',
-        branch: 'master',
-        prNumber: '10',
-        buildNumber: '123',
-        buildUrl: '#',
-      },
-      rawData: {
-        webpack: {
-          stats: {},
+  body: JSON.stringify(
+    _.merge(
+      {
+        key: '123',
+        project: 'organization/project',
+        service: 'circleci',
+        agentVersion: packageInfo.version,
+        agentType: 'webpack-plugin',
+        job: {
+          commit: 'abcd1234',
+          branch: 'master',
+          prNumber: '10',
+          buildNumber: '123',
+          buildUrl: '#',
+        },
+        rawData: {
+          webpack: {
+            stats: {},
+          },
         },
       },
-    },
-    customPayload,
-  )),
+      customPayload,
+    ),
+  ),
 });
 
 /**
@@ -89,9 +91,10 @@ module.exports.MOCK_SERVER_URL = `http://localhost:${MOCK_SERVER_PORT}`;
 
 module.exports.INGEST_MOCK = INGEST_MOCK;
 
-module.exports.serve = () => http.createServer(
-  (__, res) => {
-    res.write(JSON.stringify(INGEST_MOCK));
-    res.end();
-  },
-).listen(MOCK_SERVER_PORT);
+module.exports.serve = () =>
+  http
+    .createServer((__, res) => {
+      res.write(JSON.stringify(INGEST_MOCK));
+      res.end();
+    })
+    .listen(MOCK_SERVER_PORT);

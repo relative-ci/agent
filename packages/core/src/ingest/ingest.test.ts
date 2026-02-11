@@ -1,6 +1,4 @@
-import {
-  afterEach, describe, expect, test, vi,
-} from 'vitest';
+import { afterEach, describe, expect, test, vi } from 'vitest';
 
 import ingest from './ingest';
 
@@ -24,66 +22,71 @@ describe('Ingest', () => {
   });
 
   test('should ingest data', async () => {
-    global.fetch = vi.fn(() => Promise.resolve({
-      json: () => Promise.resolve({
-        res: {
-          job: {
-            internalBuildNumber: '10',
-          },
-        },
-        info: {
-          message: {
-            txt: 'Done',
-          },
-        },
-      }),
-    }) as any);
-
-    await ingest({ }, PARAMS);
-
-    expect(fetch).toHaveBeenCalledWith(
-      'http://localhost',
-      {
-        body: JSON.stringify({
-          key: 'abc-123',
-          project: 'organization/project',
-          agentVersion: '0.0.0',
-          agentType: 'test',
-          job: {
-            commit: 'abcd1234',
-            branch: 'master',
-            prNumber: '12',
-            buildNumber: '123',
-            buildUrl: '#',
-            commitMessage: 'Commit message',
-          },
-          rawData: {},
-        }),
-        headers: {
-          'Content-Type': 'application/json; charset=utf-8',
-        },
-        method: 'POST',
-      },
+    global.fetch = vi.fn(
+      () =>
+        Promise.resolve({
+          json: () =>
+            Promise.resolve({
+              res: {
+                job: {
+                  internalBuildNumber: '10',
+                },
+              },
+              info: {
+                message: {
+                  txt: 'Done',
+                },
+              },
+            }),
+        }) as any,
     );
+
+    await ingest({}, PARAMS);
+
+    expect(fetch).toHaveBeenCalledWith('http://localhost', {
+      body: JSON.stringify({
+        key: 'abc-123',
+        project: 'organization/project',
+        agentVersion: '0.0.0',
+        agentType: 'test',
+        job: {
+          commit: 'abcd1234',
+          branch: 'master',
+          prNumber: '12',
+          buildNumber: '123',
+          buildUrl: '#',
+          commitMessage: 'Commit message',
+        },
+        rawData: {},
+      }),
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8',
+      },
+      method: 'POST',
+    });
   });
 
   test('should ingest compressed data', async () => {
-    global.fetch = vi.fn(() => Promise.resolve({
-      json: () => Promise.resolve({
-        res: {
-          job: {
-            internalBuildNumber: '10',
-          },
-        },
-        info: {
-          message: {
-            txt: 'Done',
-          },
-        },
-      }),
-    }) as any);
+    global.fetch = vi.fn(
+      () =>
+        Promise.resolve({
+          json: () =>
+            Promise.resolve({
+              res: {
+                job: {
+                  internalBuildNumber: '10',
+                },
+              },
+              info: {
+                message: {
+                  txt: 'Done',
+                },
+              },
+            }),
+        }) as any,
+    );
 
-    await ingest({ }, PARAMS, { compress: true });
+    await ingest({}, PARAMS, { compress: true });
 
     expect(fetch).toHaveBeenCalledWith(
       'http://localhost',
@@ -109,9 +112,12 @@ describe('Ingest', () => {
   });
 
   test('should throw error when fetch returns invalid json', async () => {
-    global.fetch = vi.fn(() => Promise.resolve({
-      json: () => Promise.resolve(null),
-    }) as any);
+    global.fetch = vi.fn(
+      () =>
+        Promise.resolve({
+          json: () => Promise.resolve(null),
+        }) as any,
+    );
 
     try {
       await ingest({}, PARAMS);
@@ -121,12 +127,16 @@ describe('Ingest', () => {
   });
 
   test('should throw error when ingest returns error', async () => {
-    global.fetch = vi.fn(() => Promise.resolve({
-      json: () => Promise.resolve({
-        code: 'INGEST_FAILED',
-        message: 'Ingest failed',
-      }),
-    }) as any);
+    global.fetch = vi.fn(
+      () =>
+        Promise.resolve({
+          json: () =>
+            Promise.resolve({
+              code: 'INGEST_FAILED',
+              message: 'Ingest failed',
+            }),
+        }) as any,
+    );
 
     try {
       await ingest({}, PARAMS);
@@ -136,9 +146,12 @@ describe('Ingest', () => {
   });
 
   test('should throw error when ingest response is invalid', async () => {
-    global.fetch = vi.fn(() => Promise.resolve({
-      json: () => Promise.resolve({}),
-    }) as any);
+    global.fetch = vi.fn(
+      () =>
+        Promise.resolve({
+          json: () => Promise.resolve({}),
+        }) as any,
+    );
 
     try {
       await ingest({}, PARAMS);
