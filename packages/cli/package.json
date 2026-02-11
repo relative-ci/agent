@@ -53,10 +53,10 @@
     "@types/fs-extra": "11.0.4",
     "@types/yargs": "17.0.33",
     "rimraf": "6.1.2",
-    "rollup": "4.54.0",
+    "rollup": "4.57.1",
     "rollup-plugin-node-externals": "8.1.2",
     "typescript": "5.9.3",
-    "vitest": "4.0.16"
+    "vitest": "4.0.18"
   },
   "dependencies": {
     "@relative-ci/core": "5.2.2",

@@ -55,7 +55,7 @@
   "devDependencies": {
     "@eslint/eslintrc": "3.3.3",
     "@eslint/js": "9.39.2",
-    "dotenv": "17.2.3",
+    "dotenv": "17.2.4",
     "eslint": "9.39.2",
     "eslint-config-airbnb-base": "15.0.0",
     "eslint-config-prettier": "10.1.8",
@@ -63,9 +63,9 @@
     "lerna": "^9.0.0",
     "prettier": "3.8.1",
     "rimraf": "6.1.2",
-    "typescript-eslint": "8.51.0",
-    "verdaccio": "6.2.4",
-    "vitest": "4.0.16"
+    "typescript-eslint": "8.55.0",
+    "verdaccio": "6.2.5",
+    "vitest": "4.0.18"
   },
   "overrides": {
     "eslint-config-airbnb-base": {
