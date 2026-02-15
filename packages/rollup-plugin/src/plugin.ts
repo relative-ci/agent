@@ -62,7 +62,7 @@ export const relativeCiAgent = (userOptions: RelativeCiAgentOptions = {}): Plugi
       enabled,
       failOnError,
       includeCommitMessage,
-      stats: statsOptions,
+      stats: statsOptions = {},
       ...agentOptions
     } = options;
 
