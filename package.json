@@ -63,7 +63,7 @@
     "lerna": "^9.0.0",
     "prettier": "3.8.1",
     "rimraf": "6.1.3",
-    "typescript-eslint": "8.55.0",
+    "typescript-eslint": "8.56.1",
     "verdaccio": "6.2.9",
     "vitest": "4.0.18"
   },
