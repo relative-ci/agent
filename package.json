@@ -5,12 +5,18 @@
   "description": "Send bundle stats and CI build information to RelativeCI",
   "keywords": [
     "webpack",
-    "vitejs",
+    "webpack-plugin",
     "rspack",
+    "rspack-plugin",
+    "vite",
+    "vite-plugin",
     "rollup",
-    "bundle-size",
+    "rollup-plugin",
+    "rolldown",
+    "rolldown-plugin",
     "bundle-analyzer",
     "bundle-stats",
+    "bundle-size",
     "stats",
     "bundle",
     "size",
@@ -32,7 +38,8 @@
   "workspaces": [
     "packages/core",
     "packages/cli",
-    "packages/webpack-plugin"
+    "packages/webpack-plugin",
+    "packages/rollup-plugin"
   ],
   "engines": {
     "node": ">= 18.0.0"
