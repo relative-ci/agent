@@ -63,7 +63,7 @@
     "tsdown": "0.20.3",
     "typescript": "5.9.3",
     "vite": "7.3.0",
-    "vitest": "4.0.16"
+    "vitest": "4.0.18"
   },
   "dependencies": {
     "@relative-ci/core": "5.2.2",
