@@ -3,6 +3,7 @@
   "version": "5.2.2",
   "description": "Rollup/Vite/Rolldown plugin that sends bundle stats and CI build information to RelativeCI",
   "keywords": [
+    "relative-ci",
     "rollup",
     "rollup-plugin",
     "vite",
@@ -19,7 +20,11 @@
     "chunks",
     "modules"
   ],
-  "repository": "https://github.com/relative-ci/agent",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/relative-ci/agent.git",
+    "directory": "packages/rollup-plugin"
+  },
   "bugs": {
     "url": "https://github.com/relative-ci/agent/issues"
   },
@@ -35,7 +40,7 @@
   },
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
-  "types": "./dist/types/index.d.cts",
+  "types": "./dist/index.d.cts",
   "exports": {
     ".": {
       "import": {
@@ -48,6 +53,10 @@
       }
     }
   },
+  "files": [
+    "./dist"
+  ],
+  "sideEffects": false,
   "scripts": {
     "build": "npm run clean && npm run type-check && tsdown",
     "clean": "rimraf ./dist",
