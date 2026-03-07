@@ -2,11 +2,11 @@
   <img alt="RelativeCI" src="https://raw.githubusercontent.com/relative-ci/agent/master/assets/relative-ci--logo.png" width="96" />
 </a>
 
-# RelativeCI webpack-plugin agent
+# RelativeCI webpack/rspack plugin agent
 
 > Send bundle stats and CI build information to [RelativeCI](https://relative-ci.com?utm_source=github&utm_medium=agent).
 
-To get started, follow [RelativeCI Setup guide for webpack-plugin](https://relative-ci.com/documentation/setup?utm_source=github&utm_medium=agent).
+To get started, follow [RelativeCI Setup guide for webpack-plugin](https://relative-ci.com/documentation/setup/agent/webpack-plugin?utm_source=github&utm_medium=agent).
 
 [![npm](https://img.shields.io/npm/v/@relative-ci/webpack-plugin.svg)](https://www.npmjs.com/package/@relative-ci/webpack-plugin)
 [![node version](https://img.shields.io/node/v/@relative-ci/webpack-plugin.svg)](https://www.npmjs.com/package/@relative-ci/webpack-plugin)
@@ -39,4 +39,3 @@ To get started, follow [RelativeCI Setup guide for rollup-plugin](https://relati
 ## Other agents
 
 - [GitHub action](https://github.com/relative-ci/cli-action)
-- [CircleCI orbit (soon)](https://github.com/relative-ci/roadmap/issues/46)

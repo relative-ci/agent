@@ -40,4 +40,4 @@ To get started, follow [RelativeCI Setup guide for webpack-plugin](https://relat
 ## Other agents
 
 - [GitHub action](https://github.com/relative-ci/cli-action)
-- [CircleCI orbit (soon)](https://github.com/relative-ci/roadmap/issues/46)
+
