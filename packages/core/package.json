@@ -1,7 +1,7 @@
 {
   "name": "@relative-ci/core",
   "version": "5.2.2",
-  "description": "RelativeCI agent core",
+  "description": "Core library for RelativeCI agent - send bundle stats and CI build information to RelativeCI",
   "keywords": [
     "webpack",
     "vitejs",
