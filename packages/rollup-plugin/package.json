@@ -1,6 +1,6 @@
 {
   "name": "@relative-ci/rollup-plugin",
-  "version": "5.2.2",
+  "version": "5.3.0-rc.3",
   "description": "Rollup/Vite/Rolldown plugin that sends bundle stats and CI build information to RelativeCI",
   "keywords": [
     "relative-ci",
@@ -75,7 +75,7 @@
     "vitest": "4.0.18"
   },
   "dependencies": {
-    "@relative-ci/core": "5.2.2",
+    "@relative-ci/core": "5.3.0-rc.3",
     "lodash": "4.17.23",
     "rollup-plugin-stats": "2.0.0",
     "rollup-plugin-webpack-stats": "3.0.0"
