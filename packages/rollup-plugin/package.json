@@ -57,19 +57,19 @@
   },
   "devDependencies": {
     "@rollup/plugin-replace": "6.0.3",
-    "@types/lodash": "4.17.21",
-    "rimraf": "6.1.2",
-    "rollup": "4.54.0",
-    "tsdown": "0.20.3",
+    "@types/lodash": "4.17.24",
+    "rimraf": "6.1.3",
+    "rollup": "4.59.0",
+    "tsdown": "0.21.0",
     "typescript": "5.9.3",
-    "vite": "7.3.0",
-    "vitest": "4.0.16"
+    "vite": "7.3.1",
+    "vitest": "4.0.18"
   },
   "dependencies": {
     "@relative-ci/core": "5.2.2",
     "lodash": "4.17.23",
-    "rollup-plugin-stats": "2.0.0-beta.3",
-    "rollup-plugin-webpack-stats": "3.0.0-beta.1"
+    "rollup-plugin-stats": "2.0.0",
+    "rollup-plugin-webpack-stats": "3.0.0"
   },
   "peerDependencies": {
     "rolldown": "^1.0.0-beta.0",
