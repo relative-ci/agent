@@ -46,6 +46,7 @@
       "import": "./lib/esm/index.js"
     }
   },
+  "sideEffects": false,
   "bin": {
     "relative-ci": "bin/index.js"
   },
