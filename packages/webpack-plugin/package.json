@@ -3,8 +3,11 @@
   "version": "5.2.2",
   "description": "Webpack plugin that sends bundle stats and CI build information to RelativeCI",
   "keywords": [
+    "relative-ci",
     "webpack",
+    "webpack-plugin",
     "rspack",
+    "rspack-plugin",
     "bundle-size",
     "bundle-analyzer",
     "bundle-stats",
