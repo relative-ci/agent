@@ -3,6 +3,7 @@
   "version": "5.2.2",
   "description": "Rollup/Vite/Rolldown plugin that sends bundle stats and CI build information to RelativeCI",
   "keywords": [
+    "relative-ci",
     "rollup",
     "rollup-plugin",
     "vite",
