@@ -48,6 +48,9 @@
       }
     }
   },
+  "files": [
+    "./dist"
+  ],
   "scripts": {
     "build": "npm run clean && npm run type-check && tsdown",
     "clean": "rimraf ./dist",
