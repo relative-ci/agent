@@ -1,6 +1,6 @@
 {
   "name": "@relative-ci/cli",
-  "version": "5.3.0-rc.3",
+  "version": "5.3.0-rc.4",
   "description": "CLI to send bundle stats and CI build information to RelativeCI",
   "keywords": [
     "relative-ci",
@@ -72,7 +72,7 @@
     "vitest": "4.0.18"
   },
   "dependencies": {
-    "@relative-ci/core": "5.3.0-rc.3",
+    "@relative-ci/core": "5.3.0-rc.4",
     "cosmiconfig": "9.0.1",
     "fs-extra": "11.3.4",
     "yargs": "17.7.2"
