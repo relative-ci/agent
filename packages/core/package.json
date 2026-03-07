@@ -17,7 +17,11 @@
     "chunks",
     "modules"
   ],
-  "repository": "https://github.com/relative-ci/agent",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/relative-ci/agent",
+    "directory": "packages/core"
+  },
   "bugs": {
     "url": "https://github.com/relative-ci/agent/issues"
   },

@@ -19,7 +19,11 @@
     "chunks",
     "modules"
   ],
-  "repository": "https://github.com/relative-ci/agent",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/relative-ci/agent",
+    "directory": "packages/rollup-plugin"
+  },
   "bugs": {
     "url": "https://github.com/relative-ci/agent/issues"
   },
