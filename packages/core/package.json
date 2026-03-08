@@ -1,8 +1,9 @@
 {
   "name": "@relative-ci/core",
   "version": "5.2.2",
-  "description": "RelativeCI agent core",
+  "description": "Core library for RelativeCI agent - send bundle stats and CI build information to RelativeCI",
   "keywords": [
+    "relative-ci",
     "webpack",
     "vitejs",
     "rspack",
@@ -17,7 +18,11 @@
     "chunks",
     "modules"
   ],
-  "repository": "https://github.com/relative-ci/agent",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/relative-ci/agent",
+    "directory": "packages/core"
+  },
   "bugs": {
     "url": "https://github.com/relative-ci/agent/issues"
   },
@@ -27,6 +32,9 @@
     "name": "Viorel Cojocaru",
     "email": "vio@relative-ci.com",
     "url": "https://relative-ci.com"
+  },
+  "engines": {
+    "node": ">= 18.0.0"
   },
   "main": "./lib/cjs/index.js",
   "module": "./lib/esm/index.js",
@@ -63,12 +71,13 @@
       "import": "./lib/esm/locales/en.js"
     }
   },
+  "sideEffects": false,
   "scripts": {
     "build": "npm run clean && tsc && rollup -c && npm run build-type",
     "build-type": "echo '{\"type\":\"commonjs\"}' > lib/cjs/package.json && echo '{\"type\":\"module\"}' > lib/esm/package.json",
     "clean": "rimraf ./lib",
     "lint": "eslint .",
-    "test": "vitest src --passWithNoTests --no-watch"
+    "test": "vitest src --passWithNoTests --run"
   },
   "devDependencies": {
     "@octokit/webhooks-types": "7.6.1",
@@ -76,7 +85,7 @@
     "@rollup/plugin-node-resolve": "16.0.3",
     "@rollup/plugin-replace": "6.0.3",
     "@rollup/plugin-typescript": "12.3.0",
-    "@tsconfig/node18": "^18.2.4",
+    "@tsconfig/node18": "18.2.6",
     "@types/debug": "4.1.12",
     "@types/env-ci": "3.1.4",
     "@types/fs-extra": "11.0.4",

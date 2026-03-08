@@ -1,8 +1,9 @@
 {
   "name": "@relative-ci/cli",
   "version": "5.2.2",
-  "description": "Send bundle stats and CI build information to RelativeCI CLI",
+  "description": "CLI to send bundle stats and CI build information to RelativeCI",
   "keywords": [
+    "relative-ci",
     "webpack",
     "vitejs",
     "rspack",
@@ -17,7 +18,11 @@
     "chunks",
     "modules"
   ],
-  "repository": "https://github.com/relative-ci/agent",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/relative-ci/agent.git",
+    "directory": "packages/cli"
+  },
   "bugs": {
     "url": "https://github.com/relative-ci/agent/issues"
   },
@@ -34,6 +39,14 @@
   "main": "./lib/cjs/index.js",
   "module": "./lib/esm/index.js",
   "types": "./lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "require": "./lib/cjs/index.js",
+      "import": "./lib/esm/index.js"
+    }
+  },
+  "sideEffects": false,
   "bin": {
     "relative-ci": "bin/index.js"
   },
