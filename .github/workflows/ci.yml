@@ -52,6 +52,7 @@ jobs:
           # add glob on the first directory to force paths relative to current directory
           path: |
             packages*/*/lib
+            packages*/*/dist
 
       # Publish new version to local registry
       - name: Run local npm registry
