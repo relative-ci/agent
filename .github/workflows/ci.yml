@@ -92,12 +92,12 @@ jobs:
         run: npm install --package-lock false
 
       - name: Download build files
-        uses: actions/download-artifact@v8.0.0
+        uses: actions/download-artifact@v8.0.1
         with:
           name: build-files
 
       - name: Download local registry files
-        uses: actions/download-artifact@v8.0.0
+        uses: actions/download-artifact@v8.0.1
         with:
           name: local-registry
 
@@ -133,12 +133,12 @@ jobs:
         run: npm install --package-lock false
 
       - name: Download build files
-        uses: actions/download-artifact@v8.0.0
+        uses: actions/download-artifact@v8.0.1
         with:
           name: build-files
 
       - name: Download local registry files
-        uses: actions/download-artifact@v8.0.0
+        uses: actions/download-artifact@v8.0.1
         with:
           name: local-registry
 
@@ -171,7 +171,7 @@ jobs:
         uses: relative-ci/.github/actions/setup-node-npm@v1.1.5
 
       - name: Download build files
-        uses: actions/download-artifact@v8.0.0
+        uses: actions/download-artifact@v8.0.1
         with:
           name: build-files
 
