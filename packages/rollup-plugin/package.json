@@ -77,7 +77,7 @@
   "dependencies": {
     "@relative-ci/core": "5.3.0",
     "lodash": "4.17.23",
-    "rollup-plugin-stats": "2.0.0",
+    "rollup-plugin-stats": "2.1.0",
     "rollup-plugin-webpack-stats": "3.0.0"
   },
   "peerDependencies": {
