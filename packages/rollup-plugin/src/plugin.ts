@@ -89,9 +89,17 @@ const DEFAULT_OPTIONS = {
 export const relativeCiAgent = (userOptions: RelativeCiAgentOptions = {}): Plugin => ({
   name: PLUGIN_NAME,
   async generateBundle(__, bundle) {
+    const logger: Logger = {
+      log: console.log, // eslint-disable-line no-console
+      info: this.info,
+      warn: this.warn,
+      error: this.error,
+      debug, // send debug messages to the inline utility for consistent debugging across plugins
+    };
+
     const options = _.merge({}, DEFAULT_OPTIONS, userOptions) as RelativeCiAgentOptions;
 
-    debug(options);
+    logger.debug(options);
 
     const {
       enabled,
@@ -101,17 +109,9 @@ export const relativeCiAgent = (userOptions: RelativeCiAgentOptions = {}): Plugi
       ...agentOptions
     } = options;
 
-    const logger: Logger = {
-      log: console.log, // eslint-disable-line no-console
-      info: this.info,
-      warn: this.warn,
-      error: this.error,
-      debug,
-    };
-
     // Skip if not enabled
     if (!enabled) {
-      debug(`${PLUGIN_NAME} is disabled, skip sending data`);
+      logger.debug(`${PLUGIN_NAME} is disabled, skip sending data.`);
       return;
     }
 
@@ -143,8 +143,9 @@ export const relativeCiAgent = (userOptions: RelativeCiAgentOptions = {}): Plugi
 
       logResponse(response);
     } catch (pluginError: unknown) {
-      const error = pluginError instanceof Error ? pluginError : String(pluginError);
+      const error = pluginError instanceof Error ? pluginError.message : String(pluginError);
 
+      // Propagate the error to the bundler if failOnError is enabled, otherwise log a warning and continue
       if (failOnError) {
         logger.error(error);
         return;
