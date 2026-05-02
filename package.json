@@ -76,7 +76,7 @@
   },
   "overrides": {
     "eslint-config-airbnb-base": {
-      "eslint": "^9.0.0"
+      "eslint": "^10.0.0"
     }
   }
 }
