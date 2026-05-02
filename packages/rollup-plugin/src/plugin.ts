@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import { type OutputBundle } from 'rollup-plugin-stats';
 // eslint-disable-next-line import/no-unresolved
 import extractStats, { type StatsOptions } from 'rollup-plugin-stats/extract';
 // eslint-disable-next-line import/no-unresolved
@@ -16,9 +17,43 @@ import {
 } from '@relative-ci/core';
 import loadEnv, { isCi } from '@relative-ci/core/env';
 import ingest from '@relative-ci/core/ingest';
-import type { Plugin } from './types';
 
 const PLUGIN_NAME = 'RelativeCiAgent';
+
+/**
+ * Subset of the Vite/Rolldown/Rollup plugin hook context (`this`) used by this plugin.
+ */
+type PluginContext = {
+  info: (message: string) => void;
+  warn: (message: string) => void;
+  error: (message: string) => void;
+};
+
+/**
+ * Minimum plugin interface compatible with Vite/Rolldown/Rollup.
+ *
+ * @example
+ * {
+ *   name: 'rollupStats',
+ *   async generateBundle(outputOptions, bundle) { ... },
+ * }
+ */
+export type Plugin = {
+  /** Unique identifier for the plugin, used in error messages and logs. */
+  name: string;
+
+  /**
+   * Hook called after the bundle has been fully generated but before it is
+   * written to disk. Receives the resolved output options and the complete
+   * output bundle map.
+   */
+  generateBundle?: (
+    this: PluginContext,
+    outputOptions: unknown,
+    bundle: OutputBundle,
+    isWrite: boolean,
+  ) => void | Promise<void>;
+};
 
 type RelativeCiAgentOptions = {
   /**
@@ -54,9 +89,17 @@ const DEFAULT_OPTIONS = {
 export const relativeCiAgent = (userOptions: RelativeCiAgentOptions = {}): Plugin => ({
   name: PLUGIN_NAME,
   async generateBundle(__, bundle) {
+    const logger: Logger = {
+      log: console.log, // eslint-disable-line no-console
+      info: this.info,
+      warn: this.warn,
+      error: this.error,
+      debug, // send debug messages to the inline utility for consistent debugging across plugins
+    };
+
     const options = _.merge({}, DEFAULT_OPTIONS, userOptions) as RelativeCiAgentOptions;
 
-    debug(options);
+    logger.debug(options);
 
     const {
       enabled,
@@ -68,17 +111,9 @@ export const relativeCiAgent = (userOptions: RelativeCiAgentOptions = {}): Plugi
 
     // Skip if not enabled
     if (!enabled) {
-      debug(`${PLUGIN_NAME} is disabled, skip sending data`);
+      logger.debug(`${PLUGIN_NAME} is disabled, skip sending data.`);
       return;
     }
-
-    const logger: Logger = {
-      log: console.log, // eslint-disable-line no-console
-      info: this.info,
-      warn: this.warn,
-      error: this.error,
-      debug: this.debug,
-    };
 
     // 1. Extract bundle stats from rollup/vite/rolldown
     const { moduleOriginalSize, transform, ...extractStatsOptions } = statsOptions;
@@ -108,14 +143,15 @@ export const relativeCiAgent = (userOptions: RelativeCiAgentOptions = {}): Plugi
 
       logResponse(response);
     } catch (pluginError: unknown) {
-      const error = pluginError instanceof Error ? pluginError : String(pluginError);
+      const error = pluginError instanceof Error ? pluginError.message : String(pluginError);
 
+      // Propagate the error to the bundler if failOnError is enabled, otherwise log a warning and continue
       if (failOnError) {
-        this.error(error);
+        logger.error(error);
         return;
       }
 
-      this.warn(error);
+      logger.warn(error);
     }
   },
 });
