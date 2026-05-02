@@ -14,6 +14,12 @@ To get started, follow [RelativeCI Setup guide for rollup-plugin](https://relati
 [![ci](https://github.com/relative-ci/agent/actions/workflows/ci.yml/badge.svg)](https://github.com/relative-ci/agent/actions/workflows/ci.yml)
 [![CodeQL](https://github.com/relative-ci/agent/actions/workflows/codeql.yml/badge.svg)](https://github.com/relative-ci/agent/actions/workflows/codeql.yml)
 
+[![Vite compatibility](https://registry.vite.dev/api/badges?package=@relative-ci/rollup-plugin&tool=vite)](https://npmx.dev/package/@relative-ci/rollup-plugin)
+[![Rolldown compatibility](https://registry.vite.dev/api/badges?package=@relative-ci/rollup-plugin&tool=rolldown)](https://npmx.dev/package/@relative-ci/rollup-plugin)
+[![Rollup compatibility](https://registry.vite.dev/api/badges?package=@relative-ci/rollup-plugin&tool=rollup)](https://npmx.dev/package/@relative-ci/rollup-plugin)
+
+
+
 ## Other packages
 
 ### [`@relative-ci/cli`](https://github.com/relative-ci/agent/tree/master/packages/cli)
