@@ -146,7 +146,7 @@ jobs:
         run: ./scripts/local-registry.sh &
 
       - name: Test webpack-plugin
-        run: npm run test:package-webpack-plugin -- -t ${{ matrix.webpack }}
+        run: npm run test:package-webpack-plugin:${{ matrix.webpack }}
 
   tests:
     needs:

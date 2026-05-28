@@ -27,7 +27,7 @@ describe('webpack-plugin / build / webpack5', () => {
     test(`should build successfully with webpack ${testCase.type} config`, () =>
       new Promise((done) => {
         exec(
-          `cd test/webpack/webpack5/${testCase.cwd || ''} &&
+          `cd ${testCase.cwd || './'} &&
           CI=true \
           RELATIVE_CI_ENDPOINT=${MOCK_SERVER_URL}/save \
           RELATIVE_CI_SLUG=org/project \
