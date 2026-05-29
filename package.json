@@ -53,7 +53,6 @@
     "lerna": "lerna",
     "format": "prettier --write .",
     "release": "./scripts/release.sh",
-    "pretest:package-webpack-plugin": "cd test/webpack/webpack4 && npm install && cd ../webpack5 && npm install",
     "test": "lerna run test",
     "test:package-cli": "cd test/cli && npm install --force && vitest",
     "test:package-webpack-plugin:webpack4": "cd test/webpack/webpack4 && npm install --force && vitest",
