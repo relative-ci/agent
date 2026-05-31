@@ -48,7 +48,9 @@
   },
   "sideEffects": false,
   "bin": {
-    "relative-ci": "bin/index.js"
+    "relative-ci": "bin/index.js",
+    "relativeci": "bin/index.js",
+    "relci": "bin/index.js"
   },
   "scripts": {
     "build": "npm run clean && tsc && rollup -c && npm run build-type",
