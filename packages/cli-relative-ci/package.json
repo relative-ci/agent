@@ -19,6 +19,9 @@
     "modules"
   ],
   "homepage": "https://relative-ci.com/documentation/setup/agent/cli",
+  "bin": {
+    "relative-ci": "./bin/index.js"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/relative-ci/agent.git",
