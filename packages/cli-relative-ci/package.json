@@ -1,6 +1,6 @@
 {
   "name": "relative-ci",
-  "version": "0.0.1",
+  "version": "5.4.0",
   "description": "Alias for @relative-ci/cli — CLI to send bundle stats and CI build information to RelativeCI.",
   "keywords": [
     "relative-ci",
@@ -32,7 +32,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@relative-ci/cli": "5.3.3"
+    "@relative-ci/cli": "5.4.0"
   },
   "engines": {
     "node": ">=18"
