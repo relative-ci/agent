@@ -1,5 +1,8 @@
 storage: .verdaccio-storage
 packages:
+  'relative-ci':
+    access: $all
+    publish: $anonymous
   '@relative-ci/*':
     access: $all
     publish: $anonymous
