@@ -38,6 +38,7 @@
   "workspaces": [
     "packages/core",
     "packages/cli",
+    "packages/cli-relative-ci",
     "packages/webpack-plugin",
     "packages/rollup-plugin"
   ],

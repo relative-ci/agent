@@ -1,0 +1,40 @@
+{
+  "name": "relative-ci",
+  "version": "0.0.1",
+  "description": "Alias for @relative-ci/cli — CLI to send bundle stats and CI build information to RelativeCI.",
+  "keywords": [
+    "relative-ci",
+    "webpack",
+    "vitejs",
+    "rspack",
+    "rollup",
+    "bundle-size",
+    "bundle-analyzer",
+    "bundle-stats",
+    "stats",
+    "bundle",
+    "size",
+    "assets",
+    "chunks",
+    "modules"
+  ],
+  "homepage": "https://relative-ci.com/documentation/setup/agent/cli",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/relative-ci/agent.git",
+    "directory": "packages/cli-relative-ci"
+  },
+  "bugs": {
+    "url": "https://github.com/relative-ci/agent/issues"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@relative-ci/cli": "5.3.3"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
