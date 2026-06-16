@@ -96,7 +96,7 @@
     "rollup-plugin-node-externals": "9.0.1",
     "typescript": "5.9.3",
     "typescript-eslint": "8.60.1",
-    "vitest": "4.1.8"
+    "vitest": "4.1.9"
   },
   "dependencies": {
     "@actions/github": "8.0.1",
