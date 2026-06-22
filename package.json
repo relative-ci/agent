@@ -43,7 +43,7 @@
     "packages/rollup-plugin"
   ],
   "engines": {
-    "node": ">= 18.0.0"
+    "node": ">= 22.0.0"
   },
   "scripts": {
     "build": "lerna run build",

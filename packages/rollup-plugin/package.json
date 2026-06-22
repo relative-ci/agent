@@ -36,7 +36,7 @@
     "url": "https://relative-ci.com"
   },
   "engines": {
-    "node": ">= 18.0.0"
+    "node": ">= 22.0.0"
   },
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
