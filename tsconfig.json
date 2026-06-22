@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
     "module": "ESNext",
     "moduleResolution": "node",
     "allowJs": true,
@@ -10,15 +9,17 @@
     "noEmit": true,
     "skipLibCheck": true,
     "types": ["node"],
-    "lib": ["es2020", "es2022.error"],
+    /* target config for node 22 */
+    "target": "ES2023",
+    "lib": ["ES2023"],
     "paths": {
       "@relative-ci/core/*": ["./packages/core/src/*"],
-      "@relative-ci/core": ["./packages/core/src"]
-    }
+      "@relative-ci/core": ["./packages/core/src"],
+    },
   },
   "ts-node": {
     "compilerOptions": {
-      "module": "CommonJS"
-    }
-  }
+      "module": "CommonJS",
+    },
+  },
 }
