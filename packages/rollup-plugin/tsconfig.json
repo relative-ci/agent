@@ -5,9 +5,9 @@
     "outDir": "./dist",
     "declarationDir": "./dist",
     "types": ["node"],
-    /* target config for node 18 */
-    "target": "es2022",
-    "lib": ["es2022", "es2022.error"],
+    /* target config for node 22 */
+    "target": "ES2023",
+    "lib": ["ES2023"],
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "esModuleInterop": true,

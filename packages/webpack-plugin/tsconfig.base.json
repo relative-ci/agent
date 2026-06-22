@@ -1,13 +1,13 @@
 {
-  "extends": "@tsconfig/node18/tsconfig.json",
+  "extends": "@tsconfig/node22/tsconfig.json",
   "compilerOptions": {
     /* dirs */
     "rootDir": "./src",
     "declarationDir": "./lib/types",
     "types": ["node"],
-    /* module config */
-    "target": "es2020",
-    "lib": ["es2020", "es2022.error"],
+    /* target config for node 22 */
+    "target": "ES2023",
+    "lib": ["ES2023"],
     "resolveJsonModule": true,
     "esModuleInterop": true,
     /* behaviour options */
@@ -23,8 +23,8 @@
     "noUnusedParameters": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "noEmit": true
+    "noEmit": true,
   },
   "include": ["src"],
-  "exclude": ["node_modules", "lib"]
+  "exclude": ["node_modules", "lib"],
 }
