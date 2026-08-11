@@ -104,6 +104,9 @@ jobs:
       - name: Run local npm registry
         run: ./scripts/local-registry.sh &
 
+      - name: Wait for the local npm registry
+        run: timeout 60 sh -c 'until curl -sf http://localhost:4873/-/ping; do sleep 1; done'
+
       - name: Test CLI
         run: npm run test:package-cli
 
@@ -144,6 +147,9 @@ jobs:
 
       - name: Run local npm registry
         run: ./scripts/local-registry.sh &
+
+      - name: Wait for the local npm registry
+        run: timeout 60 sh -c 'until curl -sf http://localhost:4873/-/ping; do sleep 1; done'
 
       - name: Test webpack-plugin
         run: npm run test:package-webpack-plugin:${{ matrix.webpack }}
