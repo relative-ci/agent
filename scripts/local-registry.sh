@@ -17,3 +17,6 @@ npm config set $LOCAL_REGISTRY_AUTH --location project
 
 echo "Run local registry"
 npx --yes verdaccio --config ./verdaccio.yaml
+
+echo "Wait for the local registry"
+run: timeout 60 sh -c 'until curl -sf http://localhost:4873/-/ping; do sleep 1; done'
