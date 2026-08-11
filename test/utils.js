@@ -1,8 +1,10 @@
-const http = require('http');
-const _ = require('lodash');
-const packageInfo = require('../packages/webpack-plugin/package.json');
+import http from 'http';
+import lodash from 'lodash';
 
-const ENV_DEFAULT = {
+// eslint-disable-next-line import/no-relative-packages
+import packageInfo from '../packages/webpack-plugin/package.json';
+
+export const ENV_DEFAULT = {
   CI: 'true',
   RELATIVE_CI_ENDPOINT: 'http://localhost/save',
   RELATIVE_CI_KEY: '123',
@@ -17,15 +19,13 @@ const ENV_DEFAULT = {
   GITHUB_EVENT_PATH: '',
 };
 
-module.exports.ENV_DEFAULT = ENV_DEFAULT;
-
-module.exports.getMockRequest = (customPayload) => ({
+export const getMockRequest = (customPayload) => ({
   method: 'POST',
   headers: {
     'Content-Type': 'application/json; charset=utf-8',
   },
   body: JSON.stringify(
-    _.merge(
+    lodash.merge(
       {
         key: '123',
         project: 'organization/project',
@@ -54,7 +54,7 @@ module.exports.getMockRequest = (customPayload) => ({
  * @param {Record<string, string>} customEnv
  * @returns {void}
  */
-module.exports.setCustomEnv = (customEnv = {}) => {
+export const setCustomEnv = (customEnv = {}) => {
   const envVars = { ...ENV_DEFAULT, ...customEnv };
 
   Object.entries(envVars).forEach(([key, value]) => {
@@ -65,13 +65,13 @@ module.exports.setCustomEnv = (customEnv = {}) => {
 /**
  * @returns {void}
  */
-module.exports.clearCustomEnv = () => {
+export const clearCustomEnv = () => {
   Object.keys(ENV_DEFAULT).forEach((key) => {
     process.env[key] = undefined;
   });
 };
 
-const INGEST_MOCK = {
+export const INGEST_MOCK = {
   res: {
     job: {
       internalBuildNumber: 1,
@@ -84,14 +84,11 @@ const INGEST_MOCK = {
   },
 };
 
-const MOCK_SERVER_PORT = 5998;
+export const MOCK_SERVER_PORT = 5998;
 
-module.exports.MOCK_SERVER_PORT = MOCK_SERVER_PORT;
-module.exports.MOCK_SERVER_URL = `http://localhost:${MOCK_SERVER_PORT}`;
+export const MOCK_SERVER_URL = `http://localhost:${MOCK_SERVER_PORT}`;
 
-module.exports.INGEST_MOCK = INGEST_MOCK;
-
-module.exports.serve = () =>
+export const serve = () =>
   http
     .createServer((__, res) => {
       res.write(JSON.stringify(INGEST_MOCK));
