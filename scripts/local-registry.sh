@@ -16,4 +16,4 @@ npm config set registry=$LOCAL_REGISTRY --location project
 npm config set $LOCAL_REGISTRY_AUTH --location project
 
 echo "Run local registry"
-npx verdaccio --config ./verdaccio.yaml
+npx --yes verdaccio --config ./verdaccio.yaml
