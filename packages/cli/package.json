@@ -77,6 +77,6 @@
     "@relative-ci/core": "5.4.0",
     "cosmiconfig": "9.0.2",
     "fs-extra": "11.3.6",
-    "yargs": "17.7.2"
+    "yargs": "18.1.0"
   }
 }
