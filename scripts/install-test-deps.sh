@@ -22,4 +22,4 @@ for PACKAGE in $PACKAGES; do
 done
 
 echo "Installing:$SPECS"
-npm install --global $SPECS
+npm install --no-save $SPECS
