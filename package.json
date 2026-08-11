@@ -55,9 +55,9 @@
     "format": "prettier --write .",
     "release": "./scripts/release.sh",
     "test": "lerna run test",
-    "test:package-cli": "cd test/cli && npm install --force && vitest",
-    "test:package-webpack-plugin:webpack4": "cd test/webpack/webpack4 && npm install --force && vitest",
-    "test:package-webpack-plugin:webpack5": "cd test/webpack/webpack5 && npm install --force && vitest"
+    "test:package-cli": "cd test/cli && npm install --no-package-lock && vitest",
+    "test:package-webpack-plugin:webpack4": "cd test/webpack/webpack4 && npm install --no-package-lock && vitest",
+    "test:package-webpack-plugin:webpack5": "cd test/webpack/webpack5 && npm install --no-package-lock && vitest"
   },
   "devDependencies": {
     "@eslint/eslintrc": "3.3.3",
