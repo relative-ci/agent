@@ -23,10 +23,13 @@ describe('webpack-plugin / webpack5', () => {
   test('should ingest data successfully', async () => {
     setCustomEnv();
 
-    global.fetch = vi.fn(() =>
-      Promise.resolve({
-        json: () => Promise.resolve(INGEST_MOCK),
-      }),
+    vi.stubGlobal(
+      'fetch',
+      vi.fn(() =>
+        Promise.resolve({
+          json: () => Promise.resolve(INGEST_MOCK),
+        }),
+      ),
     );
 
     const compiler = webpack({ ...appConfig, context: __dirname });
@@ -62,7 +65,10 @@ describe('webpack-plugin / webpack5', () => {
   test('should warn, not ingest, and not throw on params error', async () => {
     setCustomEnv({ RELATIVE_CI_KEY: '' });
 
-    global.fetch = vi.fn(() => Promise.resolve());
+    vi.stubGlobal(
+      'fetch',
+      vi.fn(() => Promise.resolve()),
+    );
 
     const compiler = webpack({ ...appConfig, context: __dirname });
     compiler.outputFileSystem = new MemoryFS();
@@ -96,7 +102,10 @@ describe('webpack-plugin / webpack5', () => {
   test('should warn and not throw on ingest error', async () => {
     setCustomEnv();
 
-    global.fetch = vi.fn(() => Promise.reject(new Error('Network error')));
+    vi.stubGlobal(
+      'fetch',
+      vi.fn(() => Promise.reject(new Error('Network error'))),
+    );
 
     const compiler = webpack({
       ...appConfig,
@@ -129,7 +138,10 @@ describe('webpack-plugin / webpack5', () => {
   test('should throw and fail on ingest error when failOnError is true', async () => {
     setCustomEnv();
 
-    global.fetch = vi.fn(() => Promise.reject(new Error('Network error')));
+    vi.stubGlobal(
+      'fetch',
+      vi.fn(() => Promise.reject(new Error('Network error'))),
+    );
 
     const compiler = webpack({ ...appFailOnErrorConfig, context: __dirname });
     compiler.outputFileSystem = new MemoryFS();
