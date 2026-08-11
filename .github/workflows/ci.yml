@@ -88,9 +88,6 @@ jobs:
           cache: never
           install: false
 
-      - name: Install dependencies
-        run: npm install --package-lock false
-
       - name: Download build files
         uses: actions/download-artifact@v8.0.1
         with:
@@ -101,8 +98,14 @@ jobs:
         with:
           name: local-registry
 
+      - name: Install test dependencies
+        run: ./scripts/install-test-deps.sh
+
       - name: Run local npm registry
         run: ./scripts/local-registry.sh &
+
+      - name: Wait for the local npm registry
+        run: timeout 60 sh -c 'until curl -sf http://localhost:4873/-/ping; do sleep 1; done'
 
       - name: Test CLI
         run: npm run test:package-cli
@@ -129,9 +132,6 @@ jobs:
       - name: Delete obsolete always-auth
         run: npm config delete always-auth
 
-      - name: Install dependencies
-        run: npm install --package-lock false
-
       - name: Download build files
         uses: actions/download-artifact@v8.0.1
         with:
@@ -142,8 +142,14 @@ jobs:
         with:
           name: local-registry
 
+      - name: Install test dependencies
+        run: ./scripts/install-test-deps.sh
+
       - name: Run local npm registry
         run: ./scripts/local-registry.sh &
+
+      - name: Wait for the local npm registry
+        run: timeout 60 sh -c 'until curl -sf http://localhost:4873/-/ping; do sleep 1; done'
 
       - name: Test webpack-plugin
         run: npm run test:package-webpack-plugin:${{ matrix.webpack }}

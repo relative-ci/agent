@@ -24,8 +24,11 @@ describe('webpack-plugin / build / webpack5', () => {
   });
 
   testCases.forEach((testCase) => {
-    test(`should build successfully with webpack ${testCase.type} config`, () =>
-      new Promise((done) => {
+    test(`should build successfully with webpack ${testCase.type} config`, async () => {
+      const { stdout, stderr } = await new Promise<{
+        stdout: string;
+        stderr: string;
+      }>((resolve, reject) => {
         exec(
           `cd ${testCase.cwd || './'} &&
           CI=true \
@@ -33,13 +36,20 @@ describe('webpack-plugin / build / webpack5', () => {
           RELATIVE_CI_SLUG=org/project \
           RELATIVE_CI_KEY=abc123 \
         npm run ${testCase.run}`,
-          (_, stdout, sterr) => {
-            expect(sterr).toEqual('');
-            expect(stdout).toMatch(/compiled.*successfully/);
-            expect(stdout).toContain('Job #1 done.');
-            done(1);
+          (error, out, err) => {
+            if (error) {
+              reject(error);
+              return;
+            }
+
+            resolve({ stdout: out, stderr: err });
           },
         );
-      }));
+      });
+
+      expect(stderr).toEqual('');
+      expect(stdout).toMatch(/compiled.*successfully/);
+      expect(stdout).toContain('Job #1 done.');
+    });
   });
 });

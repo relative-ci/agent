@@ -22,8 +22,9 @@ describe('Ingest', () => {
   });
 
   test('should ingest data', async () => {
-    global.fetch = vi.fn(
-      () =>
+    vi.stubGlobal(
+      'fetch',
+      vi.fn(() =>
         Promise.resolve({
           json: () =>
             Promise.resolve({
@@ -38,7 +39,8 @@ describe('Ingest', () => {
                 },
               },
             }),
-        }) as any,
+        }),
+      ),
     );
 
     await ingest({}, PARAMS);
@@ -67,8 +69,9 @@ describe('Ingest', () => {
   });
 
   test('should ingest compressed data', async () => {
-    global.fetch = vi.fn(
-      () =>
+    vi.stubGlobal(
+      'fetch',
+      vi.fn(() =>
         Promise.resolve({
           json: () =>
             Promise.resolve({
@@ -83,7 +86,8 @@ describe('Ingest', () => {
                 },
               },
             }),
-        }) as any,
+        }),
+      ),
     );
 
     await ingest({}, PARAMS, { compress: true });
@@ -102,7 +106,10 @@ describe('Ingest', () => {
   });
 
   test('should throw error when fetch fails', async () => {
-    global.fetch = vi.fn(() => Promise.reject(new Error('Network error')));
+    vi.stubGlobal(
+      'fetch',
+      vi.fn(() => Promise.reject(new Error('Network error'))),
+    );
 
     try {
       await ingest({}, PARAMS);
@@ -112,11 +119,13 @@ describe('Ingest', () => {
   });
 
   test('should throw error when fetch returns invalid json', async () => {
-    global.fetch = vi.fn(
-      () =>
+    vi.stubGlobal(
+      'fetch',
+      vi.fn(() =>
         Promise.resolve({
           json: () => Promise.resolve(null),
-        }) as any,
+        }),
+      ),
     );
 
     try {
@@ -127,15 +136,17 @@ describe('Ingest', () => {
   });
 
   test('should throw error when ingest returns error', async () => {
-    global.fetch = vi.fn(
-      () =>
+    vi.stubGlobal(
+      'fetch',
+      vi.fn(() =>
         Promise.resolve({
           json: () =>
             Promise.resolve({
               code: 'INGEST_FAILED',
               message: 'Ingest failed',
             }),
-        }) as any,
+        }),
+      ),
     );
 
     try {
@@ -146,11 +157,13 @@ describe('Ingest', () => {
   });
 
   test('should throw error when ingest response is invalid', async () => {
-    global.fetch = vi.fn(
-      () =>
+    vi.stubGlobal(
+      'fetch',
+      vi.fn(() =>
         Promise.resolve({
           json: () => Promise.resolve({}),
-        }) as any,
+        }),
+      ),
     );
 
     try {

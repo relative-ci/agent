@@ -33,7 +33,7 @@ export default [
       'import/no-extraneous-dependencies': [
         'error',
         {
-          devDependencies: ['**/*.test.js', '**/*.config.{js,mjs}'],
+          devDependencies: ['**/*.test.js', '**/*.config.{js,mjs}', 'test/**/*.{js,mjs,ts}'],
         },
       ],
       'import/no-unresolved': [
