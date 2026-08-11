@@ -1,7 +1,6 @@
 {
   "name": "@relative-ci/agent-test-cli",
   "devDependencies": {
-    "lodash": "4.18.1",
     "@relative-ci/cli": "*"
   }
 }

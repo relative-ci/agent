@@ -6,7 +6,7 @@
 
 set -euo pipefail
 
-PACKAGES="verdaccio vitest"
+PACKAGES="cross-env lodash memory-fs tsx verdaccio vitest"
 SPECS=""
 
 for PACKAGE in $PACKAGES; do
