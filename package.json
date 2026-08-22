@@ -60,11 +60,11 @@
     "test:package-webpack-plugin:webpack5": "cd test/webpack/webpack5 && npm install --no-package-lock && vitest"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "3.3.3",
-    "@eslint/js": "9.39.2",
+    "@eslint/eslintrc": "3.3.6",
+    "@eslint/js": "10.0.1",
     "cross-env": "10.1.0",
     "dotenv": "17.4.2",
-    "eslint": "9.39.2",
+    "eslint": "10.8.1",
     "eslint-config-airbnb-base": "15.0.0",
     "eslint-config-prettier": "10.1.8",
     "eslint-plugin-import": "2.32.0",
@@ -80,7 +80,7 @@
   },
   "overrides": {
     "eslint-config-airbnb-base": {
-      "eslint": "^9.0.0"
+      "eslint": "$eslint"
     }
   }
 }
