@@ -60,7 +60,7 @@
     "test:package-webpack-plugin:webpack5": "cd test/webpack/webpack5 && npm install --no-package-lock && vitest"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "3.3.6",
+    "@eslint/eslintrc": "3.3.7",
     "@eslint/js": "10.0.1",
     "cross-env": "10.1.0",
     "dotenv": "17.4.2",
