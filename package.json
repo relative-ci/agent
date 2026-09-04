@@ -73,7 +73,7 @@
     "memory-fs": "0.5.0",
     "prettier": "3.9.6",
     "rimraf": "6.1.3",
-    "typescript-eslint": "8.67.0",
+    "typescript-eslint": "8.69.0",
     "tsx": "4.23.13",
     "verdaccio": "6.10.2",
     "vitest": "4.1.11"
