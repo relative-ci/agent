@@ -81,6 +81,9 @@
   "overrides": {
     "eslint-config-airbnb-base": {
       "eslint": "$eslint"
+    },
+    "eslint-plugin-import": {
+      "eslint": "$eslint"
     }
   }
 }
