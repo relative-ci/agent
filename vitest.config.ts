@@ -4,5 +4,8 @@ import { defineConfig } from 'vitest/config';
 export default defineConfig({
   test: {
     unstubGlobals: true,
+    env: {
+      DOTENV_CONFIG_QUIET: 'true',
+    },
   },
 });
