@@ -62,7 +62,7 @@
     "clean": "rimraf ./dist",
     "lint": "eslint .",
     "type-check": "tsc",
-    "test": "vitest src --passWithNoTests --run"
+    "test": "vitest src --config ../../vitest.config.ts --passWithNoTests --run"
   },
   "devDependencies": {
     "@rollup/plugin-replace": "6.0.3",
