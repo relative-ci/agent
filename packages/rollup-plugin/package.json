@@ -62,26 +62,26 @@
     "clean": "rimraf ./dist",
     "lint": "eslint .",
     "type-check": "tsc",
-    "test": "vitest src --passWithNoTests --run"
+    "test": "vitest src --config ../../vitest.config.ts --passWithNoTests --run"
   },
   "devDependencies": {
     "@rollup/plugin-replace": "6.0.3",
     "@types/lodash": "4.17.25",
     "rimraf": "6.1.3",
-    "tsdown": "0.22.14",
+    "tsdown": "0.23.0",
     "typescript": "5.9.3",
-    "vite": "^8.2.2",
-    "vitest": "4.1.11"
+    "vite": "^8.3.1",
+    "vitest": "5.0.2"
   },
   "dependencies": {
     "@relative-ci/core": "5.4.0",
     "lodash": "4.18.1",
-    "rollup-plugin-stats": "3.0.0",
-    "rollup-plugin-webpack-stats": "4.0.0"
+    "rollup-plugin-stats": "3.0.1",
+    "rollup-plugin-webpack-stats": "4.0.1"
   },
   "peerDependencies": {
     "rolldown": "^1.0.0-beta.0",
-    "rollup": "^4.62.5",
+    "rollup": "^4.63.5",
     "vite": "^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0"
   },
   "peerDependenciesMeta": {
