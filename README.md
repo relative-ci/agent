@@ -14,7 +14,7 @@ To get started, follow [RelativeCI Setup guide](https://relative-ci.com/document
 
 [![npm](https://img.shields.io/npm/v/@relative-ci/cli.svg)](https://www.npmjs.com/package/@relative-ci/cli)
 [![node version](https://img.shields.io/node/v/@relative-ci/cli.svg)](https://www.npmjs.com/package/@relative-ci/cli)
-[![Socket Badge](https://socket.dev/api/badge/npm/package/@relative-ci/cli)](https://socket.dev/npm/package/@relative-ci/cli)
+[![Socket Badge](https://badge.socket.dev/npm/package/@relative-ci/cli)](https://socket.dev/npm/package/@relative-ci/cli)
 [![ci](https://github.com/relative-ci/agent/actions/workflows/ci.yml/badge.svg)](https://github.com/relative-ci/agent/actions/workflows/ci.yml)
 [![CodeQL](https://github.com/relative-ci/agent/actions/workflows/codeql.yml/badge.svg)](https://github.com/relative-ci/agent/actions/workflows/codeql.yml)
 
@@ -24,7 +24,7 @@ To get started, follow [RelativeCI Setup guide for CLI](https://relative-ci.com/
 
 [![npm](https://img.shields.io/npm/v/@relative-ci/webpack-plugin.svg)](https://www.npmjs.com/package/@relative-ci/webpack-plugin)
 [![node version](https://img.shields.io/node/v/@relative-ci/webpack-plugin.svg)](https://www.npmjs.com/package/@relative-ci/webpack-plugin)
-[![Socket Badge](https://socket.dev/api/badge/npm/package/@relative-ci/webpack-plugin)](https://socket.dev/npm/package/@relative-ci/webpack-plugin)
+[![Socket Badge](https://badge.socket.dev/npm/package/@relative-ci/webpack-plugin)](https://socket.dev/npm/package/@relative-ci/webpack-plugin)
 [![ci](https://github.com/relative-ci/agent/actions/workflows/ci.yml/badge.svg)](https://github.com/relative-ci/agent/actions/workflows/ci.yml)
 [![CodeQL](https://github.com/relative-ci/agent/actions/workflows/codeql.yml/badge.svg)](https://github.com/relative-ci/agent/actions/workflows/codeql.yml)
 
@@ -34,7 +34,7 @@ To get started, follow [RelativeCI Setup guide for webpack-plugin](https://relat
 
 [![npm](https://img.shields.io/npm/v/@relative-ci/rollup-plugin.svg)](https://www.npmjs.com/package/@relative-ci/rollup-plugin)
 [![node version](https://img.shields.io/node/v/@relative-ci/rollup-plugin.svg)](https://www.npmjs.com/package/@relative-ci/rollup-plugin)
-[![Socket Badge](https://socket.dev/api/badge/npm/package/@relative-ci/rollup-plugin)](https://socket.dev/npm/package/@relative-ci/rollup-plugin)
+[![Socket Badge](https://badge.socket.dev/npm/package/@relative-ci/rollup-plugin)](https://socket.dev/npm/package/@relative-ci/rollup-plugin)
 [![ci](https://github.com/relative-ci/agent/actions/workflows/ci.yml/badge.svg)](https://github.com/relative-ci/agent/actions/workflows/ci.yml)
 [![CodeQL](https://github.com/relative-ci/agent/actions/workflows/codeql.yml/badge.svg)](https://github.com/relative-ci/agent/actions/workflows/codeql.yml)
 
