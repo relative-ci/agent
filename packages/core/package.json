@@ -77,7 +77,7 @@
     "build-type": "echo '{\"type\":\"commonjs\"}' > lib/cjs/package.json && echo '{\"type\":\"module\"}' > lib/esm/package.json",
     "clean": "rimraf ./lib",
     "lint": "eslint .",
-    "test": "vitest src --passWithNoTests --run"
+    "test": "vitest src --config ../../vitest.config.ts --passWithNoTests --run"
   },
   "devDependencies": {
     "@octokit/webhooks-types": "7.6.1",
