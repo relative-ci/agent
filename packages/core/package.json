@@ -1,6 +1,6 @@
 {
   "name": "@relative-ci/core",
-  "version": "6.0.0",
+  "version": "6.0.1-beta.0",
   "description": "Core library for RelativeCI agent - send bundle stats and CI build information to RelativeCI",
   "keywords": [
     "relative-ci",
