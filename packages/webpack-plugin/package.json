@@ -64,7 +64,7 @@
     "@types/lodash": "4.17.27",
     "memory-fs": "0.5.0",
     "rimraf": "6.1.4",
-    "rollup": "4.67.5",
+    "rollup": "4.68.2",
     "rollup-plugin-node-externals": "9.0.1",
     "typescript": "5.9.3",
     "vitest": "5.1.0",
