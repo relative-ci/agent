@@ -75,7 +75,7 @@
     "rimraf": "6.1.4",
     "typescript-eslint": "8.72.2",
     "tsx": "4.23.15",
-    "verdaccio": "6.10.6",
+    "verdaccio": "7.1.0",
     "vitest": "5.1.0"
   },
   "overrides": {
