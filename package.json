@@ -76,7 +76,7 @@
     "typescript-eslint": "8.73.0",
     "tsx": "4.23.15",
     "verdaccio": "6.10.6",
-    "vitest": "5.1.1"
+    "vitest": "5.1.2"
   },
   "overrides": {
     "eslint-config-airbnb-base": {
